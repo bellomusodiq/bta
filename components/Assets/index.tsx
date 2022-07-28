@@ -9,6 +9,7 @@ import { AssetItemProps } from "./types";
 import BitcoinImage from "../../assets/images/BTC.png";
 import LTCImage from "../../assets/images/LTC.png";
 import TronImage from "../../assets/images/TRX.png";
+import { useNavigation } from "@react-navigation/native";
 
 const AssetItem: React.FC<AssetItemProps> = ({
   title,
@@ -16,9 +17,10 @@ const AssetItem: React.FC<AssetItemProps> = ({
   amountUSD,
   image,
   currency,
+  onPress,
 }) => (
   <>
-    <TouchableOpacity style={styles.assetItemContainer}>
+    <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
       <Image
         source={image}
         style={styles.assetImage}
@@ -44,6 +46,11 @@ const AssetItem: React.FC<AssetItemProps> = ({
 );
 
 const Assets: React.FC = () => {
+  const navigation = useNavigation();
+
+  const navigateToDetail = () => {
+    navigation.navigate("AssetDetail");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -61,6 +68,7 @@ const Assets: React.FC = () => {
         amountCrypto={0.007}
         currency="BTC"
         title="Bitcoin"
+        onPress={navigateToDetail}
       />
       <AssetItem
         image={LTCImage}
@@ -68,6 +76,7 @@ const Assets: React.FC = () => {
         amountCrypto={0.007}
         currency="LTC"
         title="LiteCoin"
+        onPress={navigateToDetail}
       />
       <AssetItem
         image={TronImage}
@@ -75,6 +84,7 @@ const Assets: React.FC = () => {
         amountCrypto={0.007}
         currency="TRX"
         title="Tron"
+        onPress={navigateToDetail}
       />
     </View>
   );

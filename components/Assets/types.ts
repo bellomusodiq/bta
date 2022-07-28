@@ -4,4 +4,5 @@ export interface AssetItemProps {
   currency: string;
   amountUSD: number;
   amountCrypto: number;
+  onPress?: () => void;
 }

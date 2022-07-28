@@ -36,6 +36,7 @@ import {
 import colors from "../consts/colors";
 import LinkingConfiguration from "./LinkingConfiguration";
 import OverviewScreen from "../screens/Overview";
+import AssetDetailScreen from "../screens/AssetDetail";
 
 export default function Navigation({
   colorScheme,
@@ -60,7 +61,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      header: () => null,
+    }}>
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
@@ -71,9 +74,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
+      <Stack.Screen name="AssetDetail" component={AssetDetailScreen} />
     </Stack.Navigator>
   );
 }
