@@ -4,9 +4,9 @@ import HomeHeader from "../../components/HomeHeader";
 import PortfolioCard from "../../components/PortfolioCard";
 import SendReceiveBtns from "../../components/SendReceiveBtns";
 import ScreenLayout from "../../layouts/ScreenLayout";
-import { RootTabScreenProps } from "../../types";
+import { OverviewStackScreenProps } from "../../types";
 
-const OverviewScreen: React.FC<RootTabScreenProps<"Overview">> = () => {
+const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   return (
     <ScreenLayout scrollable>
       <HomeHeader name="Emmanuel" />

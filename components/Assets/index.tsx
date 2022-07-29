@@ -49,7 +49,13 @@ const Assets: React.FC = () => {
   const navigation = useNavigation();
 
   const navigateToDetail = () => {
+    // @ts-ignore-next-line
     navigation.navigate("AssetDetail");
+  };
+
+  const navigateToManageAsset = () => {
+    // @ts-ignore-next-line
+    navigation.navigate("ManageAsset");
   };
   return (
     <View style={styles.container}>
@@ -58,7 +64,7 @@ const Assets: React.FC = () => {
           <CustomText style={styles.title}>Assets</CustomText>
           <View style={styles.underline} />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToManageAsset}>
           <Setting5 color="black" size={RFValue(20)} />
         </TouchableOpacity>
       </View>

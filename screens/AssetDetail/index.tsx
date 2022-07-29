@@ -10,7 +10,7 @@ import CustomText from "../../components/CustomText";
 import TrendChart from "../../components/TrendChart";
 import TrendFilter from "../../components/TrendFilter";
 import ScreenLayout from "../../layouts/ScreenLayout";
-import { RootStackScreenProps } from "../../types";
+import { OverviewStackScreenProps } from "../../types";
 import styles from "./styles";
 import TronImage from "../../assets/images/TRX.png";
 import { ArrowRight, Scan, Send2 } from "iconsax-react-native";
@@ -19,7 +19,9 @@ import MarketStats from "../../components/MarketStats";
 import ReactNativeModal from "react-native-modal";
 import BuySellItem from "../../components/BuySellItem";
 
-const AssetDetailScreen: React.FC<RootStackScreenProps<"AssetDetail">> = () => {
+const AssetDetailScreen: React.FC<
+  OverviewStackScreenProps<"AssetDetail">
+> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const toggleModal = () => setShowModal(!showModal);

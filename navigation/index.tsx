@@ -38,6 +38,7 @@ import colors from "../consts/colors";
 import LinkingConfiguration from "./LinkingConfiguration";
 import OverviewScreen from "../screens/Overview";
 import AssetDetailScreen from "../screens/AssetDetail";
+import ManageAssetScreen from "../screens/ManageAsset";
 
 export default function Navigation({
   colorScheme,
@@ -92,6 +93,10 @@ const OverviewNavigator = () => (
       name="AssetDetail"
       component={AssetDetailScreen}
     />
+    <OverviewStackNavigator.Screen
+      name="ManageAsset"
+      component={ManageAssetScreen}
+    />
   </OverviewStackNavigator.Navigator>
 );
 
@@ -106,7 +111,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Overview"
+      initialRouteName="OverviewStack"
       screenOptions={{
         // tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarLabelStyle: {

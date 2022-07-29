@@ -25,10 +25,15 @@ export type OverviewStackParamList = {
   Overview: undefined;
   AssetDetail: undefined;
   NotFound: undefined;
+  ManageAsset: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
+
+export type OverviewStackScreenProps<
+  Screen extends keyof OverviewStackParamList
+> = NativeStackScreenProps<OverviewStackParamList, Screen>;
 
 export type RootTabParamList = {
   OverviewStack: undefined;
