@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   currentPriceContainer: {},
@@ -18,6 +19,16 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(16),
     paddingHorizontal: RFValue(24),
     marginTop: RFValue(24),
+    borderRadius: RFValue(8),
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  modalBalanceContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#F0F0F0",
+    paddingVertical: RFValue(16),
+    paddingHorizontal: RFValue(24),
+    marginTop: RFValue(10),
     borderRadius: RFValue(8),
     flexDirection: "row",
     justifyContent: "space-between",
@@ -93,6 +104,53 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
     color: "#3861FB",
     marginRight: RFValue(10),
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    paddingBottom: height(0.05),
+    minHeight: height(0.5),
+    paddingTop: RFValue(24),
+  },
+  modal: {
+    justifyContent: "flex-end",
+    width: width(1),
+    position: "absolute",
+    left: -width(0.05),
+    bottom: -height(0.05),
+  },
+  backDrop: {
+    backgroundColor: "black",
+    flex: 1,
+  },
+  indicator: {
+    alignSelf: "center",
+    width: RFValue(40),
+    height: 3,
+    backgroundColor: "black",
+  },
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: RFValue(30),
+    paddingHorizontal: RFValue(15),
+    paddingBottom: RFValue(30)
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: RFValue(45),
+    padding: RFValue(12),
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#F0F0F0",
+    width: "45%",
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+  buttonText: {
+    fontSize: RFValue(16),
+    marginLeft: RFValue(10),
+    lineHeight: RFValue(18),
   },
 });
 

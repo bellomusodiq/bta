@@ -29,6 +29,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
+  OverviewStackParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
@@ -61,9 +62,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{
-      header: () => null,
-    }}>
+    <Stack.Navigator
+      screenOptions={{
+        header: () => null,
+      }}
+    >
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
@@ -74,10 +77,23 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Screen name="AssetDetail" component={AssetDetailScreen} />
+      {/* <Stack.Screen name="AssetDetail" component={AssetDetailScreen} /> */}
     </Stack.Navigator>
   );
 }
+
+const OverviewStackNavigator =
+  createNativeStackNavigator<OverviewStackParamList>();
+
+const OverviewNavigator = () => (
+  <OverviewStackNavigator.Navigator screenOptions={{ header: () => null }}>
+    <OverviewStackNavigator.Screen name="Overview" component={OverviewScreen} />
+    <OverviewStackNavigator.Screen
+      name="AssetDetail"
+      component={AssetDetailScreen}
+    />
+  </OverviewStackNavigator.Navigator>
+);
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -100,9 +116,9 @@ function BottomTabNavigator() {
       }}
     >
       <BottomTab.Screen
-        name="Overview"
-        component={OverviewScreen}
-        options={({ navigation }: RootTabScreenProps<"Overview">) => ({
+        name="OverviewStack"
+        component={OverviewNavigator}
+        options={({ navigation }: RootTabScreenProps<"OverviewStack">) => ({
           title: "Overview",
           tabBarIcon: ({ focused }) => (
             <Element4
