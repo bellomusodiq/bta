@@ -20,8 +20,16 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
   BuyCrypto: undefined;
-  Summary: undefined;
+  Summary: {
+    sell?: boolean;
+  };
   PayInstruction: undefined;
+  SellCrypto?: {
+    accountName: string;
+    accountNumber?: string;
+  };
+  SelectAccount: undefined;
+  Complete: undefined;
 };
 
 export type OverviewStackParamList = {

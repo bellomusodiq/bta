@@ -1,3 +1,4 @@
+import { InfoCircle } from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -11,10 +12,18 @@ const SummaryItem: React.FC<SummaryItemProps> = ({
   valueBold,
   onClick,
   noDivider,
+  onClickInfo,
 }) => (
   <>
     <View style={styles.container}>
-      <CustomText style={styles.title}>{title}</CustomText>
+      <View style={styles.titleContainer}>
+        <CustomText style={styles.title}>{title}</CustomText>
+        {onClickInfo && (
+          <TouchableOpacity onPress={onClickInfo}>
+            <InfoCircle size={RFValue(16)} color="#292D32" />
+          </TouchableOpacity>
+        )}
+      </View>
       {onClick ? (
         <TouchableOpacity style={styles.button} onPress={onClick}>
           <CustomText style={[styles.value, { color: "#3861FB" }]}>

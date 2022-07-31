@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RFValue(14),
     color: "#979797",
+    marginRight: 5
   },
   value: {
     fontSize: RFValue(14),
@@ -25,9 +26,13 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: "#F0F0F0",
-    paddingHorizontal: RFValue(16),
+    paddingHorizontal: RFValue(8),
     paddingVertical: RFValue(10),
     borderRadius: RFValue(134),
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

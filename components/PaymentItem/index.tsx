@@ -25,7 +25,9 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
   >
     <View style={styles.iconContainer}>{icon}</View>
     <View style={styles.textContainer}>
-      <CustomText style={styles.title}>{title}</CustomText>
+      <CustomText style={styles.title} numberOfLines={1} lineBreakMode="tail">
+        {title}
+      </CustomText>
       <CustomText
         numberOfLines={1}
         lineBreakMode="tail"

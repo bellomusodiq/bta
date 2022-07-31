@@ -5,4 +5,5 @@ export interface PaymentItemProps {
   onPress?: () => void;
   showArror?: boolean;
   active?: boolean;
+  invertedIcon?: boolean;
 }

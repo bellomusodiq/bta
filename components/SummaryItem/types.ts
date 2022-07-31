@@ -4,4 +4,5 @@ export interface SummaryItemProps {
   onClick?: () => void;
   valueBold?: boolean;
   noDivider?: boolean;
+  onClickInfo?: () => void;
 }

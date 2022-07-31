@@ -45,6 +45,9 @@ import TradeScreen from "../screens/Trade";
 import BuyCryptoScreen from "../screens/BuyCrypto";
 import SummaryScreen from "../screens/Summary";
 import PayInstructionScreen from "../screens/PayInstruction";
+import SellCryptoScreen from "../screens/SellCrypto";
+import SelectAccountScreen from "../screens/SelectAccount";
+import CompleteScreen from "../screens/Complete";
 
 export default function Navigation({
   colorScheme,
@@ -85,6 +88,9 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Screen name="BuyCrypto" component={BuyCryptoScreen} />
+      <Stack.Screen name="SellCrypto" component={SellCryptoScreen} />
+      <Stack.Screen name="SelectAccount" component={SelectAccountScreen} />
+      <Stack.Screen name="Complete" component={CompleteScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
     </Stack.Navigator>

@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#3861FB",
     marginVertical: RFValue(10),
     marginHorizontal: width(0.05),
-    padding: RFValue(12),
+    padding: RFValue(14),
     justifyContent: "center",
     alignItems: "center",
     borderRadius: RFValue(134),
   },
   footerButtonText: {
     color: "white",
-    fontSize: RFValue(12),
+    fontSize: RFValue(14),
   },
 });
 
