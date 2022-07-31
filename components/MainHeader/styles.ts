@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: RFValue(10),
+    paddingVertical: RFValue(15),
     backgroundColor: "white",
     paddingHorizontal: width(0.05),
   },
@@ -21,6 +21,18 @@ const styles = StyleSheet.create({
     marginHorizontal: RFValue(2),
     textAlign: "center",
     fontSize: RFValue(18),
+  },
+  shadow: {
+    height: 2,
+    // borderBottomColor: "rgba(51, 51, 51, 0.05)",
+    // borderBottomWidth: 3,
+    shadowOffset: { width: 10, height: 18 },
+    shadowRadius: 20,
+    shadowColor: "black",
+    shadowOpacity: 0.25,
+    elevation: 8,
+    // background color must be set
+    backgroundColor: "#0000", // invisible color
   },
 });
 

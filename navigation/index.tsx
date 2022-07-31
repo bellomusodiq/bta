@@ -11,6 +11,7 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   ArrowSwapHorizontal,
   ChartSquare,
@@ -19,7 +20,7 @@ import {
   User,
 } from "iconsax-react-native";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Pressable, SafeAreaView } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import Colors from "../constants/Colors";
@@ -33,12 +34,17 @@ import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
+  TradeStackParamList,
 } from "../types";
 import colors from "../consts/colors";
 import LinkingConfiguration from "./LinkingConfiguration";
 import OverviewScreen from "../screens/Overview";
 import AssetDetailScreen from "../screens/AssetDetail";
 import ManageAssetScreen from "../screens/ManageAsset";
+import TradeScreen from "../screens/Trade";
+import BuyCryptoScreen from "../screens/BuyCrypto";
+import SummaryScreen from "../screens/Summary";
+import PayInstructionScreen from "../screens/PayInstruction";
 
 export default function Navigation({
   colorScheme,
@@ -78,7 +84,9 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      {/* <Stack.Screen name="AssetDetail" component={AssetDetailScreen} /> */}
+      <Stack.Screen name="BuyCrypto" component={BuyCryptoScreen} />
+      <Stack.Screen name="Summary" component={SummaryScreen} />
+      <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
     </Stack.Navigator>
   );
 }
@@ -100,6 +108,45 @@ const OverviewNavigator = () => (
   </OverviewStackNavigator.Navigator>
 );
 
+const TradeStackNavigator = createNativeStackNavigator<TradeStackParamList>();
+
+const TradeTab = createMaterialTopTabNavigator();
+
+const TradeTabNavigator = () => (
+  <TradeTab.Navigator
+    screenOptions={{
+      tabBarItemStyle: {
+        // alignItems: "flex-start",
+      },
+      tabBarStyle: {
+        justifyContent: "flex-start",
+      },
+    }}
+  >
+    <TradeTab.Screen
+      name="BuyCrypto"
+      options={{
+        title: "Buy crypto",
+      }}
+      component={TradeScreen}
+    />
+    <TradeTab.Screen
+      name="SellCrypto"
+      options={{
+        title: "Sell crypto",
+      }}
+      component={TradeScreen}
+    />
+  </TradeTab.Navigator>
+);
+
+// const TradeNavigator = () => (
+//   <SafeAreaView style={{ flex: 1 }}>
+//     <TradeStackNavigator.Navigator screenOptions={{ header: () => null }}>
+//       <TradeStackNavigator.Screen name="Trade" component={TradeScreen} />
+//     </TradeStackNavigator.Navigator>
+//   </SafeAreaView>
+// );
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -154,7 +201,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Trade"
-        component={TabTwoScreen}
+        component={TradeScreen}
         options={{
           title: "Trade",
           tabBarIcon: ({ focused }) => (

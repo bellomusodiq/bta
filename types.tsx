@@ -19,6 +19,9 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
+  BuyCrypto: undefined;
+  Summary: undefined;
+  PayInstruction: undefined;
 };
 
 export type OverviewStackParamList = {
@@ -28,12 +31,19 @@ export type OverviewStackParamList = {
   ManageAsset: undefined;
 };
 
+export type TradeStackParamList = {
+  Trade: undefined;
+};
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type OverviewStackScreenProps<
   Screen extends keyof OverviewStackParamList
 > = NativeStackScreenProps<OverviewStackParamList, Screen>;
+
+export type TradeStackScreenProps<Screen extends keyof TradeStackParamList> =
+  NativeStackScreenProps<TradeStackParamList, Screen>;
 
 export type RootTabParamList = {
   OverviewStack: undefined;

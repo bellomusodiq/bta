@@ -5,20 +5,32 @@ import { MainHeaderProps } from "../../components/MainHeader/types";
 import styles from "./styles";
 import { ScreenLayoutProps } from "./types";
 
-const ScreenLayout: React.FC<ScreenLayoutProps & MainHeaderProps> = ({
+const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   scrollable,
   children,
   showHeader,
-  ...headerProps
+  title,
+  headerRight,
+  showShadow,
+  footer,
+  flexibleHeader
 }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {showHeader && <MainHeader {...headerProps} />}
+      {showHeader && (
+        <MainHeader
+          showShadow={showShadow}
+          title={String(title)}
+          headerRight={headerRight}
+          flexibleHeader={flexibleHeader}
+        />
+      )}
       {scrollable ? (
         <ScrollView style={styles.container}>{children}</ScrollView>
       ) : (
         <View style={styles.container}>{children}</View>
       )}
+      {footer}
     </SafeAreaView>
   );
 };
