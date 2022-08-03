@@ -30,6 +30,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
+  HistoryStackParamList,
   OverviewStackParamList,
   RootStackParamList,
   RootTabParamList,
@@ -48,6 +49,8 @@ import PayInstructionScreen from "../screens/PayInstruction";
 import SellCryptoScreen from "../screens/SellCrypto";
 import SelectAccountScreen from "../screens/SelectAccount";
 import CompleteScreen from "../screens/Complete";
+import HistoryScreen from "../screens/History";
+import TransactionDetailScreen from "../screens/TransactionDetail";
 
 export default function Navigation({
   colorScheme,
@@ -114,36 +117,24 @@ const OverviewNavigator = () => (
   </OverviewStackNavigator.Navigator>
 );
 
-const TradeStackNavigator = createNativeStackNavigator<TradeStackParamList>();
+const HistoryStackNavigator =
+  createNativeStackNavigator<HistoryStackParamList>();
 
-const TradeTab = createMaterialTopTabNavigator();
-
-const TradeTabNavigator = () => (
-  <TradeTab.Navigator
+const HistoryNavigator = () => (
+  <HistoryStackNavigator.Navigator
     screenOptions={{
-      tabBarItemStyle: {
-        // alignItems: "flex-start",
-      },
-      tabBarStyle: {
-        justifyContent: "flex-start",
-      },
+      header: () => null,
     }}
   >
-    <TradeTab.Screen
-      name="BuyCrypto"
-      options={{
-        title: "Buy crypto",
-      }}
-      component={TradeScreen}
+    <HistoryStackNavigator.Screen
+      name="HistoryHome"
+      component={HistoryScreen}
     />
-    <TradeTab.Screen
-      name="SellCrypto"
-      options={{
-        title: "Sell crypto",
-      }}
-      component={TradeScreen}
+    <HistoryStackNavigator.Screen
+      name="TransactionDetail"
+      component={TransactionDetailScreen}
     />
-  </TradeTab.Navigator>
+  </HistoryStackNavigator.Navigator>
 );
 
 // const TradeNavigator = () => (
@@ -222,7 +213,7 @@ function BottomTabNavigator() {
           tabBarInactiveTintColor: colors.navigationIcon,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Portfolio"
         component={TabTwoScreen}
         options={{
@@ -238,10 +229,10 @@ function BottomTabNavigator() {
           tabBarActiveTintColor: colors.navigationIconActive,
           tabBarInactiveTintColor: colors.navigationIcon,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="History"
-        component={TabTwoScreen}
+        component={HistoryNavigator}
         options={{
           title: "History",
           tabBarIcon: ({ focused }) => (

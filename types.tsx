@@ -39,6 +39,11 @@ export type OverviewStackParamList = {
   ManageAsset: undefined;
 };
 
+export type HistoryStackParamList = {
+  HistoryHome: undefined;
+  TransactionDetail: undefined;
+};
+
 export type TradeStackParamList = {
   Trade: undefined;
 };
@@ -49,6 +54,10 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 export type OverviewStackScreenProps<
   Screen extends keyof OverviewStackParamList
 > = NativeStackScreenProps<OverviewStackParamList, Screen>;
+
+export type HistoryStackScreenProps<
+  Screen extends keyof HistoryStackParamList
+> = NativeStackScreenProps<HistoryStackParamList, Screen>;
 
 export type TradeStackScreenProps<Screen extends keyof TradeStackParamList> =
   NativeStackScreenProps<TradeStackParamList, Screen>;
