@@ -16,7 +16,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
   const { params } = route;
 
   const navigateToPayInstruction = () => {
-    if (!params.sell) {
+    if (!params?.sell) {
       navigation.navigate("PayInstruction");
     } else {
       navigation.navigate("Complete");
@@ -35,19 +35,19 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             style={styles.footerButton}
           >
             <CustomText style={styles.footerButtonText}>
-              {!params.sell ? "BUY" : "SELL $20.54"}
+              {!params?.sell ? "BUY" : "SELL $20.54"}
             </CustomText>
           </TouchableOpacity>
         </View>
       }
     >
       <CustomText style={styles.title}>
-        You are {!params.sell ? "buying" : "selling"}
+        You are {!params?.sell ? "buying" : "selling"}
       </CustomText>
       <CustomText style={styles.token}>1200.22 DOGE</CustomText>
       <View style={styles.summaryItem}>
         <SummaryItem title="DOGE Price" value="$0.06" />
-        {!params.sell ? (
+        {!params?.sell ? (
           <>
             <SummaryItem
               title="Payment"
@@ -76,10 +76,17 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         )}
         <SummaryItem
           title="TOTAL"
-          value={!params.sell ? "GHS 100" : "$20.57"}
+          value={!params?.sell ? "GHS 100" : "$20.57"}
           valueBold
           noDivider
         />
+        <View style={styles.note}>
+          <Flag2 size={RFValue(24)} color="#3861FB" />
+          <CustomText style={styles.noteText}>
+            Kindly follow all the outlined steps in the next page accordingly to
+            complete your purchase
+          </CustomText>
+        </View>
       </View>
     </ScreenLayout>
   );

@@ -30,6 +30,11 @@ export type RootStackParamList = {
   };
   SelectAccount: undefined;
   Complete: undefined;
+  SendCrypto: undefined;
+  SendToken: undefined;
+  SendTokenSummary: undefined;
+  ReceiveCrypto: undefined;
+  ReceiveCryptoSummary: undefined;
 };
 
 export type OverviewStackParamList = {

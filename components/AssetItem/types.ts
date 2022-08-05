@@ -6,4 +6,5 @@ export interface AssetItemProps {
   amountCrypto: number;
   onPress?: () => void;
   hideTrend?: boolean;
+  showArrow?: boolean;
 }

@@ -15,9 +15,13 @@ const styles = StyleSheet.create({
   iconContainer: {
     marginRight: RFValue(8),
   },
+  rightContainer: {
+    marginLeft: RFValue(8),
+  },
   input: {
     color: "#979797",
     fontSize: RFValue(15),
+    flex: 1,
   },
 });
 

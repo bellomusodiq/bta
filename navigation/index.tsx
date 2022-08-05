@@ -51,6 +51,11 @@ import SelectAccountScreen from "../screens/SelectAccount";
 import CompleteScreen from "../screens/Complete";
 import HistoryScreen from "../screens/History";
 import TransactionDetailScreen from "../screens/TransactionDetail";
+import SendCryptoScreen from "../screens/SendCrypto";
+import SendTokenScreen from "../screens/SendToken";
+import SendTokenSummaryScreen from "../screens/SendTokenSummary";
+import ReceiveCryptoScreen from "../screens/ReceiveCrypto";
+import ReceiveCryptoSummaryScreen from "../screens/ReceiveCryptoSummary";
 
 export default function Navigation({
   colorScheme,
@@ -96,6 +101,17 @@ function RootNavigator() {
       <Stack.Screen name="Complete" component={CompleteScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
+      <Stack.Screen name="SendCrypto" component={SendCryptoScreen} />
+      <Stack.Screen name="SendToken" component={SendTokenScreen} />
+      <Stack.Screen
+        name="SendTokenSummary"
+        component={SendTokenSummaryScreen}
+      />
+      <Stack.Screen name="ReceiveCrypto" component={ReceiveCryptoScreen} />
+      <Stack.Screen
+        name="ReceiveCryptoSummary"
+        component={ReceiveCryptoSummaryScreen}
+      />
     </Stack.Navigator>
   );
 }

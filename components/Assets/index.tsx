@@ -10,40 +10,7 @@ import BitcoinImage from "../../assets/images/BTC.png";
 import LTCImage from "../../assets/images/LTC.png";
 import TronImage from "../../assets/images/TRX.png";
 import { useNavigation } from "@react-navigation/native";
-
-const AssetItem: React.FC<AssetItemProps> = ({
-  title,
-  amountCrypto,
-  amountUSD,
-  image,
-  currency,
-  onPress,
-}) => (
-  <>
-    <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
-      <Image
-        source={image}
-        style={styles.assetImage}
-        resizeMode="contain"
-        resizeMethod="scale"
-      />
-      <View style={styles.nameContainer}>
-        <CustomText style={styles.assetTitle}>{title}</CustomText>
-        <CustomText style={styles.assetAbbr}>{currency}</CustomText>
-      </View>
-      <View style={styles.trendContainer}>
-        <UpTrendIcon />
-      </View>
-      <View style={styles.valueContainer}>
-        <CustomText style={styles.amount}>${amountUSD}</CustomText>
-        <CustomText
-          style={styles.amountValue}
-        >{`${amountCrypto}${currency}`}</CustomText>
-      </View>
-    </TouchableOpacity>
-    <View style={styles.divider} />
-  </>
-);
+import AssetItem from "../AssetItem";
 
 const Assets: React.FC = () => {
   const navigation = useNavigation();
