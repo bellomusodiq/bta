@@ -86,12 +86,12 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Change email",
-            onPress: () => {},
+            onPress: () => navigation.navigate("ChangeEmail"),
             icon: <DirectboxReceive size={24} color="#3861FB" variant="Bold" />,
           },
           {
             title: "Change password",
-            onPress: () => {},
+            onPress: () => navigation.navigate("ChangePassword"),
             icon: <PasswordCheck size={24} color="#3861FB" variant="Bold" />,
           },
           {

@@ -58,6 +58,8 @@ import ReceiveCryptoScreen from "../screens/ReceiveCrypto";
 import ReceiveCryptoSummaryScreen from "../screens/ReceiveCryptoSummary";
 import ProfileScreen from "../screens/Profile";
 import AccountLimitsScreen from "../screens/AccountLimits";
+import ChangeEmailScreen from "../screens/ChangeEmail";
+import ChangePasswordScreen from "../screens/ChangePassword";
 
 export default function Navigation({
   colorScheme,
@@ -115,6 +117,8 @@ function RootNavigator() {
         component={ReceiveCryptoSummaryScreen}
       />
       <Stack.Screen name="AccountLimits" component={AccountLimitsScreen} />
+      <Stack.Screen name="ChangeEmail" component={ChangeEmailScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
     </Stack.Navigator>
   );
 }
