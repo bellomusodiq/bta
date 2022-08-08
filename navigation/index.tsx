@@ -56,6 +56,8 @@ import SendTokenScreen from "../screens/SendToken";
 import SendTokenSummaryScreen from "../screens/SendTokenSummary";
 import ReceiveCryptoScreen from "../screens/ReceiveCrypto";
 import ReceiveCryptoSummaryScreen from "../screens/ReceiveCryptoSummary";
+import ProfileScreen from "../screens/Profile";
+import AccountLimitsScreen from "../screens/AccountLimits";
 
 export default function Navigation({
   colorScheme,
@@ -112,6 +114,7 @@ function RootNavigator() {
         name="ReceiveCryptoSummary"
         component={ReceiveCryptoSummaryScreen}
       />
+      <Stack.Screen name="AccountLimits" component={AccountLimitsScreen} />
     </Stack.Navigator>
   );
 }
@@ -265,7 +268,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Profile"
-        component={TabTwoScreen}
+        component={ProfileScreen}
         options={{
           title: "Profile",
           tabBarIcon: ({ focused }) => (

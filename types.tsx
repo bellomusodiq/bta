@@ -35,6 +35,13 @@ export type RootStackParamList = {
   SendTokenSummary: undefined;
   ReceiveCrypto: undefined;
   ReceiveCryptoSummary: undefined;
+  AccountLimits: undefined;
+  ChangeEmail: undefined;
+  ChangePassword: undefined;
+  PaymentAccounts: undefined;
+  AddMobileMoney: undefined;
+  AddBankAccount: undefined;
+  FAQs: undefined;
 };
 
 export type OverviewStackParamList = {
