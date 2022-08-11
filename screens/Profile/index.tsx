@@ -76,7 +76,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Payment accounts",
-            onPress: () => {},
+            onPress: () => navigation.navigate("PaymentAccounts"),
             icon: <Bank size={24} color="#3861FB" variant="Bulk" />,
           },
         ]}
@@ -116,7 +116,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           },
           {
             title: "Frequently asked questions",
-            onPress: () => {},
+            onPress: () => navigation.navigate("FAQs"),
             icon: <MessageQuestion size={24} color="#3861FB" variant="Bold" />,
           },
         ]}
@@ -140,7 +140,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
       <ProfileItems
         data={[
           {
-            title: "Terms of use",
+            title: "Deactivate account",
             onPress: () => {},
             icon: <UserRemove size={24} color="#3861FB" variant="Bulk" />,
           },

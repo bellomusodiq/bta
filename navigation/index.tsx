@@ -60,6 +60,10 @@ import ProfileScreen from "../screens/Profile";
 import AccountLimitsScreen from "../screens/AccountLimits";
 import ChangeEmailScreen from "../screens/ChangeEmail";
 import ChangePasswordScreen from "../screens/ChangePassword";
+import PaymentAccountsScreen from "../screens/PaymentAccounts";
+import AddMobileMoneyScreen from "../screens/AddMobileMoney";
+import AddBankAccountScreen from "../screens/AddBankAccount";
+import FAQsScreen from "../screens/FAQ";
 
 export default function Navigation({
   colorScheme,
@@ -119,6 +123,10 @@ function RootNavigator() {
       <Stack.Screen name="AccountLimits" component={AccountLimitsScreen} />
       <Stack.Screen name="ChangeEmail" component={ChangeEmailScreen} />
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+      <Stack.Screen name="PaymentAccounts" component={PaymentAccountsScreen} />
+      <Stack.Screen name="AddMobileMoney" component={AddMobileMoneyScreen} />
+      <Stack.Screen name="AddBankAccount" component={AddBankAccountScreen} />
+      <Stack.Screen name="FAQs" component={FAQsScreen} />
     </Stack.Navigator>
   );
 }
