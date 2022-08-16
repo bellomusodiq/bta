@@ -5,7 +5,6 @@ import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
-import DatePicker from "react-native-date-picker";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
@@ -16,25 +15,8 @@ const KYCStep2Screen: React.FC<RootStackScreenProps<"KYCStep2">> = () => {
   const [ghanaCard, setGhanaCard] = useState<Date>(new Date());
   const navigation = useNavigation();
 
-  const onChange = (event, selectedDate) => {
-    setPicker(null);
-    setDob(selectedDate);
-  };
-
   return (
     <ScreenLayout scrollable title="Step 2" showHeader showShadow>
-      <DatePicker
-        modal
-        open={Boolean(picker)}
-        date={dob}
-        onConfirm={(date) => {
-          setPicker(null);
-          setDob(date);
-        }}
-        onCancel={() => {
-          setPicker(null);
-        }}
-      />
       <View style={styles.progressContainer}>
         <CustomText style={styles.kycText}>KYC progress</CustomText>
         <View style={styles.progress}>
