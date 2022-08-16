@@ -7,11 +7,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: height(0.015),
+    paddingTop: height(0.035),
   },
   welcomeText: {
     fontSize: RFValue(20),
+    lineHeight: RFValue(24),
+    fontWeight: "600",
     color: "#333333",
+    fontFamily: "Inter_600SemiBold"
   },
   grayText: {
     color: "#979797",

@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderRadius: RFValue(45),
-    padding: RFValue(16),
+    padding: RFValue(12.5),
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#F0F0F0",
-    width: "45%",
+    width: "48%",
     backgroundColor: "white",
     flexDirection: "row",
   },

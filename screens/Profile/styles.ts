@@ -58,6 +58,28 @@ const styles = StyleSheet.create({
     width: "22%",
     marginBottom: RFValue(30),
   },
+  note: {
+    flexDirection: "row",
+    marginBottom: RFValue(25),
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: "#FFF9E9",
+  },
+  noteTextContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  noteText: {
+    color: "#EBB101",
+  },
+  noteIconContainer: {
+    marginTop: 10,
+  },
+  noteTextTitle: {
+    color: "#EBB101",
+    fontFamily: "Inter_700Bold",
+    marginBottom: 5
+  },
 });
 
 export default styles;

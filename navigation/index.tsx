@@ -64,6 +64,10 @@ import PaymentAccountsScreen from "../screens/PaymentAccounts";
 import AddMobileMoneyScreen from "../screens/AddMobileMoney";
 import AddBankAccountScreen from "../screens/AddBankAccount";
 import FAQsScreen from "../screens/FAQ";
+import KYCBeginScreen from "../screens/KYCBegin";
+import KYCInfoScreen from "../screens/KYCInfo";
+import KYCStep1Screen from "../screens/KYCStep1";
+import KYCStep2Screen from "../screens/KYCStep2";
 
 export default function Navigation({
   colorScheme,
@@ -127,6 +131,10 @@ function RootNavigator() {
       <Stack.Screen name="AddMobileMoney" component={AddMobileMoneyScreen} />
       <Stack.Screen name="AddBankAccount" component={AddBankAccountScreen} />
       <Stack.Screen name="FAQs" component={FAQsScreen} />
+      <Stack.Screen name="KYCBegin" component={KYCBeginScreen} />
+      <Stack.Screen name="KYCInfo" component={KYCInfoScreen} />
+      <Stack.Screen name="KYCStep1" component={KYCStep1Screen} />
+      <Stack.Screen name="KYCStep2" component={KYCStep2Screen} />
     </Stack.Navigator>
   );
 }

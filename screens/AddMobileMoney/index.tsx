@@ -53,7 +53,7 @@ const AddMobileMoneyScreen: React.FC<
               },
             ]}
           >
-            <CustomText style={styles.footerButtonText}>SAVE</CustomText>
+            <CustomText style={styles.footerButtonText}>BEGIN</CustomText>
           </TouchableOpacity>
         </View>
       }

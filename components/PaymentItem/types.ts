@@ -1,7 +1,7 @@
 export interface PaymentItemProps {
   title: string;
   icon: JSX.Element;
-  description: string;
+  description?: string;
   onPress?: () => void;
   showArror?: boolean;
   active?: boolean;

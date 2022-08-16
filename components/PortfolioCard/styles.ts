@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     borderRadius: RFValue(8),
-    marginTop: RFValue(10),
+    marginTop: RFValue(23),
   },
   textContainer: {},
   title: {

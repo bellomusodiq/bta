@@ -12,6 +12,7 @@ import {
   DirectboxReceive,
   Edit2,
   FingerScan,
+  MedalStar,
   MessageQuestion,
   Notification,
   PasswordCheck,
@@ -26,6 +27,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import ProfileItems from "../../components/ProfileItems";
 import BitAfrikaImage from "../../assets/images/bitafrika.png";
 import { useNavigation } from "@react-navigation/native";
+import SendIcon from "../../components/icons/send-icon";
 
 const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
   const navigation = useNavigation();
@@ -43,6 +45,22 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.divider} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("KYCBegin")}
+        style={styles.note}
+      >
+        <MedalStar size={RFValue(24)} color="#3861FB" variant="Linear" />
+        <View style={styles.noteTextContainer}>
+          <CustomText style={styles.noteTextTitle}>Complete KYC</CustomText>
+          <CustomText style={styles.noteText}>
+            Verify your account to be able to able to buy, sell, send and
+            receive crypto without limits.
+          </CustomText>
+        </View>
+        <View style={styles.noteIconContainer}>
+          <SendIcon />
+        </View>
+      </TouchableOpacity>
       <ProfileItems
         data={[
           {
@@ -136,6 +154,16 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           },
         ]}
         title="Legal"
+      />
+      <ProfileItems
+        data={[
+          {
+            title: "Access logs",
+            onPress: () => {},
+            icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
+          },
+        ]}
+        title="Logs"
       />
       <ProfileItems
         data={[

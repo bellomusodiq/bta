@@ -42,6 +42,15 @@ export type RootStackParamList = {
   AddMobileMoney: undefined;
   AddBankAccount: undefined;
   FAQs: undefined;
+  KYCBegin: undefined;
+  KYCInfo: undefined;
+  KYCStep1: undefined;
+  KYCStep2: undefined;
+  KYCStep3: undefined;
+  KYCSelfie: undefined;
+  KYCID: undefined;
+  KYCInformationReview: undefined;
+
 };
 
 export type OverviewStackParamList = {

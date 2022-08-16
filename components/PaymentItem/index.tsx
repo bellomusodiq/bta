@@ -24,17 +24,26 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
     onPress={onPress}
   >
     <View style={styles.iconContainer}>{icon}</View>
-    <View style={styles.textContainer}>
+    <View
+      style={[
+        styles.textContainer,
+        {
+          justifyContent: !description ? "center" : "flex-start",
+        },
+      ]}
+    >
       <CustomText style={styles.title} numberOfLines={1} lineBreakMode="tail">
         {title}
       </CustomText>
-      <CustomText
-        numberOfLines={1}
-        lineBreakMode="tail"
-        style={styles.description}
-      >
-        {description}
-      </CustomText>
+      {description && (
+        <CustomText
+          numberOfLines={1}
+          lineBreakMode="tail"
+          style={styles.description}
+        >
+          {description}
+        </CustomText>
+      )}
     </View>
     <View style={styles.arrowContainer}>
       {showArror && <ArrowRight2 size={RFValue(18)} color="#000" />}

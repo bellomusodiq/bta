@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     lineHeight: RFValue(20),
     textAlign: "right",
+    fontFamily: "Inter_600SemiBold",
+
   },
   amountValue: {
     fontSize: RFValue(14),
