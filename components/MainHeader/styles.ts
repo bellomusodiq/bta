@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     marginHorizontal: RFValue(2),
     textAlign: "center",
     fontSize: RFValue(18),
+    fontFamily: "Inter_600SemiBold",
   },
   shadow: {
     height: 2,

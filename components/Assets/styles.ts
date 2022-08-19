@@ -9,15 +9,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: RFValue(10),
+    // marginBottom: RFValue(10),
   },
   titleContainer: {
     alignItems: "stretch",
   },
   title: {
-    fontSize: RFValue(20),
+    fontSize: RFValue(18),
     lineHeight: RFValue(24),
     color: "#333333",
+    fontFamily: "Inter_500Medium",
   },
   underline: {
     height: 2,

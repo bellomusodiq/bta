@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F0F0F0",
     borderRadius: RFValue(134),
-    paddingVertical: RFValue(12),
+    paddingVertical: RFValue(18),
     paddingHorizontal: RFValue(25),
   },
   iconContainer: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "#979797",
-    fontSize: RFValue(15),
+    fontSize: RFValue(16),
     flex: 1,
   },
 });

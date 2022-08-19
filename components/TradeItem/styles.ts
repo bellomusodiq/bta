@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   priceTitle: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
   },
   price: {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 0.2,
   },
   rateTitle: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
   },
   rate: {

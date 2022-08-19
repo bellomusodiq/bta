@@ -30,7 +30,7 @@ const SendTokenSummaryScreen: React.FC<
   const navigation = useNavigation();
   const onContinue = () => {
     // @ts-ignore-next-line
-    navigation.replace("Root");
+    navigation.navigate("Complete");
   };
   return (
     <ScreenLayout

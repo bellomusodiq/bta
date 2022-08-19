@@ -4,7 +4,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F1F4FF",
-    padding: RFValue(16),
+    paddingHorizontal: RFValue(16),
+    paddingVertical: RFValue(10),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -14,19 +15,20 @@ const styles = StyleSheet.create({
   textContainer: {},
   title: {
     color: "black",
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
+    fontFamily: "Inter_500Medium"
   },
   balance: {
     color: "black",
     fontSize: RFValue(32),
     lineHeight: RFValue(40),
     fontFamily: "Inter_700Bold",
-    marginTop: RFValue(8),
+    marginTop: RFValue(4),
   },
   eyeIcon: {
-    height: "40%",
-    marginTop: RFValue(20),
+    height: "47%",
+    marginTop: RFValue(16),
   },
 });
 

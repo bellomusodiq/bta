@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#3861FB",
     fontSize: RFValue(14),
+    fontFamily: "Inter_500Medium",
   },
 });
 

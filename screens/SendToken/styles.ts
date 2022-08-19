@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     marginTop: RFValue(20),
   },
   pasteText: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(11),
     color: "#3861FB",
     fontFamily: "Inter_700Bold",
   },
@@ -18,13 +18,14 @@ const styles = StyleSheet.create({
   tablet: {
     marginLeft: 10,
     backgroundColor: "#F1F4FF",
-    paddingVertical: 2,
+    paddingVertical: 4,
     borderRadius: 141,
     paddingHorizontal: 12,
   },
   tabletText: {
     color: "#3861FB",
     fontFamily: "Inter_700Bold",
+    fontSize: RFValue(11.5),
   },
   availableText: {
     fontSize: RFValue(14),
@@ -55,6 +56,9 @@ const styles = StyleSheet.create({
   footerButtonText: {
     color: "white",
     fontSize: RFValue(16),
+  },
+  maxText: {
+    fontSize: RFValue(11),
   },
 });
 

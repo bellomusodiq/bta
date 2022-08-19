@@ -68,6 +68,8 @@ import KYCBeginScreen from "../screens/KYCBegin";
 import KYCInfoScreen from "../screens/KYCInfo";
 import KYCStep1Screen from "../screens/KYCStep1";
 import KYCStep2Screen from "../screens/KYCStep2";
+import KYCStep3Screen from "../screens/KYCStep3";
+import KYCInformationScreen from "../screens/KYCInfomationReview";
 
 export default function Navigation({
   colorScheme,
@@ -135,6 +137,11 @@ function RootNavigator() {
       <Stack.Screen name="KYCInfo" component={KYCInfoScreen} />
       <Stack.Screen name="KYCStep1" component={KYCStep1Screen} />
       <Stack.Screen name="KYCStep2" component={KYCStep2Screen} />
+      <Stack.Screen name="KYCStep3" component={KYCStep3Screen} />
+      <Stack.Screen
+        name="KYCInformationReview"
+        component={KYCInformationScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -199,8 +206,15 @@ function BottomTabNavigator() {
         // tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarLabelStyle: {
           fontSize: RFValue(11),
+          fontFamily: "Inter_600SemiBold",
         },
         header: () => null,
+        tabBarStyle: {
+          paddingTop: 18,
+          // paddingBottom: 10,
+          height: 90,
+          paddingHorizontal: 20,
+        },
       }}
     >
       <BottomTab.Screen
@@ -239,7 +253,7 @@ function BottomTabNavigator() {
         name="Trade"
         component={TradeScreen}
         options={{
-          title: "Trade",
+          title: "Buy/Sell",
           tabBarIcon: ({ focused }) => (
             <ArrowSwapHorizontal
               size={RFValue(20)}

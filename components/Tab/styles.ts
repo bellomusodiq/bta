@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   },
   tabItemTitle: {
     marginBottom: RFValue(10),
-    fontSize: RFValue(18),
-    lineHeight: RFValue(22),
+    fontSize: RFValue(15),
+    lineHeight: RFValue(18),
     fontFamily: "Inter_600SemiBold",
   },
   indicator: {

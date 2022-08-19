@@ -13,7 +13,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
   const navigation = useNavigation();
   const headerRight = (
     <TouchableOpacity>
-      <Scan size={RFValue(24)} color="#000" />
+      <Scan size={RFValue(20)} color="#000" />
     </TouchableOpacity>
   );
 
@@ -60,7 +60,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
           placeholder="Amount in USD"
           rightComponent={
             <View style={styles.amountRight}>
-              <CustomText>MAX</CustomText>
+              <CustomText style={styles.maxText}>MAX</CustomText>
               <View style={styles.tablet}>
                 <CustomText style={styles.tabletText}>BTC</CustomText>
               </View>

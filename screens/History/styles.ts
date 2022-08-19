@@ -5,8 +5,8 @@ import { height, width } from "../../consts/dimenentions";
 const styles = StyleSheet.create({
   header: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: RFValue(32),
-    lineHeight: RFValue(40),
+    fontSize: RFValue(24),
+    lineHeight: RFValue(32),
     marginTop: RFValue(15),
   },
   text: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: 5,
     marginBottom: 15,
-    borderColor: "#979797",
+    borderColor: "#F0F0F0",
   },
   statusItemText: {
     color: "black",
@@ -132,15 +132,7 @@ const styles = StyleSheet.create({
   },
   modalFooter: {
     backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: -1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
 
-    elevation: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: width(0.05),

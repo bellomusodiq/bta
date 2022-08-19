@@ -25,7 +25,7 @@ const data = [
     amountUSD: 20.44,
     amountCrypto: 0.007,
     currency: "LTC",
-    title: "LiteCoin",
+    title: "Litecoin",
   },
   {
     image: TronImage,

@@ -58,7 +58,7 @@ const MarketStats: React.FC = () => {
           amount="$92.5bn"
         />
         <MarketStatsItem
-          icon={<StatusUp size={RFValue(24)} color="#3861FB" variant="Bulk" />}
+          icon={<StatusUp size={RFValue(24)} color="#3861FB" variant="Bold" />}
           title="All time high"
           amount="$0.23"
         />

@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
-    width: width(0.9) - RFValue(24),
-    alignSelf: "flex-end",
+    width: width(0.75),
+    alignSelf: "center",
   },
 });
 

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingTop: height(0.035),
   },
   welcomeText: {
-    fontSize: RFValue(20),
+    fontSize: RFValue(19),
     lineHeight: RFValue(24),
     fontWeight: "600",
     color: "#333333",

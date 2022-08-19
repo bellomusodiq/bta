@@ -101,7 +101,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
             <CustomText style={styles.percentageText}>75%</CustomText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.percentage}>
-            <CustomText style={styles.percentageText}>100%</CustomText>
+            <CustomText style={styles.percentageText}>MAX</CustomText>
           </TouchableOpacity>
         </View>
       </View>

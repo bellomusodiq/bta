@@ -8,15 +8,58 @@ import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const KYCStep2Screen: React.FC<RootStackScreenProps<"KYCStep2">> = () => {
   const [picker, setPicker] = useState<string | null>();
-  const [dob, setDob] = useState<Date>(new Date());
-  const [ghanaCard, setGhanaCard] = useState<Date>(new Date());
+  const [dob, setDob] = useState<Date>();
+  const [ghanaCard, setGhanaCard] = useState<Date>();
   const navigation = useNavigation();
 
+  const handleConfirm = (date: Date) => {
+    if (picker === "dob") {
+      setDob(date);
+    } else {
+      setGhanaCard(date);
+    }
+    setPicker(null);
+  };
+
+  const hideDatePicker = () => {
+    setPicker(null);
+  };
+
+  const disabled = Boolean(dob || ghanaCard);
+
   return (
-    <ScreenLayout scrollable title="Step 2" showHeader showShadow>
+    <ScreenLayout
+      scrollable
+      title="Step 2"
+      showHeader
+      showShadow
+      footer={
+        <View style={styles.footer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("KYCStep3")}
+            disabled={disabled}
+            style={[
+              styles.footerButton,
+              {
+                backgroundColor: !disabled ? "#3861FB" : "#979797",
+              },
+            ]}
+          >
+            <CustomText style={styles.footerButtonText}>SAVE</CustomText>
+          </TouchableOpacity>
+        </View>
+      }
+    >
+      <DateTimePickerModal
+        isVisible={Boolean(picker)}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
       <View style={styles.progressContainer}>
         <CustomText style={styles.kycText}>KYC progress</CustomText>
         <View style={styles.progress}>
@@ -48,10 +91,23 @@ const KYCStep2Screen: React.FC<RootStackScreenProps<"KYCStep2">> = () => {
       <View style={styles.inputContainer}>
         <View style={styles.datePickerContainer}>
           <CustomText style={styles.datePickerText}>
-            Set date of birth
+            {dob?.toDateString() || "Set date of birth"}
           </CustomText>
           <TouchableOpacity
             onPress={() => setPicker("dob")}
+            style={styles.datePicker}
+          >
+            <Calendar size={RFValue(20)} color="#292D32" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.datePickerContainer}>
+          <CustomText style={styles.datePickerText}>
+            {ghanaCard?.toDateString() || "Ghana card expiry date"}
+          </CustomText>
+          <TouchableOpacity
+            onPress={() => setPicker("ghanaCard")}
             style={styles.datePicker}
           >
             <Calendar size={RFValue(20)} color="#292D32" />

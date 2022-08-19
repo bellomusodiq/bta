@@ -28,7 +28,7 @@ const Assets: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
-          <CustomText style={styles.title}>Assets</CustomText>
+          <CustomText style={styles.title}>Portfolio</CustomText>
           <View style={styles.underline} />
         </View>
         <TouchableOpacity onPress={navigateToManageAsset}>
@@ -48,7 +48,7 @@ const Assets: React.FC = () => {
         amountUSD={20.44}
         amountCrypto={0.007}
         currency="LTC"
-        title="LiteCoin"
+        title="Litecoin"
         onPress={navigateToDetail}
       />
       <AssetItem

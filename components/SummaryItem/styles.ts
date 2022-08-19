@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RFValue(14),
     color: "#979797",
-    marginRight: 5
+    marginRight: 5,
   },
   value: {
     fontSize: RFValue(14),
@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
+    width: width(0.8),
+    alignSelf: "center"
   },
   button: {
     borderWidth: 1,

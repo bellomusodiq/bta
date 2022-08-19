@@ -53,34 +53,63 @@ const styles = StyleSheet.create({
     color: "#000000",
     marginBottom: RFValue(16),
   },
-  subTitle: {
-    color: "#979797",
-    fontSize: RFValue(14),
+  title2: {
+    fontSize: RFValue(16),
     lineHeight: RFValue(24),
-    marginBottom: RFValue(32),
-    letterSpacing: 0.01,
-  },
-  inputContainer: {
+    color: "#979797",
     marginBottom: RFValue(16),
   },
-  datePickerContainer: {
-    backgroundColor: "#FBFBFB",
+  subTitle: {
+    fontSize: RFValue(14),
+    lineHeight: RFValue(24),
+    color: "#979797",
+    marginBottom: RFValue(16),
+  },
+  button: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "center",
+    padding: 16,
     borderWidth: 1,
     borderColor: "#F0F0F0",
-    borderRadius: RFValue(134),
-    paddingVertical: RFValue(12),
-    paddingHorizontal: RFValue(25),
+    borderRadius: 130,
+    marginBottom: RFValue(32),
   },
-  datePickerText: {
-    color: "#979797",
-    fontSize: RFValue(15),
+  buttonText: {
+    marginLeft: 8,
+    fontSize: RFValue(16),
+  },
+  buttonText2: {
+    marginLeft: 8,
+    fontSize: RFValue(16),
+    color: "#3861FB",
+  },
+  previewContainer: {
+    flexDirection: "row",
+    padding: 16,
+    backgroundColor: "#FBFBFB",
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderRadius: 8,
+    marginBottom: RFValue(16),
+  },
+  textContainer: {
     flex: 1,
+    marginHorizontal: 16,
   },
-  datePicker: {
-    marginLeft: 10,
+  remove: {
+    marginBottom: RFValue(24),
+    color: "#FF5C5C",
+    fontSize: RFValue(14),
+  },
+  previewTitle: {
+    fontSize: RFValue(14),
+    lineHeight: RFValue(24),
+  },
+  previewText: {
+    fontSize: RFValue(12),
+    lineHeight: RFValue(18),
+    color: "#979797",
   },
   footer: {
     backgroundColor: "white",

@@ -11,19 +11,7 @@ import FailedImage from "../../assets/images/failed.png";
 const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = () => {
   const navigation = useNavigation();
   return (
-    <ScreenLayout
-      title=""
-      footer={
-        <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Root")}
-            style={styles.footerButton}
-          >
-            <CustomText style={styles.footerButtonText}>CONTINUE</CustomText>
-          </TouchableOpacity>
-        </View>
-      }
-    >
+    <ScreenLayout title="">
       <View style={styles.container}>
         <Image
           source={SuccessImage}
@@ -39,6 +27,12 @@ const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = () => {
         </CustomText>
         <TouchableOpacity style={styles.button}>
           <CustomText style={styles.buttonText}>View transaction</CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.replace("Root")}
+          style={[styles.button, { marginTop: 20 }]}
+        >
+          <CustomText style={styles.buttonText}>Go to homepage</CustomText>
         </TouchableOpacity>
       </View>
     </ScreenLayout>

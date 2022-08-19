@@ -80,13 +80,13 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
           valueBold
           noDivider
         />
-        <View style={styles.note}>
-          <Flag2 size={RFValue(24)} color="#3861FB" />
-          <CustomText style={styles.noteText}>
-            Kindly follow all the outlined steps in the next page accordingly to
-            complete your purchase
-          </CustomText>
-        </View>
+      </View>
+      <View style={styles.note}>
+        <Flag2 size={RFValue(24)} color="#3861FB" />
+        <CustomText style={styles.noteText}>
+          Kindly follow all the outlined steps in the next page accordingly to
+          complete your purchase
+        </CustomText>
       </View>
     </ScreenLayout>
   );
