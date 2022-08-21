@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, TextInputProps, View } from "react-native";
+import { TextInput, TextInputProps, View, ViewStyle } from "react-native";
 import styles from "./styles";
 
 const CustomInput: React.FC<
@@ -7,9 +7,10 @@ const CustomInput: React.FC<
     icon?: JSX.Element;
     rightComponent?: JSX.Element;
     inputColor?: string;
+    style?: ViewStyle;
   } & TextInputProps
-> = ({ icon, rightComponent, inputColor, ...props }) => (
-  <View style={styles.container}>
+> = ({ icon, rightComponent, inputColor, style, ...props }) => (
+  <View style={[styles.container, style]}>
     {icon && <View style={styles.iconContainer}>{icon}</View>}
     <TextInput
       {...props}

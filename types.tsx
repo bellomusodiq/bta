@@ -50,7 +50,14 @@ export type RootStackParamList = {
   KYCSelfie: undefined;
   KYCID: undefined;
   KYCInformationReview: undefined;
-
+  SetPin: {
+    confirm?: boolean;
+  };
+  SplashScreen: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+  WelcomeBack: undefined;
+  VerifyEmail: undefined;
 };
 
 export type OverviewStackParamList = {

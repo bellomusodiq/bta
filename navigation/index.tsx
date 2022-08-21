@@ -70,6 +70,12 @@ import KYCStep1Screen from "../screens/KYCStep1";
 import KYCStep2Screen from "../screens/KYCStep2";
 import KYCStep3Screen from "../screens/KYCStep3";
 import KYCInformationScreen from "../screens/KYCInfomationReview";
+import SplashScreen from "../screens/SplashScreen";
+import SignInScreen from "../screens/SignIn";
+import WelcomeBackScreen from "../screens/WelcomeBack";
+import SignUpScreen from "../screens/SignUp";
+import VerifyEmailScreen from "../screens/VerifyEmail";
+import SetPinScreen from "../screens/SetPin";
 
 export default function Navigation({
   colorScheme,
@@ -98,6 +104,7 @@ function RootNavigator() {
       screenOptions={{
         header: () => null,
       }}
+      initialRouteName="SplashScreen"
     >
       <Stack.Screen
         name="Root"
@@ -142,6 +149,12 @@ function RootNavigator() {
         name="KYCInformationReview"
         component={KYCInformationScreen}
       />
+      <Stack.Screen name="SetPin" component={SetPinScreen} />
+      <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="WelcomeBack" component={WelcomeBackScreen} />
+      <Stack.Screen name="VerifyEmail" component={VerifyEmailScreen} />
     </Stack.Navigator>
   );
 }
