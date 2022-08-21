@@ -18,6 +18,54 @@ import { RFValue } from "react-native-responsive-fontsize";
 import MarketStats from "../../components/MarketStats";
 import ReactNativeModal from "react-native-modal";
 import BuySellItem from "../../components/BuySellItem";
+import { LineChart } from "react-native-wagmi-charts";
+
+const data = [
+  {
+    timestamp: 1625945400000,
+    value: 33575.25,
+  },
+  {
+    timestamp: 1625946300000,
+    value: 33545.25,
+  },
+  {
+    timestamp: 1625947200000,
+    value: 33510.25,
+  },
+  {
+    timestamp: 1625948100000,
+    value: 33215.25,
+  },
+  {
+    timestamp: 1625948100000,
+    value: 33215.25,
+  },
+  {
+    timestamp: 1625949100000,
+    value: 33515.25,
+  },
+  {
+    timestamp: 1625958100000,
+    value: 33615.25,
+  },
+  {
+    timestamp: 1625968100000,
+    value: 33215.25,
+  },
+  {
+    timestamp: 1625948100000,
+    value: 33215.25,
+  },
+  {
+    timestamp: 1625948100000,
+    value: 33215.25,
+  },
+  {
+    timestamp: 1625948100000,
+    value: 33215.25,
+  },
+];
 
 const AssetDetailScreen: React.FC<
   OverviewStackScreenProps<"AssetDetail">
@@ -33,7 +81,12 @@ const AssetDetailScreen: React.FC<
         <CustomText style={styles.currentPriceTitle}>Current price</CustomText>
         <CustomText style={styles.currentPrice}>$20.55</CustomText>
       </View>
-      <TrendChart />
+      {/* <TrendChart /> */}
+      <LineChart.Provider data={data}>
+        <LineChart>
+          <LineChart.Path />
+        </LineChart>
+      </LineChart.Provider>
       <TrendFilter />
       <View style={styles.coinBalanceContainer}>
         <Image source={TronImage} style={styles.coinImage} />
