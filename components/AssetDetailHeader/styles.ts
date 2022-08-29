@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     paddingTop: RFValue(30),
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   left: {
     width: "5%",

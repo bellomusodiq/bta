@@ -34,16 +34,17 @@ const styles = StyleSheet.create({
   assetImage: {
     width: "10%",
     height: RFValue(40),
+    marginRight: 5,
   },
   nameContainer: {
-    width: "22%",
+    width: "50%",
   },
   trendContainer: {
-    width: "25%",
+    width: "20%",
     alignSelf: "center",
   },
   valueContainer: {
-    flex: 0.6,
+    flex: 0.9,
   },
   divider: {
     height: 1,
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     lineHeight: RFValue(20),
     fontFamily: "Inter_500Medium",
+    marginBottom: 8,
   },
   assetAbbr: {
     fontSize: RFValue(14),
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(20),
     textAlign: "right",
     fontFamily: "Inter_600SemiBold",
+    marginBottom: 8,
   },
   amountValue: {
     fontSize: RFValue(14),

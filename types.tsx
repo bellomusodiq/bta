@@ -19,7 +19,11 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  BuyCrypto: undefined;
+  BuyCrypto: {
+    payment?: {
+      title: string;
+    };
+  };
   Summary: {
     sell?: boolean;
   };
@@ -39,7 +43,9 @@ export type RootStackParamList = {
   ChangeEmail: undefined;
   ChangePassword: undefined;
   PaymentAccounts: undefined;
-  AddMobileMoney: undefined;
+  AddMobileMoney: {
+    from?: string;
+  };
   AddBankAccount: undefined;
   FAQs: undefined;
   KYCBegin: undefined;
@@ -58,6 +64,10 @@ export type RootStackParamList = {
   SignUp: undefined;
   WelcomeBack: undefined;
   VerifyEmail: undefined;
+  PaymentMethod: undefined;
+  AddPaymentMethod: undefined;
+  Portfolio: undefined;
+  AssetDetail: undefined;
 };
 
 export type OverviewStackParamList = {

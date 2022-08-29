@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import CustomText from "../CustomText";
+import CloseIcon from "../icons/close-icon";
 import styles from "./styles";
 
 const AssetDetailHeader: React.FC = () => {
@@ -16,7 +17,7 @@ const AssetDetailHeader: React.FC = () => {
         onPress={() => navigation.goBack()}
         style={styles.right}
       >
-        <CustomText style={styles.cross}>x</CustomText>
+        <CloseIcon />
       </TouchableOpacity>
     </View>
   );

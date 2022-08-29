@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +71,31 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(20),
     color: "#979797",
     textAlign: "right",
+  },
+  tab: {
+    borderColor: "#CCCCCC",
+    backgroundColor: "#FBFBFB",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    width: width(1),
+    marginLeft: -width(0.05),
+  },
+  tabItem: {
+    paddingTop: 16,
+    marginHorizontal: 24,
+  },
+  tabItemText: {
+    color: "#979797",
+    fontSize: RFValue(16),
+  },
+  tabDivider: {
+    height: 2,
+    backgroundColor: "#3861FB",
+    borderRadius: 1,
+    position: "relative",
+    marginTop: 16,
+    marginBottom: -1,
   },
 });
 

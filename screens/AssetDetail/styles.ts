@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: RFValue(30),
     paddingHorizontal: RFValue(15),
-    paddingBottom: RFValue(30)
+    paddingBottom: RFValue(30),
   },
   button: {
     borderWidth: 1,
@@ -151,6 +151,16 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     marginLeft: RFValue(10),
     lineHeight: RFValue(18),
+  },
+  footerText: {
+    textAlign: "center",
+    marginBottom: 50,
+    marginTop: 40,
+    fontSize: RFValue(12),
+    lineHeight: RFValue(18),
+    width: "80%",
+    alignSelf: "center",
+    color: "#979797",
   },
 });
 

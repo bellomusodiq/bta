@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { Eye, EyeSlash } from "iconsax-react-native";
 import React, { useMemo, useState } from "react";
 import { Image, TextInput, TouchableOpacity, View } from "react-native";
@@ -22,8 +22,9 @@ const countryData = [
 
 const AddMobileMoneyScreen: React.FC<
   RootStackScreenProps<"AddMobileMoney">
-> = () => {
+> = ({ route }) => {
   const navigation = useNavigation();
+  const { params } = route;
 
   const [accountName, setAccountName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -35,6 +36,15 @@ const AddMobileMoneyScreen: React.FC<
   const disabled =
     !accountName || !phoneNumber || !country || !provider || !password;
 
+  const onNavigate = () => {
+    if (params?.from) {
+      const popAction = StackActions.pop(2);
+      navigation.dispatch(popAction);
+    } else {
+      navigation.goBack();
+    }
+  };
+
   return (
     <ScreenLayout
       title="Add mobile money"
@@ -44,7 +54,7 @@ const AddMobileMoneyScreen: React.FC<
       footer={
         <View style={styles.footer}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={onNavigate}
             disabled={disabled}
             style={[
               styles.footerButton,
@@ -53,7 +63,7 @@ const AddMobileMoneyScreen: React.FC<
               },
             ]}
           >
-            <CustomText style={styles.footerButtonText}>BEGIN</CustomText>
+            <CustomText style={styles.footerButtonText}>ADD</CustomText>
           </TouchableOpacity>
         </View>
       }

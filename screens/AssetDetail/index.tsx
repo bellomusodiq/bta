@@ -139,14 +139,12 @@ const AssetDetailScreen: React.FC<
             </View>
             <View style={styles.balanceContainer}>
               <CustomText style={styles.balanceAmount}>$100.50</CustomText>
-              <CustomText style={styles.balanceCurrency}>
-                You have 1505TRX
-              </CustomText>
+              <CustomText style={styles.balanceCurrency}>1505TRX</CustomText>
             </View>
           </View>
           <BuySellItem type="buy" title="Tron" />
           <BuySellItem type="sell" title="Tron" />
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <TouchableOpacity style={styles.button}>
               <Scan size={RFValue(18)} color="#000" />
               <CustomText style={styles.buttonText}>Receive</CustomText>
@@ -155,7 +153,11 @@ const AssetDetailScreen: React.FC<
               <Send2 size={RFValue(18)} color="#000" />
               <CustomText style={styles.buttonText}>Send</CustomText>
             </TouchableOpacity>
-          </View>
+          </View> */}
+          <CustomText style={styles.footerText}>
+            Crypto market prices are highly volatile and so market prices are
+            quoted every 60 seconds
+          </CustomText>
         </View>
       </ReactNativeModal>
     </ScreenLayout>

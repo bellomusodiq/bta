@@ -27,6 +27,17 @@ const styles = StyleSheet.create({
   arrowContainer: {
     justifyContent: "center",
   },
+  unavailableContainer: {
+    alignSelf: "center",
+    backgroundColor: "#FFF9E9",
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 124
+  },
+  unavailable: {
+    fontSize: 12,
+    color: "#E4AC01",
+  },
 });
 
 export default styles;

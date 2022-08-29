@@ -17,6 +17,7 @@ import {
   ChartSquare,
   Clock,
   Element4,
+  ProfileCircle,
   User,
 } from "iconsax-react-native";
 import * as React from "react";
@@ -76,6 +77,9 @@ import WelcomeBackScreen from "../screens/WelcomeBack";
 import SignUpScreen from "../screens/SignUp";
 import VerifyEmailScreen from "../screens/VerifyEmail";
 import SetPinScreen from "../screens/SetPin";
+import PaymentMethodScreen from "../screens/PaymentMethod";
+import AddPaymentMethodScreen from "../screens/AddPaymentMethod";
+import PortfolioScreen from "../screens/Portfolio";
 
 export default function Navigation({
   colorScheme,
@@ -155,6 +159,13 @@ function RootNavigator() {
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="WelcomeBack" component={WelcomeBackScreen} />
       <Stack.Screen name="VerifyEmail" component={VerifyEmailScreen} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
+      <Stack.Screen
+        name="AddPaymentMethod"
+        component={AddPaymentMethodScreen}
+      />
+      <Stack.Screen name="Portfolio" component={PortfolioScreen} />
+      <Stack.Screen name="AssetDetail" component={AssetDetailScreen} />
     </Stack.Navigator>
   );
 }
@@ -165,10 +176,6 @@ const OverviewStackNavigator =
 const OverviewNavigator = () => (
   <OverviewStackNavigator.Navigator screenOptions={{ header: () => null }}>
     <OverviewStackNavigator.Screen name="Overview" component={OverviewScreen} />
-    <OverviewStackNavigator.Screen
-      name="AssetDetail"
-      component={AssetDetailScreen}
-    />
     <OverviewStackNavigator.Screen
       name="ManageAsset"
       component={ManageAssetScreen}
@@ -220,13 +227,15 @@ function BottomTabNavigator() {
         tabBarLabelStyle: {
           fontSize: RFValue(11),
           fontFamily: "Inter_600SemiBold",
+          marginBottom: 20,
         },
         header: () => null,
         tabBarStyle: {
-          paddingTop: 18,
-          // paddingBottom: 10,
-          height: 90,
+          paddingTop: 10,
+          height: 100,
           paddingHorizontal: 20,
+          justifyContent: "center",
+          alignItems: "center",
         },
       }}
     >
@@ -241,6 +250,7 @@ function BottomTabNavigator() {
               color={
                 focused ? colors.navigationIconActive : colors.navigationIcon
               }
+              variant="Bold"
             />
           ),
           headerRight: () => (
@@ -273,6 +283,7 @@ function BottomTabNavigator() {
               color={
                 focused ? colors.navigationIconActive : colors.navigationIcon
               }
+              variant="Bold"
             />
           ),
           tabBarActiveTintColor: colors.navigationIconActive,
@@ -307,6 +318,7 @@ function BottomTabNavigator() {
               color={
                 focused ? colors.navigationIconActive : colors.navigationIcon
               }
+              variant="Bold"
             />
           ),
           tabBarActiveTintColor: colors.navigationIconActive,
@@ -319,11 +331,12 @@ function BottomTabNavigator() {
         options={{
           title: "Profile",
           tabBarIcon: ({ focused }) => (
-            <User
+            <ProfileCircle
               size={RFValue(20)}
               color={
                 focused ? colors.navigationIconActive : colors.navigationIcon
               }
+              variant="Bold"
             />
           ),
           tabBarActiveTintColor: colors.navigationIconActive,

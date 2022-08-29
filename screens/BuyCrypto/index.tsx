@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Bank, ReceiptSearch } from "iconsax-react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
@@ -9,8 +9,11 @@ import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
-const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = () => {
+const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
+  route,
+}) => {
   const navigation = useNavigation();
+  const { params } = route;
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const HeaderRightComponent = (
@@ -20,12 +23,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = () => {
   );
 
   const onContinue = () => {
-    setPaymentMethod("");
-    if (paymentScreen === 1) {
-      setPaymentScreen(2);
-    } else {
-      navigation.navigate("Summary");
-    }
+    navigation.navigate("Summary");
   };
   return (
     <ScreenLayout
@@ -38,11 +36,11 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = () => {
         <View style={styles.footer}>
           <TouchableOpacity
             onPress={onContinue}
-            disabled={!Boolean(paymentMethod)}
+            disabled={!params?.payment?.title}
             style={[
               styles.footerButton,
               {
-                backgroundColor: paymentMethod ? "#3861FB" : "#979797",
+                backgroundColor: params?.payment?.title ? "#3861FB" : "#979797",
               },
             ]}
           >
@@ -63,7 +61,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = () => {
         </View>
       </View>
       <CustomText style={styles.paymentTitle2}>Payment</CustomText>
-      {paymentScreen === 1 ? (
+      {!params?.payment?.title ? (
         <PaymentItem
           title="Choose a payment method"
           description="Debit cards, Mobile money etc..."
@@ -73,20 +71,19 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = () => {
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />
             </View>
           }
-          onPress={() => setPaymentMethod("payment-method")}
+          onPress={() => navigation.navigate("PaymentMethod")}
           active={paymentMethod === "payment-method"}
         />
       ) : (
         <PaymentItem
-          title="MOMO - 23357448434"
+          title={params?.payment?.title}
           description="Tap to change payment"
           icon={
             <View style={styles.iconContainer}>
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />
             </View>
           }
-          onPress={() => setPaymentMethod("momo")}
-          active={paymentMethod === "momo"}
+          onPress={() => navigation.navigate("PaymentMethod")}
         />
       )}
     </ScreenLayout>

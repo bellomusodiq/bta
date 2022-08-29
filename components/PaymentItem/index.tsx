@@ -13,6 +13,7 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
   showArror,
   onPress,
   active,
+  unavailable,
 }) => (
   <TouchableOpacity
     style={[
@@ -32,7 +33,16 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
         },
       ]}
     >
-      <CustomText style={styles.title} numberOfLines={1} lineBreakMode="tail">
+      <CustomText
+        style={[
+          styles.title,
+          {
+            color: unavailable ? "#979797" : "black",
+          },
+        ]}
+        numberOfLines={1}
+        lineBreakMode="tail"
+      >
         {title}
       </CustomText>
       {description && (
@@ -45,9 +55,15 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
         </CustomText>
       )}
     </View>
-    <View style={styles.arrowContainer}>
-      {showArror && <ArrowRight2 size={RFValue(18)} color="#000" />}
-    </View>
+    {!unavailable ? (
+      <View style={styles.arrowContainer}>
+        {showArror && <ArrowRight2 size={RFValue(18)} color="#000" />}
+      </View>
+    ) : (
+      <View style={styles.unavailableContainer}>
+        <CustomText style={styles.unavailable}>Unavailable</CustomText>
+      </View>
+    )}
   </TouchableOpacity>
 );
 

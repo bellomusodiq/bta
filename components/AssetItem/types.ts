@@ -7,4 +7,7 @@ export interface AssetItemProps {
   onPress?: () => void;
   hideTrend?: boolean;
   showArrow?: boolean;
+  percentageChange?: number;
+  tokenPrice?: string;
+  noPercentage?: boolean;
 }

@@ -9,15 +9,13 @@ const styles = StyleSheet.create({
     marginTop: RFValue(15),
   },
   button: {
-    borderWidth: 1,
     borderRadius: RFValue(45),
     padding: RFValue(12.5),
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "#F0F0F0",
-    width: "48%",
-    backgroundColor: "white",
     flexDirection: "row",
+    width: RFValue(48),
+    height: RFValue(48),
   },
   buttonText: {
     fontSize: RFValue(16),

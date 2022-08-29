@@ -1,3 +1,4 @@
+import { Notification } from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import CustomText from "../CustomText";
@@ -10,8 +11,11 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ name, whatsappNumber }) => (
     <CustomText style={styles.welcomeText}>
       <CustomText style={styles.grayText}>Hello!</CustomText> {name} 👋
     </CustomText>
-    <TouchableOpacity>
-      <WhatsappIcon />
+    <TouchableOpacity style={styles.notificationContainer}>
+      <Notification color="black" size={32} />
+      <View style={styles.indicator}>
+        <CustomText style={styles.indicatorText}>9</CustomText>
+      </View>
     </TouchableOpacity>
   </View>
 );

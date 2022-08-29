@@ -9,9 +9,9 @@ import { BuySellItemProps } from "./types";
 const BuySellItem: React.FC<BuySellItemProps> = ({ type, title, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.container}>
     {type === "buy" ? (
-      <MoneyRecive size={RFValue(38)} color="#3861FB" variant="Bulk" />
+      <MoneyRecive size={RFValue(32)} color="#EBB101" variant="Linear" />
     ) : (
-      <MoneySend size={RFValue(38)} color="#3861FB" variant="Bulk" />
+      <MoneySend size={RFValue(32)} color="#EBB101" variant="Linear" />
     )}
     <View style={styles.textContainer}>
       <CustomText style={styles.title}>

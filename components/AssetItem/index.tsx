@@ -16,6 +16,9 @@ const AssetItem: React.FC<AssetItemProps> = ({
   onPress,
   hideTrend,
   showArrow,
+  percentageChange = 0,
+  noPercentage,
+  tokenPrice,
 }) => (
   <>
     <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
@@ -27,9 +30,17 @@ const AssetItem: React.FC<AssetItemProps> = ({
       />
       <View style={styles.nameContainer}>
         <CustomText style={styles.assetTitle}>{title}</CustomText>
-        <CustomText style={styles.assetAbbr}>{currency}</CustomText>
+        <CustomText style={styles.assetAbbr}>
+          {tokenPrice || currency}{" "}
+          {!noPercentage && (
+            <CustomText
+              style={{ color: percentageChange >= 0 ? "#25D366" : "#FF5C5C" }}
+            >
+              {percentageChange === 0 ? "0.0" : percentageChange}%
+            </CustomText>
+          )}
+        </CustomText>
       </View>
-      <View style={styles.trendContainer}>{!hideTrend && <UpTrendIcon />}</View>
       {!showArrow ? (
         <View style={styles.valueContainer}>
           <CustomText style={styles.amount}>

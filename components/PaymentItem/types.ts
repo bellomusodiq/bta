@@ -6,4 +6,5 @@ export interface PaymentItemProps {
   showArror?: boolean;
   active?: boolean;
   invertedIcon?: boolean;
+  unavailable?: boolean;
 }
