@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RFValue(16),
     lineHeight: RFValue(24),
+    fontFamily: "Inter_600SemiBold",
   },
   usdAmount: {
     fontSize: RFValue(14),

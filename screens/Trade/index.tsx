@@ -1,5 +1,5 @@
 import { SearchNormal1 } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
@@ -60,7 +60,9 @@ const TRADE_ITEMS: TradeItemProps[] = [
   },
 ];
 
-const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = () => {
+const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
+  route: { params },
+}) => {
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
   const navigation = useNavigation();
 
@@ -68,9 +70,15 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = () => {
     if (curerntIndex === 0) {
       navigation.navigate("BuyCrypto");
     } else {
-      navigation.navigate("SellCrypto")
+      navigation.navigate("SellCrypto");
     }
   };
+
+  useEffect(() => {
+    if (params?.tab === "sell") {
+      setCurrentIndex(1);
+    }
+  }, [params]);
   return (
     <ScreenLayout>
       <CustomText style={styles.header}>Trade</CustomText>

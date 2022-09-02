@@ -35,11 +35,11 @@ const ManageAssetScreen: React.FC<
 > = () => {
   const headerRight = (
     <TouchableOpacity>
-      <Trash size={RFValue(24)} color="#292D32" />
+      <Trash size={RFValue(20)} color="#292D32" />
     </TouchableOpacity>
   );
   return (
-    <ScreenLayout showHeader title="Manage assets" headerRight={headerRight}>
+    <ScreenLayout showHeader title="Manage assets" >
       <FlatList
         data={data}
         renderItem={({ item }) => (

@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: RFValue(20),
-    lineHeight: RFValue(24),
+    fontSize: RFValue(16),
+    lineHeight: RFValue(20),
   },
   confirmations: {
     fontSize: RFValue(14),

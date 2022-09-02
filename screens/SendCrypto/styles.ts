@@ -3,7 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   input: {
-    marginVertical: RFValue(24),
+    marginTop: RFValue(18),
   },
 });
 

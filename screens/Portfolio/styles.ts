@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(14),
     lineHeight: RFValue(18),
     color: "#979797",
-    marginBottom: 40,
+    marginBottom: 30,
   },
   amount1: {
     textAlign: "center",
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 40,
+    marginBottom: 30,
+    paddingHorizontal: width(0.05),
   },
   btn: {
     flexDirection: "row",

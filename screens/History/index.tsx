@@ -156,8 +156,7 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
             title="Time"
             data={[
               "Today (5)",
-              "1 month (25)",
-              "3 months (115)",
+              "Yesterday (25)",
               "All time (259)",
             ]}
             onChange={(i: number) => setTime(i)}

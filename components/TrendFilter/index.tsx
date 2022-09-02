@@ -50,6 +50,7 @@ const TrendFilter: React.FC = () => {
     <FlatList
       data={data}
       horizontal
+      showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
         <TrendFilterItem
           onPress={() => setCurrentTrend(item.title)}

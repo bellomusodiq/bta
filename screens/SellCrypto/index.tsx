@@ -15,8 +15,16 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   const { params } = route;
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  // navigate to Histor > sell tab, sorting by only token
   const HeaderRightComponent = (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Root", {
+          screen: "History",
+          token: "DOGE",
+        })
+      }
+    >
       <ReceiptSearch size={RFValue(24)} color="#979797" />
     </TouchableOpacity>
   );
@@ -81,7 +89,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           <View style={styles.divider} />
           <View style={styles.balance}>
             <CustomText style={styles.balanceText}>
-              <CustomText style={styles.balanceTitle}>Balance:</CustomText>{" "}
+              <CustomText style={styles.balanceTitle}>Bal:</CustomText>{" "}
               120.89 DOGE ($100.65)
             </CustomText>
           </View>
@@ -101,7 +109,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
             <CustomText style={styles.percentageText}>75%</CustomText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.percentage}>
-            <CustomText style={styles.percentageText}>MAX</CustomText>
+            <CustomText style={styles.percentageText}>max</CustomText>
           </TouchableOpacity>
         </View>
       </View>

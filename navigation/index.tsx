@@ -276,7 +276,7 @@ function BottomTabNavigator() {
         name="Trade"
         component={TradeScreen}
         options={{
-          title: "Buy/Sell",
+          title: "Buy / Sell",
           tabBarIcon: ({ focused }) => (
             <ArrowSwapHorizontal
               size={RFValue(20)}

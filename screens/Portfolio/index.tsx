@@ -91,15 +91,24 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
         You hold a total of 4 assets
       </CustomText>
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Trade", { tab: "buy" })}
+          style={styles.btn}
+        >
           <MoneyRecive size="24" color="#3861FB" />
           <CustomText style={styles.btnText}>Buy</CustomText>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Trade", { tab: "sell" })}
+          style={styles.btn}
+        >
           <Export size="24" color="#3861FB" />
           <CustomText style={styles.btnText}>Withdraw</CustomText>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ReceiveCrypto")}
+          style={styles.btn}
+        >
           <Import size="24" color="#3861FB" />
           <CustomText style={styles.btnText}>Deposit</CustomText>
         </TouchableOpacity>

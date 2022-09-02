@@ -60,7 +60,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
           placeholder="Amount in USD"
           rightComponent={
             <View style={styles.amountRight}>
-              <CustomText style={styles.maxText}>MAX</CustomText>
+              <CustomText style={styles.maxText}>max</CustomText>
               <View style={styles.tablet}>
                 <CustomText style={styles.tabletText}>BTC</CustomText>
               </View>

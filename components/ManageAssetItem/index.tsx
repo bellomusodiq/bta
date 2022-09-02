@@ -33,14 +33,14 @@ const ManageAssetItem: React.FC<ManageAssetItemProps> = ({
           backgroundColorOff="#C4C4C4"
           containerStyle={{
             marginTop: 16,
-            width: 45,
-            height: 25,
-            borderRadius: 25,
+            width: 35,
+            height: 22,
+            borderRadius: 22,
             padding: 2,
           }}
           circleStyle={{
-            width: 23,
-            height: 23,
+            width: 20,
+            height: 20,
             borderRadius: 25,
           }}
         />

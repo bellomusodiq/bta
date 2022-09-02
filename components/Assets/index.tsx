@@ -54,7 +54,7 @@ const Assets: React.FC = () => {
           </CustomText>
           {currentTab === "assets" && <View style={styles.tabDivider} />}
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => setCurrentTab("nfts")}
           style={styles.tabItem}
         >
@@ -69,7 +69,7 @@ const Assets: React.FC = () => {
             NFTs
           </CustomText>
           {currentTab === "nfts" && <View style={styles.tabDivider} />}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <AssetItem
         image={BitcoinImage}

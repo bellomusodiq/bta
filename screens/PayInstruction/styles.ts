@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     marginTop: RFValue(20),
   },
   iconContainer: {
-    width: 48,
-    height: 48,
+    width: 39,
+    height: 39,
     backgroundColor: "#3861FB",
     justifyContent: "center",
     alignItems: "center",
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     marginHorizontal: RFValue(7.5),
   },
   loadingIcon: {
-    width: RFValue(10),
-    height: RFValue(10),
+    width: RFValue(7.5),
+    height: RFValue(7.5),
     backgroundColor: "#3861FB",
     transform: [
       {
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     fontSize: RFValue(14),
+    fontFamily: "Inter_600SemiBold",
   },
   divider: {
     height: 1,

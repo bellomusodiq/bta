@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -19,10 +19,10 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   let [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_700Bold,
-    Inter_500Medium,
-    Inter_600SemiBold,
+    Inter_400Regular: require("./assets/fonts/Degular.ttf"),
+    Inter_700Bold: require("./assets/fonts/DegularBold.otf"),
+    Inter_500Medium: require("./assets/fonts/DegularMedium.ttf"),
+    Inter_600SemiBold: require("./assets/fonts/DegularSemibold.otf"),
   });
 
   if (!fontsLoaded) {

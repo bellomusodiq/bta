@@ -82,11 +82,18 @@ const AssetDetailScreen: React.FC<
         <CustomText style={styles.currentPrice}>$20.55</CustomText>
       </View>
       {/* <TrendChart /> */}
-      <LineChart.Provider data={data}>
-        <LineChart>
-          <LineChart.Path />
-        </LineChart>
-      </LineChart.Provider>
+      <View style={styles.graphContainer}>
+        <LineChart.Provider data={data}>
+          <LineChart height={200}>
+            <LineChart.Path color="#3861FB">
+              <LineChart.Gradient color="#3861FB" />
+            </LineChart.Path>
+            <LineChart.CursorCrosshair>
+              <LineChart.Tooltip />
+            </LineChart.CursorCrosshair>
+          </LineChart>
+        </LineChart.Provider>
+      </View>
       <TrendFilter />
       <View style={styles.coinBalanceContainer}>
         <Image source={TronImage} style={styles.coinImage} />
@@ -97,7 +104,7 @@ const AssetDetailScreen: React.FC<
         <View style={styles.balanceContainer}>
           <CustomText style={styles.balanceAmount}>$100.50</CustomText>
           <CustomText style={styles.balanceCurrency}>
-            You have 1505TRX
+            1505 TRX
           </CustomText>
         </View>
       </View>

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Flag2 } from "iconsax-react-native";
+import { ArrowRight2, Flag2 } from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -51,7 +51,14 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
           <>
             <SummaryItem
               title="Payment"
-              value="Momo (233553610084) >"
+              componentValue={
+                <View style={styles.buttonTextContainer}>
+                  <CustomText style={styles.buttonText}>
+                    Momo (233553610084)
+                  </CustomText>
+                  <ArrowRight2 size={16} />
+                </View>
+              }
               onClick={() => {}}
             />
             <SummaryItem title="Buy rate per dollar" value="GHS 8.15" />

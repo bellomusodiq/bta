@@ -15,8 +15,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 }) => {
   const navigation = useNavigation();
   return (
-    <>
-      <View style={[styles.container]}>
+    <View>
+      <View style={styles.container}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.headerLeft}
@@ -34,7 +34,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         </View>
       </View>
       {showShadow && <View style={styles.shadow} />}
-    </>
+    </View>
   );
 };
 

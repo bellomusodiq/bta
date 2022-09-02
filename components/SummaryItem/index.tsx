@@ -13,6 +13,7 @@ const SummaryItem: React.FC<SummaryItemProps> = ({
   onClick,
   noDivider,
   onClickInfo,
+  componentValue,
 }) => (
   <>
     <View style={styles.container}>
@@ -26,9 +27,13 @@ const SummaryItem: React.FC<SummaryItemProps> = ({
       </View>
       {onClick ? (
         <TouchableOpacity style={styles.button} onPress={onClick}>
-          <CustomText style={[styles.value, { color: "#3861FB" }]}>
-            {value}
-          </CustomText>
+          {componentValue ? (
+            componentValue
+          ) : (
+            <CustomText style={[styles.value, { color: "#3861FB" }]}>
+              {value}
+            </CustomText>
+          )}
         </TouchableOpacity>
       ) : (
         <CustomText

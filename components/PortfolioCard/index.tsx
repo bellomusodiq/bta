@@ -13,7 +13,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ balance }) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <CustomText style={styles.title}>My balance</CustomText>
+        <CustomText style={styles.title}>Portfolio balance</CustomText>
         <CustomText style={styles.balance}>
           {showBalance ? `$${balance}` : "****"}
         </CustomText>

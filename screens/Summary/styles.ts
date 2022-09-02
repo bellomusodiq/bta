@@ -61,6 +61,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: RFValue(14),
   },
+  buttonTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  buttonText: {
+    margin: 0,
+    color: "#3861FB",
+    marginRight: 5,
+  },
 });
 
 export default styles;

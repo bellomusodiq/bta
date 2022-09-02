@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F0F0",
   },
   transactionDetailItem: {
-    paddingVertical: RFValue(24),
+    paddingVertical: RFValue(12),
     flexDirection: "row",
   },
   textContainer: {

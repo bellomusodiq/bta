@@ -61,7 +61,6 @@ const ReceiveCryptoScreen: React.FC<
             title={item.title}
             onPress={navigateToSendToken}
             hideTrend
-            showArrow
           />
         )}
       />

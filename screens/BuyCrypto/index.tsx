@@ -16,8 +16,13 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
   const { params } = route;
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  // filter only token histories in the history page
   const HeaderRightComponent = (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Root", { screen: "History", token: "DOGE" })
+      }
+    >
       <ReceiptSearch size={RFValue(24)} color="#979797" />
     </TouchableOpacity>
   );
@@ -60,7 +65,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
           <CustomText style={styles.currency}>GHS</CustomText>
         </View>
       </View>
-      <CustomText style={styles.paymentTitle2}>Payment</CustomText>
+      <CustomText style={styles.paymentTitle2}>Pay with</CustomText>
       {!params?.payment?.title ? (
         <PaymentItem
           title="Choose a payment method"

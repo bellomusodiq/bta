@@ -12,7 +12,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ name, whatsappNumber }) => (
       <CustomText style={styles.grayText}>Hello!</CustomText> {name} 👋
     </CustomText>
     <TouchableOpacity style={styles.notificationContainer}>
-      <Notification color="black" size={32} />
+      <Notification color="black" size={28} />
       <View style={styles.indicator}>
         <CustomText style={styles.indicatorText}>9</CustomText>
       </View>

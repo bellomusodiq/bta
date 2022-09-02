@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     borderRadius: 16,
+    alignItems: "center",
   },
   textContainer: {
     flex: 1,
@@ -19,14 +20,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: RFValue(20),
-    lineHeight: RFValue(24),
+    fontSize: RFValue(16),
+    lineHeight: RFValue(20),
     marginBottom: 8,
   },
   desc: {
     color: "#979797",
-    fontSize: RFValue(14),
-    lineHeight: RFValue(16),
+    fontSize: RFValue(12),
+    lineHeight: RFValue(14),
   },
 });
 

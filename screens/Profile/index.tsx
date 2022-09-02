@@ -71,7 +71,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
             onToggle: () => setBiometrics(!biometrics),
           },
           {
-            title: "Biometrics",
+            title: "Notifications",
             icon: <Notification size={24} color="#3861FB" variant="Bold" />,
             isToggle: true,
             active: notification,

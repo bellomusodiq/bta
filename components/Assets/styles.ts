@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   tab: {
-    borderColor: "#CCCCCC",
+    borderColor: "#EEEEEE",
     backgroundColor: "#FBFBFB",
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
   tabItemText: {
     color: "#979797",
     fontSize: RFValue(16),
+    fontFamily: "Inter_600SemiBold",
   },
   tabDivider: {
     height: 2,

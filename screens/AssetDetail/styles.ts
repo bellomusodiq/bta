@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     lineHeight: RFValue(20),
   },
+  graphContainer: {
+    width: width(1),
+    marginLeft: -width(0.05),
+  },
   currentPrice: {
     fontSize: RFValue(30),
     lineHeight: RFValue(40),
@@ -34,8 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   coinImage: {
-    width: RFValue(45),
-    height: RFValue(45),
+    width: RFValue(36),
+    height: RFValue(36),
+    alignSelf: "center",
   },
   titleContainer: {
     width: "30%",
@@ -68,12 +73,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: RFValue(16),
-    borderWidth: 1,
-    borderColor: "#F0F0F0",
     borderRadius: RFValue(130),
+    backgroundColor: "#3861FB",
   },
   buySellButtonText: {
     fontSize: RFValue(16),
+    color: "white",
   },
   aboutTitle: {
     fontSize: RFValue(20),

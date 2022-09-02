@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   assetTitle: {
     fontSize: RFValue(16),
     lineHeight: RFValue(20),
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Inter_600SemiBold",
     marginBottom: 8,
   },
   assetAbbr: {

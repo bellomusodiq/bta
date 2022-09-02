@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(15),
   },
   image: {
-    width: RFValue(40),
-    height: RFValue(40),
+    width: RFValue(32),
+    height: RFValue(32),
   },
   priceContainer: {
     flex: 0.6,

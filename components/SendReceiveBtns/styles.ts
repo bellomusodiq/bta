@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
     marginLeft: RFValue(10),
     lineHeight: RFValue(24),
   },
+  title: {
+    alignSelf: "center",
+    fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
+    marginTop: 8,
+  },
 });
 
 export default styles;
