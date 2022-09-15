@@ -26,24 +26,25 @@ const slides = [
     key: 1,
     title: (
       <CustomText style={styles.title}>
-        Welcome to <CustomText style={styles.hilight}>Bitafrika</CustomText>
+        <CustomText style={styles.hilight}>Financial</CustomText> freedom for
+        you
       </CustomText>
     ),
-    buttonTitle: "Continue",
+    buttonTitle: "Next",
     image: SplashImage2,
-    text: "BitAfrika is the easiest way to buy, sell, send and receive cryptocurrency in Africa",
+    text: "Send and receive 6+ cryptocurrencies from anyone anywhere in the world",
   },
-  {
-    key: 2,
-    title: (
-      <CustomText style={styles.title}>
-        Welcome to <CustomText style={styles.hilight}>Bitafrika</CustomText>
-      </CustomText>
-    ),
-    buttonTitle: "Get Started",
-    image: SplashImage3,
-    text: "BitAfrika is the easiest way to buy, sell, send and receive cryptocurrency in Africa",
-  },
+  // {
+  //   key: 2,
+  //   title: (
+  //     <CustomText style={styles.title}>
+  //       Welcome to <CustomText style={styles.hilight}>Bitafrika</CustomText>
+  //     </CustomText>
+  //   ),
+  //   buttonTitle: "Get Started",
+  //   image: SplashImage3,
+  //   text: "BitAfrika is the easiest way to buy, sell, send and receive cryptocurrency in Africa",
+  // },
 ];
 
 const SplashScreen: React.FC<RootStackScreenProps<"SplashScreen">> = () => {

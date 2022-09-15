@@ -34,6 +34,7 @@ export type RootStackParamList = {
   };
   SelectAccount: undefined;
   Complete: undefined;
+  Pending: undefined;
   SendCrypto: undefined;
   SendToken: undefined;
   SendTokenSummary: undefined;
@@ -68,6 +69,7 @@ export type RootStackParamList = {
   AddPaymentMethod: undefined;
   Portfolio: undefined;
   AssetDetail: undefined;
+  Notifications: undefined;
 };
 
 export type OverviewStackParamList = {

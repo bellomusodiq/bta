@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { width } from "../../consts/dimenentions";
+import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   container: {
@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(15),
     backgroundColor: "white",
     paddingHorizontal: width(0.05),
+    zIndex: 3,
   },
   headerLeft: {
     width: RFValue(28),
@@ -24,16 +25,21 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
   },
   shadow: {
-    height: 2,
-    // borderBottomColor: "rgba(51, 51, 51, 0.05)",
-    // borderBottomWidth: 3,
-    shadowOffset: { width: 10, height: 18 },
-    shadowRadius: 20,
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    elevation: 8,
-    // background color must be set
-    backgroundColor: "#0000", // invisible color
+    // minHeight: 10,
+    // // borderBottomColor: "rgba(51, 51, 51, 0.05)",
+    // // borderBottomWidth: 3,
+    // shadowOffset: { width: 0, height: 8 },
+    // borderTopColor: "#F0F0F0",
+    // borderTopWidth: 1,
+    // shadowRadius: 5,
+    // shadowColor: "#333333",
+    // // shadowOpacity: 0.25,
+    // elevation: 1,
+    // zIndex: 3,
+    // // background color must be set
+    // backgroundColor: "#FFF", // invisible color
+    // flexDirection: "column",
+    // // marginTop: -3,
   },
 });
 

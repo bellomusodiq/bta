@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: RFValue(15),
+    paddingHorizontal: RFValue(15),
   },
   button: {
     borderRadius: RFValue(45),
@@ -14,8 +15,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    width: RFValue(48),
-    height: RFValue(48),
+    width: RFValue(47),
+    height: RFValue(47),
   },
   buttonText: {
     fontSize: RFValue(16),

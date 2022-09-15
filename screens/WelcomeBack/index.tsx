@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../../components/CustomText";
-import FaceIcon from "../../components/icons/face-icon";
+import * as LocalAuthentication from "expo-local-authentication";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
   const navigation = useNavigation();
   const [pin, setPin] = useState<string>("");
+  const [compatible, setCompatible] = useState<boolean>(false);
+  const [fingerprints, setFingerprints] = useState<boolean>(false);
 
   const updatePin = (digit: string) => {
     if (pin.length < 4) {
@@ -31,6 +33,30 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
       navigation.replace("Root");
     }
   }, [pin]);
+
+  const checkDeviceForHardware = async () => {
+    let compatible = await LocalAuthentication.hasHardwareAsync();
+    setCompatible(compatible);
+  };
+
+  const checkForFingerprints = async () => {
+    let fingerprints = await LocalAuthentication.isEnrolledAsync();
+    setFingerprints(fingerprints);
+  };
+
+  const scanFingerprint = async () => {
+    let result = await LocalAuthentication.authenticateAsync(
+      "Scan your finger."
+    );
+    if (result.success) {
+      navigation.replace("Root");
+    }
+  };
+
+  useEffect(() => {
+    checkDeviceForHardware();
+    checkForFingerprints();
+  }, []);
 
   const splitPin = pin.split("");
   return (
@@ -87,7 +113,10 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { marginBottom: -60 }]}>
+        <TouchableOpacity
+          onPress={scanFingerprint}
+          style={[styles.button, { marginBottom: -60 }]}
+        >
           <Image
             style={styles.faceId}
             source={FaceImage}

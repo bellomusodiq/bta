@@ -3135,6 +3135,11 @@ color@^4.2.3:
     color-convert "^2.0.1"
     color-string "^1.9.0"
 
+colord@2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/colord/-/colord-2.9.2.tgz#25e2bacbbaa65991422c07ea209e2089428effb1"
+  integrity sha512-Uqbg+J445nc1TKn4FoDPS6ZZqAvEDnwrH42yo8B40JSOgSLxMZ/gt3h4nmCtPLQeXhjJJkqBx7SCY35WnIixaQ==
+
 colorette@^1.0.7:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.4.0.tgz#5190fbb87276259a86ad700bff2c6d6faa3fca40"
@@ -3910,6 +3915,14 @@ expo-asset@~8.5.0:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
+expo-barcode-scanner@~11.3.0:
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/expo-barcode-scanner/-/expo-barcode-scanner-11.3.0.tgz#0f23d748dcc04feb03f3978713eff6c7a5e7e11b"
+  integrity sha512-UZMZ4t/Q0P0nbpD2qCehpZ350zP8YIO1T1Mk3HgeT1gu/T2kRhwaVjI3oxxD33h3uPyXjYGd/RFvRqUEgHfd0A==
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+    expo-image-loader "~3.2.0"
+
 expo-clipboard@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/expo-clipboard/-/expo-clipboard-3.0.1.tgz#c3a46b08bb376bc5b4a5ed75631e56f5e1075db8"
@@ -3986,6 +3999,14 @@ expo-linking@~3.1.0:
     invariant "^2.2.4"
     qs "^6.9.1"
     url-parse "^1.5.9"
+
+expo-local-authentication@~12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-12.2.0.tgz#a1534d2f1a3e63483d20a1cff303b1a312b8e1ef"
+  integrity sha512-JY8aqucTl2SEsC2qnxLD6Dhrxke/Pm10zEMFQVVUO6OsiwqdSO6r/xLE5zzUgLogjOHfKIqGH4rXZLEi8x4Dvw==
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+    invariant "^2.2.4"
 
 expo-manifests@~0.3.0:
   version "0.3.1"
@@ -7369,6 +7390,13 @@ react-native-screens@~3.11.1:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-shadow-2@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-shadow-2/-/react-native-shadow-2-7.0.5.tgz#e371e9eb799edb42c7527696fa02fa9bb2cc12c5"
+  integrity sha512-nmYuyv0SFMZpFf7RDxsf1638IfA2E7VSKkQf2D/t5R/i0/wSlQN/2gvg41mO7oam4/tt+jQJc2XqICCmvxm/FA==
+  dependencies:
+    colord "2.9.2"
 
 react-native-svg@^12.1.1:
   version "12.4.4"

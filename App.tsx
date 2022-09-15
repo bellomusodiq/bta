@@ -32,16 +32,6 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return (
-      <SafeAreaProvider>
-        <StatusBar
-          // style="light"
-          backgroundColor="red"
-          barStyle="light-content"
-          // translucent={true}
-        />
-        <Navigation colorScheme={colorScheme} />
-      </SafeAreaProvider>
-    );
+    return <Navigation colorScheme={colorScheme} />;
   }
 }

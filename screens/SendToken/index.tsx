@@ -1,15 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import { Scan } from "iconsax-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
+import * as Clipboard from "expo-clipboard";
 import styles from "./styles";
 
 const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
+  const [currency, setCurrency] = useState<string>("BTC");
+  const [amount, setAmount] = useState<number | null>();
+  const [address, setAddress] = useState<string>("");
   const navigation = useNavigation();
   const headerRight = (
     <TouchableOpacity>
@@ -19,6 +23,19 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
 
   const onContinue = () => {
     navigation.navigate("SendTokenSummary");
+  };
+
+  const toggleCurrency = () => {
+    setCurrency(currency === "BTC" ? "USD" : "BTC");
+  };
+
+  const setMaxAmount = () => {
+    setAmount(100.5);
+  };
+
+  const fetchCopiedText = async () => {
+    const text = await Clipboard.getStringAsync();
+    setAddress(text);
   };
 
   return (
@@ -48,8 +65,10 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
       <View style={styles.inputContainer}>
         <CustomInput
           placeholder="Recipent address"
+          value={address}
+          onChangeText={(text) => setAddress(text)}
           rightComponent={
-            <TouchableOpacity>
+            <TouchableOpacity onPress={fetchCopiedText}>
               <CustomText style={styles.pasteText}>PASTE</CustomText>
             </TouchableOpacity>
           }
@@ -57,13 +76,17 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
       </View>
       <View style={styles.inputContainer}>
         <CustomInput
-          placeholder="Amount in USD"
+          value={String(amount || "")}
+          onChangeText={(text) => setAmount(Number(text))}
+          placeholder={`Amount in ${currency}`}
           rightComponent={
             <View style={styles.amountRight}>
-              <CustomText style={styles.maxText}>max</CustomText>
-              <View style={styles.tablet}>
-                <CustomText style={styles.tabletText}>BTC</CustomText>
-              </View>
+              <TouchableOpacity onPress={setMaxAmount}>
+                <CustomText style={styles.maxText}>max</CustomText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleCurrency} style={styles.tablet}>
+                <CustomText style={styles.tabletText}>{currency}</CustomText>
+              </TouchableOpacity>
             </View>
           }
         />

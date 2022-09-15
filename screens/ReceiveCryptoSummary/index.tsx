@@ -1,6 +1,6 @@
 import { DocumentCopy, Export, SearchNormal1 } from "iconsax-react-native";
 import React, { useState } from "react";
-import { FlatList, Image, View } from "react-native";
+import { FlatList, Image, TextInput, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import AssetItem from "../../components/AssetItem";
 import CustomInput from "../../components/CustomInput";
@@ -46,6 +46,8 @@ const ReceiveCryptoSummaryScreen: React.FC<
 > = () => {
   const data = [{ label: "Bitcoin - BTC", value: "BTC" }];
   const [token, setToken] = useState<any>(data[0]);
+  const [bank, setBank] = useState<any>();
+  const [query, setQuery] = useState<any>();
   const navigation = useNavigation();
   const navigateToSendToken = () => navigation.navigate("SendToken");
   return (
@@ -53,14 +55,56 @@ const ReceiveCryptoSummaryScreen: React.FC<
       <View style={styles.container}>
         <View style={styles.dropdownContainer}>
           <Dropdown
-            value={token}
-            onChange={(val) => setToken(val)}
+            renderInputSearch={() => (
+              <View style={styles.searchInputContainer}>
+                <SearchNormal1
+                  color="#979797"
+                  size={RFValue(16)}
+                  variant="Linear"
+                />
+                <TextInput
+                  placeholder="Search for banks"
+                  style={styles.searchInput}
+                  placeholderTextColor="#979797"
+                  value={query}
+                  onChangeText={(value) => setQuery(value)}
+                />
+                <TouchableOpacity onPress={() => setQuery("")}>
+                  <CustomText style={styles.searchCancel}>Cancel</CustomText>
+                </TouchableOpacity>
+              </View>
+            )}
+            value={bank}
+            onChange={(val) => setBank(val)}
             style={styles.dropdown}
-            data={data}
-            placeholder={"Select currency"}
+            data={[
+              {
+                label: "Bitcoin - BTC",
+                value: "Bitcoin",
+                image: (
+                  <Image
+                    source={BitcoinImage}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
+                ),
+              },
+            ]}
+            renderLeftIcon={() => (bank ? bank.image : null)}
+            renderItem={(item, selected) => (
+              <View style={styles.dropdownItem}>
+                {item.image}
+                <View style={styles.dropdownItemContainer}>
+                  <CustomText style={styles.dropdownItemText}>
+                    {item.label}
+                  </CustomText>
+                  <CustomText style={styles.rightText}>{item.value}</CustomText>
+                </View>
+              </View>
+            )}
+            placeholder={"Select token"}
             labelField="label"
             valueField="value"
-            selectedTextStyle={{ color: "#3861FB" }}
           />
         </View>
         <Image source={BarcodeImage} style={styles.barcode} />

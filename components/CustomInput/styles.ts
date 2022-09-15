@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     color: "#979797",
     fontSize: RFValue(16),
     flex: 1,
+    fontFamily: "Inter_400Regular",
   },
 });
 

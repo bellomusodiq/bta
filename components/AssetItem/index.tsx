@@ -31,12 +31,24 @@ const AssetItem: React.FC<AssetItemProps> = ({
       <View style={styles.nameContainer}>
         <CustomText style={styles.assetTitle}>{title}</CustomText>
         <CustomText style={styles.assetAbbr}>
-          {tokenPrice || currency}{" "}
+          {tokenPrice || currency}
+          {"   "}
           {!noPercentage && (
             <CustomText
-              style={{ color: percentageChange >= 0 ? "#25D366" : "#FF5C5C" }}
+              style={{
+                color: percentageChange >= 0 ? "#25D366" : "#FF5C5C",
+              }}
             >
-              {percentageChange === 0 ? "0.0" : percentageChange}%
+              {percentageChange === 0
+                ? "+0.0"
+                : `${percentageChange >= 0 ? "+" : ""}${percentageChange}`}
+              <CustomText
+                style={{
+                  fontSize: 12,
+                }}
+              >
+                %
+              </CustomText>
             </CustomText>
           )}
         </CustomText>
@@ -44,10 +56,10 @@ const AssetItem: React.FC<AssetItemProps> = ({
       {!showArrow ? (
         <View style={styles.valueContainer}>
           <CustomText style={styles.amount}>
-            {hideTrend ? `${amountCrypto}${currency}` : `$${amountUSD}`}
+            {hideTrend ? `${amountCrypto} ${currency}` : `$${amountUSD}`}
           </CustomText>
           <CustomText style={styles.amountValue}>
-            {hideTrend ? `$${amountUSD}` : `${amountCrypto}${currency}`}
+            {hideTrend ? `$${amountUSD}` : `${amountCrypto} ${currency}`}
           </CustomText>
         </View>
       ) : (

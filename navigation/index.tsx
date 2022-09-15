@@ -80,6 +80,8 @@ import SetPinScreen from "../screens/SetPin";
 import PaymentMethodScreen from "../screens/PaymentMethod";
 import AddPaymentMethodScreen from "../screens/AddPaymentMethod";
 import PortfolioScreen from "../screens/Portfolio";
+import PendingScreen from "../screens/Pending";
+import NotificationsScreen from "../screens/Notifications";
 
 export default function Navigation({
   colorScheme,
@@ -124,6 +126,7 @@ function RootNavigator() {
       <Stack.Screen name="SellCrypto" component={SellCryptoScreen} />
       <Stack.Screen name="SelectAccount" component={SelectAccountScreen} />
       <Stack.Screen name="Complete" component={CompleteScreen} />
+      <Stack.Screen name="Pending" component={PendingScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
       <Stack.Screen name="SendCrypto" component={SendCryptoScreen} />
@@ -166,6 +169,7 @@ function RootNavigator() {
       />
       <Stack.Screen name="Portfolio" component={PortfolioScreen} />
       <Stack.Screen name="AssetDetail" component={AssetDetailScreen} />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />
     </Stack.Navigator>
   );
 }

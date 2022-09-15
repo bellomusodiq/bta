@@ -14,26 +14,33 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   flexibleHeader,
 }) => {
   const navigation = useNavigation();
+  let shadowStyle = {};
+  if (showShadow) {
+    shadowStyle = {
+      shadowOffset: { width: 0, height: 4 },
+      shadowColor: "#333333",
+      shadowOpacity: 0.08,
+      shadowRadius: 4,
+      elevation: 3,
+    };
+  }
   return (
-    <View>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.headerLeft}
-        >
-          <ArrowLeft size={RFValue(24)} color="#292D32" />
-        </TouchableOpacity>
-        <CustomText style={styles.header}>{title}</CustomText>
-        <View
-          style={[
-            styles.headerRight,
-            { width: flexibleHeader ? "30%" : RFValue(28) },
-          ]}
-        >
-          {headerRight}
-        </View>
+    <View style={[styles.container, shadowStyle]}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.headerLeft}
+      >
+        <ArrowLeft size={RFValue(24)} color="#292D32" />
+      </TouchableOpacity>
+      <CustomText style={styles.header}>{title}</CustomText>
+      <View
+        style={[
+          styles.headerRight,
+          { width: flexibleHeader ? "30%" : RFValue(38) },
+        ]}
+      >
+        {headerRight}
       </View>
-      {showShadow && <View style={styles.shadow} />}
     </View>
   );
 };

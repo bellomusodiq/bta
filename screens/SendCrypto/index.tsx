@@ -1,5 +1,5 @@
 import { SearchNormal1 } from "iconsax-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import AssetItem from "../../components/AssetItem";
@@ -37,19 +37,33 @@ const data = [
 ];
 
 const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
+  const [filterData, setFilterData] = useState<any>(data);
+  const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
   const navigateToSendToken = () => navigation.navigate("SendToken");
+
+  const onSearch = (text: string) => {
+    setQuery(text);
+    const result = data.filter(
+      (item) =>
+        item.title.toLowerCase().includes(text.toLowerCase()) ||
+        item.currency.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilterData(result);
+  };
   return (
     <ScreenLayout showHeader showShadow title="Send">
       <View style={styles.input}>
         <CustomInput
           icon={<SearchNormal1 size={RFValue(16)} color="#979797" />}
           placeholder="Search for a token"
+          onChangeText={onSearch}
+          value={query}
         />
       </View>
 
       <FlatList
-        data={data}
+        data={filterData}
         renderItem={({ item }) => (
           <AssetItem
             image={item.image}

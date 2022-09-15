@@ -79,7 +79,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           },
           {
             title: "Manage crypto asset",
-            onPress: () => {},
+            onPress: () => navigation.navigate("ManageAsset"),
             icon: <Setting2 size={24} color="#3861FB" variant="Bold" />,
           },
           {
@@ -113,7 +113,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
             icon: <PasswordCheck size={24} color="#3861FB" variant="Bold" />,
           },
           {
-            title: "2FA security",
+            title: "Change PIN",
             onPress: () => {},
             icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
           },

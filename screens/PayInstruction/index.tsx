@@ -9,10 +9,12 @@ import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import * as Clipboard from "expo-clipboard";
+import { useNavigation } from "@react-navigation/native";
 
 const PayInstructionScreen: React.FC<
   RootStackScreenProps<"PayInstruction">
 > = () => {
+  const navigation = useNavigation();
   const copyToClipBoard = async () => {
     await Clipboard.setStringAsync("42HFOG66T95");
   };
@@ -72,7 +74,10 @@ const PayInstructionScreen: React.FC<
           LTD EMMANUEL KWABENA NKRUMAH
         </CustomText>
       </StepItem>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Pending")}
+        style={styles.button}
+      >
         <CustomText style={styles.buttonText}>DONE</CustomText>
       </TouchableOpacity>
       <View style={styles.note}>

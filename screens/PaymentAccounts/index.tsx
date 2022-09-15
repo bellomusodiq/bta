@@ -24,8 +24,8 @@ const PaymentAccountsScreen: React.FC<
   };
 
   // @ts-ignore-next-line
-  const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
+  const renderItem = (item, i) => (
+    <View key={i} style={styles.itemContainer}>
       <PaymentItem
         title="Emmanuel Kwabena Nkrumah"
         description="ACCESS BANK - 069XXXXXX"
@@ -40,7 +40,7 @@ const PaymentAccountsScreen: React.FC<
   );
 
   return (
-    <ScreenLayout showHeader showShadow title="Payment accounts">
+    <ScreenLayout scrollable showHeader showShadow title="Payment accounts">
       <CustomText style={styles.paymentTitle2}>
         Add bank accounts or mobile money account for payments. You can add up
         to to 5 payment accounts
@@ -71,7 +71,8 @@ const PaymentAccountsScreen: React.FC<
       <CustomText style={styles.paymentTitle2}>
         Your saved payment methods
       </CustomText>
-      <FlatList renderItem={renderItem} data={data} />
+      {/* <FlatList renderItem={renderItem} data={data} /> */}
+      {data.map((item, i) => renderItem(item, i))}
     </ScreenLayout>
   );
 };

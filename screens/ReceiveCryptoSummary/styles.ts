@@ -15,15 +15,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: RFValue(32),
   },
-  dropdown: {
-    flex: 0.65,
-    marginLeft: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#F0F0F0",
-    borderRadius: 124,
-  },
   btnContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -72,6 +63,86 @@ const styles = StyleSheet.create({
   },
   boldText: {
     color: "black",
+  },
+  dropdown: {
+    // flex: 0.7,
+    // marginLeft: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderRadius: 124,
+    width: "65%",
+  },
+  dropdownContainerStyle: {
+    backgroundColor: "#F0F0F0",
+    marginTop: 5,
+    padding: 10,
+  },
+  countryDropdown: {
+    // flex: 0.7,
+    // marginLeft: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderTopLeftRadius: 124,
+    borderBottomLeftRadius: 124,
+    // width: "100%",
+  },
+  image: {
+    width: RFValue(20),
+    height: RFValue(20),
+    marginRight: RFValue(10),
+  },
+  countryImage: {
+    width: RFValue(25),
+    height: RFValue(16),
+    marginRight: RFValue(10),
+  },
+  dropdownItem: {
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dropdownItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+  dropdownItemText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    fontSize: RFValue(14),
+    color: "#3861FB",
+  },
+  rightText: {
+    textAlign: "right",
+    color: "#979797",
+  },
+  countryDropdownContainer: {
+    flexDirection: "row",
+  },
+  searchInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderRadius: RFValue(4),
+  },
+  searchInput: {
+    flex: 1,
+    marginHorizontal: 5,
+    fontSize: RFValue(12),
+    lineHeight: RFValue(16),
+    color: "#3861FB",
+  },
+  searchCancel: {
+    color: "#3861FB",
+    fontSize: RFValue(12),
   },
 });
 

@@ -13,7 +13,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   headerRight,
   showShadow,
   footer,
-  flexibleHeader
+  flexibleHeader,
 }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>

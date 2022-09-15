@@ -15,6 +15,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   const { params } = route;
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [currency, setCurrency] = useState<string>("DOGE");
   // navigate to Histor > sell tab, sorting by only token
   const HeaderRightComponent = (
     <TouchableOpacity
@@ -79,18 +80,21 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
               keyboardType="numeric"
               style={styles.input}
             />
-            <CustomText style={styles.usd}>USD</CustomText>
+            <CustomText style={styles.usd}>{currency}</CustomText>
           </View>
-          <View style={styles.currencyContainer}>
-            <CustomText style={styles.currency}>DOGE</CustomText>
-          </View>
+          <TouchableOpacity
+            onPress={() => setCurrency(currency === "USD" ? "DOGE" : "USD")}
+            style={styles.currencyContainer}
+          >
+            <CustomText style={styles.currency}>{currency}</CustomText>
+          </TouchableOpacity>
         </View>
         <View style={styles.balanceContainer}>
           <View style={styles.divider} />
           <View style={styles.balance}>
             <CustomText style={styles.balanceText}>
-              <CustomText style={styles.balanceTitle}>Bal:</CustomText>{" "}
-              120.89 DOGE ($100.65)
+              <CustomText style={styles.balanceTitle}>Bal:</CustomText> 120.89
+              DOGE ($100.65)
             </CustomText>
           </View>
           <View style={styles.divider} />
