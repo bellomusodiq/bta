@@ -3,8 +3,8 @@ import Svg, { Path } from "react-native-svg";
 
 const HomeSendIcon: React.FC = () => (
   <Svg
-    width="24"
-    height="24"
+    width="23"
+    height="23"
     viewBox="0 0 24 24"
     fill="none"
   >

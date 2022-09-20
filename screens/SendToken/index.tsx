@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Scan } from "iconsax-react-native";
-import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
@@ -9,14 +9,32 @@ import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import * as Clipboard from "expo-clipboard";
 import styles from "./styles";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { width } from "../../consts/dimenentions";
 
 const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
+  const navigation = useNavigation();
   const [currency, setCurrency] = useState<string>("BTC");
   const [amount, setAmount] = useState<number | null>();
   const [address, setAddress] = useState<string>("");
-  const navigation = useNavigation();
+  const [openBarcode, setOpenBarcode] = useState<boolean>(false);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  const [scanned, setScanned] = useState<boolean>(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ data }: { data: string }) => {
+    setAddress(data);
+    setOpenBarcode(false);
+  };
+
   const headerRight = (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => setOpenBarcode(true)}>
       <Scan size={RFValue(20)} color="#000" />
     </TouchableOpacity>
   );
@@ -43,7 +61,6 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
       showHeader
       title="Send bitcoin"
       showShadow
-      scrollable
       headerRight={headerRight}
       footer={
         <View style={styles.footer}>
@@ -62,38 +79,54 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
         </View>
       }
     >
-      <View style={styles.inputContainer}>
-        <CustomInput
-          placeholder="Recipent address"
-          value={address}
-          onChangeText={(text) => setAddress(text)}
-          rightComponent={
-            <TouchableOpacity onPress={fetchCopiedText}>
-              <CustomText style={styles.pasteText}>PASTE</CustomText>
-            </TouchableOpacity>
-          }
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <CustomInput
-          value={String(amount || "")}
-          onChangeText={(text) => setAmount(Number(text))}
-          placeholder={`Amount in ${currency}`}
-          rightComponent={
-            <View style={styles.amountRight}>
-              <TouchableOpacity onPress={setMaxAmount}>
-                <CustomText style={styles.maxText}>max</CustomText>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={toggleCurrency} style={styles.tablet}>
-                <CustomText style={styles.tabletText}>{currency}</CustomText>
-              </TouchableOpacity>
+      <View style={styles.container}>
+        {openBarcode ? (
+          <BarCodeScanner
+            onBarCodeScanned={handleBarCodeScanned}
+            style={styles.barcode}
+          />
+        ) : (
+          <>
+            <View style={styles.inputContainer}>
+              <CustomInput
+                placeholder="Recipent address"
+                value={address}
+                onChangeText={(text) => setAddress(text)}
+                rightComponent={
+                  <TouchableOpacity onPress={fetchCopiedText}>
+                    <CustomText style={styles.pasteText}>PASTE</CustomText>
+                  </TouchableOpacity>
+                }
+              />
             </View>
-          }
-        />
+            <View style={styles.inputContainer}>
+              <CustomInput
+                value={String(amount || "")}
+                onChangeText={(text) => setAmount(Number(text))}
+                placeholder={`Amount in ${currency}`}
+                rightComponent={
+                  <View style={styles.amountRight}>
+                    <TouchableOpacity onPress={setMaxAmount}>
+                      <CustomText style={styles.maxText}>max</CustomText>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={toggleCurrency}
+                      style={styles.tablet}
+                    >
+                      <CustomText style={styles.tabletText}>
+                        {currency}
+                      </CustomText>
+                    </TouchableOpacity>
+                  </View>
+                }
+              />
+            </View>
+            <CustomText style={styles.availableText}>
+              Available in wallet: 0.0034 BTC
+            </CustomText>
+          </>
+        )}
       </View>
-      <CustomText style={styles.availableText}>
-        Available in wallet: 0.0034 BTC
-      </CustomText>
     </ScreenLayout>
   );
 };

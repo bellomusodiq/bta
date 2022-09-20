@@ -35,7 +35,7 @@ const MenuBtns: React.FC = () => {
           onPress={() => navigation.navigate("Portfolio")}
           style={[styles.button, { backgroundColor: "#F8F2FF" }]}
         >
-          <ChartSquare variant="Bold" color="#9747FF" size={24} />
+          <ChartSquare variant="Bold" color="#9747FF" size={23} />
         </TouchableOpacity>
         <CustomText style={styles.title}>Portfolio</CustomText>
       </View>
@@ -44,7 +44,7 @@ const MenuBtns: React.FC = () => {
         onPress={() => navigation.navigate("ManageAsset")}
           style={[styles.button, { backgroundColor: "#FFF3EC" }]}
         >
-          <Candle variant="Bold" color="#F45D01" size={24} />
+          <Candle variant="Bold" color="#F45D01" size={23} />
         </TouchableOpacity>
         <CustomText style={styles.title}>Manage</CustomText>
       </View>

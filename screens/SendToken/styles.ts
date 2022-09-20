@@ -3,6 +3,18 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: "red",
+    height: "100%",
+  },
+  barcode: {
+    width: "100%",
+    height: width(0.9),
+    position: "absolute",
+    left: 0,
+    top: 0,
+  },
   inputContainer: {
     marginTop: RFValue(20),
   },

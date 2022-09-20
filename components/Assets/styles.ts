@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginLeft: -width(0.05),
   },
   tabItem: {
-    paddingTop: 16,
+    paddingTop: 10,
     marginHorizontal: 24,
   },
   tabItemText: {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3861FB",
     borderRadius: 1,
     position: "relative",
-    marginTop: 16,
+    marginTop: 10,
     marginBottom: -1,
   },
 });
