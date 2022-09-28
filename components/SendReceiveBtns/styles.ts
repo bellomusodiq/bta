@@ -9,14 +9,17 @@ const styles = StyleSheet.create({
     marginTop: RFValue(15),
     paddingHorizontal: RFValue(15),
   },
+  buttonContainer: {
+    alignItems: "center",
+  },
   button: {
     borderRadius: RFValue(45),
-    padding: RFValue(12.5),
+    padding: RFValue(8.5),
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    width: RFValue(47),
-    height: RFValue(47),
+    width: RFValue(38),
+    height: RFValue(38),
   },
   buttonText: {
     fontSize: RFValue(16),

@@ -64,6 +64,8 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   route: { params },
 }) => {
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
+  const [filterData, setFilterData] = useState<any>(TRADE_ITEMS);
+  const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = () => {
@@ -72,6 +74,14 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
     } else {
       navigation.navigate("SellCrypto");
     }
+  };
+
+  const onSearch = (text: string) => {
+    setQuery(text);
+    const result = TRADE_ITEMS.filter((item) =>
+      item.title.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilterData(result);
   };
 
   useEffect(() => {
@@ -95,9 +105,11 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
       <CustomInput
         icon={<SearchNormal1 size={RFValue(15)} color="#979797" />}
         placeholder="Search for a token"
+        value={query}
+        onChangeText={onSearch}
       />
       <FlatList
-        data={TRADE_ITEMS}
+        data={filterData}
         renderItem={({ item }) => (
           <TradeItem
             title={item.title}

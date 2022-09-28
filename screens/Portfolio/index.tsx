@@ -1,12 +1,13 @@
 import {
   Export,
+  Eye,
   EyeSlash,
   Import,
   MoneyRecive,
   More,
   SearchNormal1,
 } from "iconsax-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
@@ -21,6 +22,33 @@ import TronImage from "../../assets/images/TRX.png";
 import USDTImage from "../../assets/images/USDT.png";
 import UpTrendIcon from "../../components/icons/uptrend-icon";
 import { useNavigation } from "@react-navigation/native";
+
+const data = [
+  {
+    id: 1,
+    amountUSD: 20.44,
+    amountCrypto: 0.007,
+    currency: "BTC",
+    title: "Bitcoin",
+    image: BitcoinImage,
+  },
+  {
+    id: 1,
+    amountUSD: 20.44,
+    amountCrypto: 0.007,
+    currency: "LTC",
+    title: "Litecoin",
+    image: LTCImage,
+  },
+  {
+    id: 1,
+    amountUSD: 20.44,
+    amountCrypto: 0.007,
+    currency: "TRX",
+    title: "Tron",
+    image: TronImage,
+  },
+];
 
 const AssetItem: React.FC<any> = ({
   image,
@@ -59,10 +87,25 @@ const AssetItem: React.FC<any> = ({
   </>
 );
 const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
+  const [showBalance, setShowBalance] = useState<boolean>(true);
+  const [assetItems, setAssetItems] = useState(data);
+  const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
   const navigateToDetail = () => {
     // @ts-ignore-next-line
     navigation.navigate("AssetDetail");
+  };
+
+  const toggleBalance = () => setShowBalance(!showBalance);
+
+  const onSearch = (text: string) => {
+    setQuery(text);
+    const result = data.filter(
+      (item) =>
+        item.title.toLowerCase().includes(text.toLowerCase()) ||
+        item.currency.toLowerCase().includes(text.toLowerCase())
+    );
+    setAssetItems(result);
   };
 
   return (
@@ -81,7 +124,9 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
       }
     >
       <CustomText style={styles.holdings}>Total holdings</CustomText>
-      <CustomText style={styles.amount1}>$1,567.88</CustomText>
+      <CustomText style={styles.amount1}>
+        ${showBalance ? "1,567.88" : "****"}
+      </CustomText>
       <View style={styles.growthContainer}>
         <CustomText style={styles.growth}>
           + 22.5% growth in 24 hours
@@ -121,43 +166,36 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
             <CustomText style={styles.assetCount}>9</CustomText>
           </View>
         </View>
-        <TouchableOpacity style={styles.toggleTitle}>
-          <EyeSlash size={20} color="black" />
-          <CustomText style={styles.toggleText}>Hide 0 Balance</CustomText>
+        <TouchableOpacity onPress={toggleBalance} style={styles.toggleTitle}>
+          {showBalance ? (
+            <EyeSlash size={20} color="black" />
+          ) : (
+            <Eye size={20} color="black" />
+          )}
+          <CustomText style={styles.toggleText}>
+            {showBalance ? "Hide" : "Show"} Balance
+          </CustomText>
         </TouchableOpacity>
       </View>
       <CustomInput
         icon={<SearchNormal1 size={20} color="#979797" />}
         style={styles.searchInput}
         placeholder="Search for a token"
+        value={query}
+        onChangeText={onSearch}
       />
-      <AssetItem
-        image={BitcoinImage}
-        amountUSD={20.44}
-        amountCrypto={0.007}
-        currency="BTC"
-        title="Bitcoin"
-        onPress={navigateToDetail}
-        noPercentage
-      />
-      <AssetItem
-        image={LTCImage}
-        amountUSD={20.44}
-        amountCrypto={0.007}
-        currency="LTC"
-        title="Litecoin"
-        onPress={navigateToDetail}
-        noPercentage
-      />
-      <AssetItem
-        image={TronImage}
-        amountUSD={20.44}
-        amountCrypto={0.007}
-        currency="TRX"
-        title="Tron"
-        onPress={navigateToDetail}
-        noPercentage
-      />
+      {assetItems.map((asset) => (
+        <AssetItem
+          key={asset.currency}
+          image={asset.image}
+          amountUSD={asset.amountUSD}
+          amountCrypto={asset.amountCrypto}
+          currency={asset.currency}
+          title={asset.title}
+          onPress={navigateToDetail}
+          noPercentage
+        />
+      ))}
     </ScreenLayout>
   );
 };

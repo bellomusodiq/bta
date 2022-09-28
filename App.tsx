@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -32,6 +32,14 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return <Navigation colorScheme={colorScheme} />;
+    return (
+      <View style={{ flex: 1 }}>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar
+          backgroundColor="white"
+          barStyle="dark-content"
+        />
+      </View>
+    );
   }
 }

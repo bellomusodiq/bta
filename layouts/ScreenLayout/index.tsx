@@ -16,7 +16,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   flexibleHeader,
 }) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       {showHeader && (
         <MainHeader
           showShadow={showShadow}
@@ -26,7 +26,12 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
         />
       )}
       {scrollable ? (
-        <ScrollView style={styles.container}>{children}</ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+        >
+          {children}
+        </ScrollView>
       ) : (
         <View style={styles.container}>{children}</View>
       )}
