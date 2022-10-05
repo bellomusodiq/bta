@@ -51,6 +51,13 @@ const styles = StyleSheet.create({
     color: "#979797",
     fontSize: RFValue(12),
   },
+  error: {
+    textAlign: "center",
+    marginTop: 24,
+    marginBottom: 40,
+    color: "red",
+    fontSize: RFValue(12),
+  },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",

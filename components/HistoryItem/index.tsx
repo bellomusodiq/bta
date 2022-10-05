@@ -12,29 +12,42 @@ const HistoryItem: React.FC<HistoryItemProps> = ({
   tokenAmount,
   title,
   date,
-  onPress
-}) => (
-  <TouchableOpacity onPress={onPress} style={styles.container}>
-    <View style={styles.iconContainer}>
-      {type === "out" ? (
-        <MoneySend size="20" color="#27C27A" />
-      ) : (
-        <MoneyRecive size="20" color="#27C27A" />
-      )}
-    </View>
-    <View style={styles.mainContainer}>
-      <View style={styles.textContainer}>
-        <CustomText style={styles.title}>{title}</CustomText>
-        <CustomText style={styles.usdAmount}>${usdAmount}</CustomText>
+  onPress,
+  status,
+}) => {
+  let color = "#27C27A";
+  let backgroundColor = "#EFFCF6";
+  if (status === "pending") {
+    color = "#EBB101";
+    backgroundColor = "#FFF9E9";
+  }
+  if (status === "failed") {
+    color = "#FF5C5C";
+    backgroundColor = "#FFF3F3";
+  }
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <View style={[styles.iconContainer, { backgroundColor }]}>
+        {type === "out" ? (
+          <MoneySend size="20" color={color} />
+        ) : (
+          <MoneyRecive size="20" color={color} />
+        )}
       </View>
-      <View style={styles.dateContainer}>
-        <CustomText style={styles.tokenAmount}>
-          {tokenAmount} {token}
-        </CustomText>
-        <CustomText style={styles.date}>{date}</CustomText>
+      <View style={styles.mainContainer}>
+        <View style={styles.textContainer}>
+          <CustomText style={styles.title}>{title}</CustomText>
+          <CustomText style={styles.usdAmount}>${usdAmount}</CustomText>
+        </View>
+        <View style={styles.dateContainer}>
+          <CustomText style={styles.tokenAmount}>
+            {tokenAmount} {token}
+          </CustomText>
+          <CustomText style={styles.date}>{date}</CustomText>
+        </View>
       </View>
-    </View>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+  );
+};
 
 export default HistoryItem;

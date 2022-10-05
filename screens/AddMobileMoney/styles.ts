@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3861FB",
     marginVertical: RFValue(10),
     marginHorizontal: width(0.05),
+    width: "90%",
     padding: RFValue(16),
     justifyContent: "center",
     alignItems: "center",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import CustomText from "../CustomText";
 import styles from "./styles";
@@ -27,25 +27,28 @@ const TrendFilterItem: React.FC<TrendFilterItemProps> = ({
   </TouchableOpacity>
 );
 
-const TrendFilter: React.FC = () => {
-  const [currentTrend, setCurrentTrend] = useState<string>("15m");
+const TrendFilter: React.FC<{ onSetTrend: (currentTrend: string) => {} }> = ({
+  onSetTrend,
+}) => {
+  const [currentTrend, setCurrentTrend] = useState<string>("daily");
   const data: TrendFilterItemProps[] = [
     {
-      title: "15m",
+      title: "daily",
     },
     {
-      title: "1hr",
+      title: "weekly",
     },
     {
-      title: "1day",
+      title: "monthly",
     },
     {
-      title: "1month",
-    },
-    {
-      title: "More",
+      title: "yearly",
     },
   ];
+
+  useEffect(() => {
+    onSetTrend(currentTrend);
+  }, [currentTrend]);
   return (
     <FlatList
       data={data}

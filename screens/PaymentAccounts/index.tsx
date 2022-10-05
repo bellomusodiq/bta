@@ -1,11 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
-import { Add, Bank, Mobile } from "iconsax-react-native";
-import React, { useState } from "react";
-import { FlatList, TextInput, TouchableOpacity, View } from "react-native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { Bank, Mobile } from "iconsax-react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import {
+  paymentAccountApi,
+  paymentAccountPlatformsApi,
+} from "../../api/profile.api";
+import CustomButton from "../../components/CustomButton";
 import CustomText from "../../components/CustomText";
 import PaymentItem from "../../components/PaymentItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
+import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
@@ -14,7 +20,14 @@ const data = Array(4).fill(1);
 const PaymentAccountsScreen: React.FC<
   RootStackScreenProps<"PaymentAccounts">
 > = ({ route }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [paymentAccounts, setPaymentAccounts] = useState<any>([]);
+  const [paymentPlatforms, setPaymentPlatforms] = useState<any>([]);
 
   const onContinue = () => {
     navigation.navigate("SellCrypto", {
@@ -27,8 +40,8 @@ const PaymentAccountsScreen: React.FC<
   const renderItem = (item, i) => (
     <View key={i} style={styles.itemContainer}>
       <PaymentItem
-        title="Emmanuel Kwabena Nkrumah"
-        description="ACCESS BANK - 069XXXXXX"
+        title={item.nameOnAccount}
+        description={`${item.networkCode} - ${item.number}`}
         icon={
           <View style={styles.iconContainer}>
             <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
@@ -39,40 +52,87 @@ const PaymentAccountsScreen: React.FC<
     </View>
   );
 
+  const getPaymentList = async () => {
+    const result = await paymentAccountApi(user.token);
+    if (result.success) {
+      setLoading(false);
+      setPaymentAccounts(result.info);
+    } else {
+      setError(true);
+    }
+  };
+
+  const getPaymentPlatforms = async () => {
+    const result = await paymentAccountPlatformsApi(user.token);
+    if (result.success) {
+      setLoading(false);
+      setPaymentPlatforms(result.info);
+    } else {
+      setError(true);
+    }
+  };
+
+  const fetchPaymentDetails = async () => {
+    setLoading(true);
+    setError(false);
+    await getPaymentPlatforms();
+    await getPaymentList();
+  };
+
+  useEffect(() => {
+    fetchPaymentDetails();
+  }, [isFocused]);
+
   return (
     <ScreenLayout scrollable showHeader showShadow title="Payment accounts">
-      <CustomText style={styles.paymentTitle2}>
-        Add bank accounts or mobile money account for payments. You can add up
-        to to 5 payment accounts
-      </CustomText>
-      <View style={styles.accountContainer}>
-        <PaymentItem
-          title="Add Mobile money"
-          description="MTN momo"
-          icon={
-            <View style={styles.iconContainer}>
-              <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
-            </View>
-          }
-          onPress={() => navigation.navigate("AddMobileMoney")}
-        />
-      </View>
-      <PaymentItem
-        title="Add Bank Account"
-        description="Select bank"
-        icon={
-          <View style={styles.iconContainer}>
-            <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
+      {loading || error ? (
+        <View style={styles.loadingContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <CustomText style={styles.errorText}>
+                Something went wrong
+              </CustomText>
+              <CustomButton onPress={getPaymentList}>Try again</CustomButton>
+            </>
+          )}
+        </View>
+      ) : (
+        <>
+          <CustomText style={styles.paymentTitle2}>
+            Add bank accounts or mobile money account for payments. You can add
+            up to to 5 payment accounts
+          </CustomText>
+          <View style={styles.accountContainer}>
+            <PaymentItem
+              title="Add Mobile money"
+              description="MTN momo"
+              icon={
+                <View style={styles.iconContainer}>
+                  <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
+                </View>
+              }
+              onPress={() => navigation.navigate("AddMobileMoney")}
+            />
           </View>
-        }
-        onPress={() => navigation.navigate("AddBankAccount")}
-      />
-      <View style={styles.dividerFull} />
-      <CustomText style={styles.paymentTitle2}>
-        Your saved payment methods
-      </CustomText>
-      {/* <FlatList renderItem={renderItem} data={data} /> */}
-      {data.map((item, i) => renderItem(item, i))}
+          <PaymentItem
+            title="Add Bank Account"
+            description="Select bank"
+            icon={
+              <View style={styles.iconContainer}>
+                <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
+              </View>
+            }
+            onPress={() => navigation.navigate("AddBankAccount")}
+          />
+          <View style={styles.dividerFull} />
+          <CustomText style={styles.paymentTitle2}>
+            Your saved payment methods
+          </CustomText>
+          {paymentAccounts.map((item, i) => renderItem(item, i))}
+        </>
+      )}
     </ScreenLayout>
   );
 };

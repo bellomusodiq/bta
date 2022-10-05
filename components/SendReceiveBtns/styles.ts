@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: RFValue(15),
-    paddingHorizontal: RFValue(15),
+    paddingHorizontal: RFValue(22),
   },
   buttonContainer: {
     alignItems: "center",
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
-    marginTop: 8,
+    marginTop: 0,
   },
 });
 

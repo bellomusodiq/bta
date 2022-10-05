@@ -1,9 +1,11 @@
-import { MedalStar } from "iconsax-react-native";
-import React from "react";
+import { Flag2, MedalStar } from "iconsax-react-native";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { accountLimitsApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
+import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
@@ -31,6 +33,24 @@ const Limit: React.FC<{
 const AccountLimitsScreen: React.FC<
   RootStackScreenProps<"AccountLimits">
 > = () => {
+  const { user } = useAppSelector((state) => state.auth);
+  const [accountLimits, setAccountLimits] = useState<any>({});
+
+  const getAccountLimits = async () => {
+    const result = await accountLimitsApi(user.token);
+    if (result.success) {
+      setAccountLimits(result.info);
+    }
+  };
+
+  useEffect(() => {
+    getAccountLimits();
+  }, []);
+
+  const getFraction = (limit: number, left: number) => {
+    return left / limit;
+  };
+
   return (
     <ScreenLayout scrollable showHeader showShadow title="Account limits">
       <View style={styles.container}>
@@ -40,27 +60,41 @@ const AccountLimitsScreen: React.FC<
         <View style={styles.card}>
           <View style={styles.itemContainer}>
             <CustomText style={styles.keyText}>Send crypto</CustomText>
-            <CustomText style={styles.valueText}>Unlimied</CustomText>
+            <CustomText style={styles.valueText}>
+              {accountLimits?.cryptoSend}
+            </CustomText>
           </View>
           <View style={styles.divider} />
           <View style={styles.itemContainer}>
             <CustomText style={styles.keyText}>Receive crypto</CustomText>
-            <CustomText style={styles.valueText}>Unlimied</CustomText>
+            <CustomText style={styles.valueText}>
+              {accountLimits?.cryptoReceive}
+            </CustomText>
           </View>
         </View>
         <CustomText style={styles.header}>Buy</CustomText>
         <View style={styles.card}>
           <Limit
             title="Total limit"
-            totalAmount="$1,000 daily"
-            totalLeft="$800 left"
-            completed={0.25}
+            totalAmount={`$${accountLimits?.buyLimit} daily`}
+            totalLeft={`$${accountLimits?.buyAvailable?.amount} left`}
+            completed={
+              getFraction(
+                accountLimits?.cryptoSend,
+                accountLimits?.buyAvailable?.amount
+              ) || 0
+            }
           />
           <Limit
             title="USDT limit"
-            totalAmount="$2,000 daily"
-            totalLeft="$1,800 left"
-            completed={0.15}
+            totalAmount={`$${accountLimits?.usdtBuyLimit} daily`}
+            totalLeft={`$${accountLimits?.buyAvailable?.amount} left`}
+            completed={
+              getFraction(
+                accountLimits?.useBuyLimit,
+                accountLimits?.buyAvailable?.amount
+              ) || 0
+            }
             addMargin
           />
         </View>
@@ -68,15 +102,25 @@ const AccountLimitsScreen: React.FC<
         <View style={styles.card}>
           <Limit
             title="Total limit"
-            totalAmount="$100,000 daily"
-            totalLeft="$100,000 left"
-            completed={0}
+            totalAmount={`$${accountLimits?.sellLimit} daily`}
+            totalLeft={`$${accountLimits?.sellAvailable?.amount} left`}
+            completed={
+              getFraction(
+                accountLimits?.cryptoReceive,
+                accountLimits?.sellAvailable?.amount
+              ) || 0
+            }
           />
           <Limit
             title="USDT limit"
-            totalAmount="$10,000,000 daily"
-            totalLeft="$10,000,000 left"
-            completed={0}
+            totalAmount={`$${accountLimits?.usdtSellLimit} daily`}
+            totalLeft={`$${accountLimits?.sellAvailable?.amount} left`}
+            completed={
+              getFraction(
+                accountLimits?.usdtSellLimit,
+                accountLimits?.sellAvailable?.amount
+              ) || 0
+            }
             addMargin
           />
         </View>
@@ -85,20 +129,28 @@ const AccountLimitsScreen: React.FC<
           <View style={styles.softBanHeader}>
             <CustomText style={styles.softBanTitle}>Soft Ban</CustomText>
             <View style={styles.softBanContainer}>
-              <CustomText style={styles.softBanText}>NO</CustomText>
+              <CustomText style={styles.softBanText}>
+                {accountLimits.softBan ? "Yes" : "No"}
+              </CustomText>
             </View>
           </View>
           <CustomText style={styles.softBanDescription}>
-            No restrictions are placed on your account. Buy, sell, send and
-            receive freely
+            {accountLimits.softBan
+              ? "Your account has been restricted, please contact customer care"
+              : "No restrictions are placed on your account. Buy, sell, send and receive freely"}
           </CustomText>
         </View>
         <CustomText style={styles.header}>KYC status</CustomText>
         <View style={styles.note}>
-          <MedalStar size={RFValue(24)} color="#3861FB" />
+          {accountLimits.kycVerified ? (
+            <MedalStar size={RFValue(24)} color="#3861FB" />
+          ) : (
+            <Flag2 size={RFValue(24)} color="#3861FB" />
+          )}
           <CustomText style={styles.noteText}>
-            Your are currently on KYC level 3. this means you have the highest
-            verification badge
+            {accountLimits.kycVerified
+              ? "Your are currently on KYC level 3. this means you have the highest verification badge"
+              : "You need to verify kyc"}
           </CustomText>
         </View>
       </View>

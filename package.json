@@ -16,12 +16,16 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/datetimepicker": "6.1.2",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/material-top-tabs": "^6.2.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
+    "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
+    "currency-to-abbreviation": "^2.0.1",
     "expo": "~45.0.0",
     "expo-app-loading": "^2.0.0",
     "expo-asset": "~8.5.0",
@@ -57,17 +61,24 @@
     "react-native-svg": "^12.1.1",
     "react-native-switch-toggle": "^2.2.1",
     "react-native-tab-view": "^3.1.1",
+    "react-native-toast-message": "^2.1.5",
     "react-native-wagmi-charts": "^2.1.0",
-    "react-native-web": "0.17.7"
+    "react-native-web": "0.17.7",
+    "react-redux": "^8.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@types/react": "~17.0.21",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "@types/react-native": "~0.66.13",
     "jest": "^26.6.3",
     "jest-expo": "~45.0.0",
     "react-test-renderer": "17.0.2",
     "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   },
   "private": true
 }

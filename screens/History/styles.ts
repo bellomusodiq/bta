@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: width(0.05),
     paddingVertical: height(0.02),
-    marginTop: height(0.04)
+    marginTop: height(0.04),
   },
   footerButton: {
     justifyContent: "center",
@@ -151,6 +151,14 @@ const styles = StyleSheet.create({
   },
   footerButtonText: {
     color: "white",
+    fontSize: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
     fontSize: 16,
   },
 });

@@ -6,4 +6,5 @@ export interface HistoryItemProps {
   date: string;
   tokenAmount: number;
   onPress?: () => void;
+  status: "pending" | "success" | "failed";
 }

@@ -8,12 +8,17 @@ import styles from "./styles";
 import FaceImage from "../../assets/images/face.png";
 import { TagCross } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppSelector } from "../../store";
 
 const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
   const navigation = useNavigation();
+  const { user } = useAppSelector((state) => state.auth);
+
   const [pin, setPin] = useState<string>("");
   const [compatible, setCompatible] = useState<boolean>(false);
   const [fingerprints, setFingerprints] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const updatePin = (digit: string) => {
     if (pin.length < 4) {
@@ -27,10 +32,21 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
     }
   };
 
-  useEffect(() => {
-    if (pin.length === 4) {
+  const checkPin = async () => {
+    const userPin = await AsyncStorage.getItem("@pin");
+    if (userPin && userPin === pin) {
       // @ts-ignore-next-line
       navigation.replace("Root");
+    } else {
+      setError("Incorrect pin. Try again!");
+    }
+  };
+
+  useEffect(() => {
+    if (pin.length === 4) {
+      checkPin();
+    } else {
+      setError("");
     }
   }, [pin]);
 
@@ -67,7 +83,7 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
           <CustomText style={styles.nameText}>Not Emmanuel?</CustomText>
         </TouchableOpacity>
       </View>
-      <CustomText style={styles.email}>Emmanuel***@***.com</CustomText>
+      <CustomText style={styles.email}>{user.email}</CustomText>
       <View style={styles.divider} />
       <View style={styles.pinContainer}>
         {Array(4)
@@ -78,7 +94,13 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
             </View>
           ))}
       </View>
-      <CustomText style={styles.enterPin}>Enter your pin to log in</CustomText>
+      {error ? (
+        <CustomText style={styles.errorPin}>{error}</CustomText>
+      ) : (
+        <CustomText style={styles.enterPin}>
+          Enter your pin to log in
+        </CustomText>
+      )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => updatePin("1")}>
           <CustomText style={styles.buttonText}>1</CustomText>

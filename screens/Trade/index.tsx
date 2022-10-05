@@ -14,9 +14,14 @@ import LTCImage from "../../assets/images/LTC.png";
 import TRXImage from "../../assets/images/TRX.png";
 import DOGEImage from "../../assets/images/DOGE.png";
 import USDTImage from "../../assets/images/USDT.png";
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import TradeItem from "../../components/TradeItem";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { setDashboardData } from "../../store/auth.slice";
+import { loadDashboard } from "../../api/dashboard.api";
+import { err } from "react-native-svg/lib/typescript/xml";
+import CustomButton from "../../components/CustomButton";
 
 const TAB_DATA: TabItemProps[] = [
   {
@@ -27,49 +32,32 @@ const TAB_DATA: TabItemProps[] = [
   },
 ];
 
-const TRADE_ITEMS: TradeItemProps[] = [
-  {
-    title: "Bitcoin",
-    price: "$20,750.89",
-    rate: 8.2,
-    image: BTCImage,
-  },
-  {
-    title: "Doge",
-    price: "$0.06",
-    rate: 8.2,
-    image: DOGEImage,
-  },
-  {
-    title: "Litecoin",
-    price: "$50.45",
-    rate: 8.2,
-    image: LTCImage,
-  },
-  {
-    title: "Tron",
-    price: "$0.06",
-    rate: 8.2,
-    image: TRXImage,
-  },
-  {
-    title: "Tether",
-    price: "$1",
-    rate: 8.2,
-    image: USDTImage,
-  },
-];
+const coinImage = {
+  BTC: BTCImage,
+  BCH: BTCImage,
+  DOGE: DOGEImage,
+  LTC: LTCImage,
+  TRX: TRXImage,
+  USDT: USDTImage,
+};
 
 const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   route: { params },
 }) => {
-  const [curerntIndex, setCurrentIndex] = useState<number>(0);
-  const [filterData, setFilterData] = useState<any>(TRADE_ITEMS);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const { dashboardData, user } = useAppSelector((state) => state.auth);
+  const [filterData, setFilterData] = useState<any>(
+    dashboardData?.currencies || []
+  );
   const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>("");
+  const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = () => {
-    if (curerntIndex === 0) {
+    if (currentIndex === 0) {
       navigation.navigate("BuyCrypto");
     } else {
       navigation.navigate("SellCrypto");
@@ -78,8 +66,8 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
 
   const onSearch = (text: string) => {
     setQuery(text);
-    const result = TRADE_ITEMS.filter((item) =>
-      item.title.toLowerCase().includes(text.toLowerCase())
+    const result = dashboardData?.currencies.filter((item) =>
+      item.name.toLowerCase().includes(text.toLowerCase())
     );
     setFilterData(result);
   };
@@ -89,16 +77,33 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
       setCurrentIndex(1);
     }
   }, [params]);
+
+  const getDashboardData = async () => {
+    setLoading(true);
+    setError(null);
+    const result = await loadDashboard(user?.token);
+    setLoading(false);
+    if (result.success) {
+      dispatch(setDashboardData(result));
+    } else {
+      setError("Something went wrong, Try again!");
+    }
+  };
+
+  useEffect(() => {
+    getDashboardData();
+  }, [isFocused]);
+
   return (
     <ScreenLayout>
       <CustomText style={styles.header}>Trade</CustomText>
       <Tab
         tabs={TAB_DATA}
         onTabChange={(index) => setCurrentIndex(index)}
-        activeIndex={curerntIndex}
+        activeIndex={currentIndex}
       />
       <CustomText style={styles.text}>
-        {curerntIndex === 0
+        {currentIndex === 0
           ? "Purchase crypto directly from your bank account without limit and restrictions"
           : "Sell your crypto instantly for cash"}
       </CustomText>
@@ -108,21 +113,36 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
         value={query}
         onChangeText={onSearch}
       />
-      <FlatList
-        data={filterData}
-        renderItem={({ item }) => (
-          <TradeItem
-            title={item.title}
-            image={item.image}
-            price={item.price}
-            rate={item.rate}
-            tradeType={curerntIndex === 0 ? "buy" : "sell"}
-            onPress={navigateToBuyOrSell}
-          />
-        )}
-        style={styles.tradeItems}
-        ItemSeparatorComponent={() => <View style={styles.divider} />}
-      />
+      {loading || error ? (
+        <View style={styles.loadingContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <CustomText style={styles.errorText}>
+                Something went wrong
+              </CustomText>
+              <CustomButton onPress={getDashboardData}>Try again</CustomButton>
+            </>
+          )}
+        </View>
+      ) : (
+        <FlatList
+          data={filterData}
+          renderItem={({ item }) => (
+            <TradeItem
+              title={item.name}
+              image={coinImage[item.symbol]}
+              price={`$${item.price}`}
+              rate={currentIndex === 0 ? item.rates.buy : item.rates.sell}
+              tradeType={currentIndex === 0 ? "buy" : "sell"}
+              onPress={navigateToBuyOrSell}
+            />
+          )}
+          style={styles.tradeItems}
+          ItemSeparatorComponent={() => <View style={styles.divider} />}
+        />
+      )}
     </ScreenLayout>
   );
 };

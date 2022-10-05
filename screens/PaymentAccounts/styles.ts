@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { width } from "../../consts/dimenentions";
+import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   paymentContainer: {
@@ -149,6 +149,15 @@ const styles = StyleSheet.create({
   },
   accountContainer: {
     marginBottom: RFValue(15),
+  },
+  loadingContainer: {
+    flex: 1,
+    height: height(0.85),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
   },
 });
 

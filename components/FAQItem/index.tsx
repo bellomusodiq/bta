@@ -5,7 +5,7 @@ import CustomText from "../CustomText";
 import styles from "./styles";
 import { FAQItemProps } from "./types";
 
-const FAQItem: React.FC<FAQItemProps> = ({ title, description }) => {
+const FAQItem: React.FC<FAQItemProps> = ({ title, content }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -21,7 +21,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ title, description }) => {
       {open ? (
         <>
           <View style={styles.divider} />
-          <CustomText style={styles.description}>{description}</CustomText>
+          <CustomText style={styles.description}>{content}</CustomText>
         </>
       ) : null}
     </TouchableOpacity>

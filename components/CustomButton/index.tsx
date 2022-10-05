@@ -3,12 +3,13 @@ import {
   TextStyle,
   TouchableOpacity,
   TouchableOpacityProps,
+  ActivityIndicator,
 } from "react-native";
 import CustomText from "../CustomText";
 import styles from "./styles";
 
 const CustomButton: React.FC<
-  TouchableOpacityProps & { buttonText?: TextStyle }
+  TouchableOpacityProps & { buttonText?: TextStyle; loading?: boolean }
 > = ({ style, buttonText, ...props }) => (
   <TouchableOpacity
     {...props}
@@ -20,9 +21,13 @@ const CustomButton: React.FC<
       style,
     ]}
   >
-    <CustomText style={[styles.footerButtonText, buttonText]}>
-      {props.children}
-    </CustomText>
+    {props.loading ? (
+      <ActivityIndicator size="small" color="white" />
+    ) : (
+      <CustomText style={[styles.footerButtonText, buttonText]}>
+        {props.children}
+      </CustomText>
+    )}
   </TouchableOpacity>
 );
 

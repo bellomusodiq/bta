@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootTabScreenProps } from "../../types";
@@ -28,11 +28,46 @@ import ProfileItems from "../../components/ProfileItems";
 import BitAfrikaImage from "../../assets/images/bitafrika.png";
 import { useNavigation } from "@react-navigation/native";
 import SendIcon from "../../components/icons/send-icon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StackActions } from "@react-navigation/native";
+import { logoutHandler } from "../../utils/logout";
+import {
+  disableNotificationApi,
+  enableNotificationApi,
+  getNotificationStatusApi,
+} from "../../api/profile.api";
+import { useAppSelector } from "../../store";
 
 const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const [biometrics, setBiometrics] = useState<boolean>(true);
   const [notification, setNotification] = useState<boolean>(true);
+
+  const onSignOut = async () => {
+    await AsyncStorage.removeItem("@user");
+    navigation.dispatch(StackActions.popToTop());
+  };
+
+  const toggleNotification = async () => {
+    setNotification(!notification);
+    if (notification) {
+      await disableNotificationApi(user.token);
+    } else {
+      await enableNotificationApi(user.token, "some-token");
+    }
+  };
+
+  const getNotificationStatus = async () => {
+    const result = await getNotificationStatusApi(user.token);
+    if (result.success) {
+      setNotification(result.tokenEnabled);
+    }
+  };
+
+  useEffect(() => {
+    getNotificationStatus();
+  }, [])
 
   return (
     <ScreenLayout scrollable>
@@ -75,7 +110,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
             icon: <Notification size={24} color="#3861FB" variant="Bold" />,
             isToggle: true,
             active: notification,
-            onToggle: () => setNotification(!notification),
+            onToggle: toggleNotification,
           },
           {
             title: "Manage crypto asset",
@@ -114,7 +149,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           },
           {
             title: "Change PIN",
-            onPress: () => {},
+            onPress: () => navigation.navigate("SetPin"),
             icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
           },
         ]}
@@ -175,7 +210,10 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         ]}
         title="Deactivate"
       />
-      <TouchableOpacity style={styles.logoutButton}>
+      <TouchableOpacity
+        onPress={() => logoutHandler(navigation)}
+        style={styles.logoutButton}
+      >
         <CustomText style={styles.logoutButtonText}>SIGN OUT</CustomText>
       </TouchableOpacity>
       <Image

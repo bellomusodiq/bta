@@ -9,6 +9,7 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useIsFocused,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -82,6 +83,9 @@ import AddPaymentMethodScreen from "../screens/AddPaymentMethod";
 import PortfolioScreen from "../screens/Portfolio";
 import PendingScreen from "../screens/Pending";
 import NotificationsScreen from "../screens/Notifications";
+import { useAppDispatch, useAppSelector } from "../store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setUser } from "../store/auth.slice";
 
 export default function Navigation({
   colorScheme,
@@ -105,6 +109,22 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const isFocused = useIsFocused();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+
+  const getUser = async () => {
+    const result = await AsyncStorage.getItem("@user");
+    if (result) {
+      const user = JSON.parse(result);
+      dispatch(setUser(user));
+    }
+  };
+
+  React.useEffect(() => {
+    getUser();
+  }, [user, isFocused]);
+
   return (
     <Stack.Navigator
       screenOptions={{

@@ -48,6 +48,13 @@ const styles = StyleSheet.create({
     borderColor: "#F0F0F0",
     borderRadius: 124,
   },
+  error: {
+    textAlign: "center",
+    alignSelf: "center",
+    marginVertical: 10,
+    color: "red",
+    fontSize: 16,
+  },
 });
 
 export default styles;

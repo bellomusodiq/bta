@@ -5,13 +5,13 @@ import CustomText from "../CustomText";
 import CloseIcon from "../icons/close-icon";
 import styles from "./styles";
 
-const AssetDetailHeader: React.FC = () => {
+const AssetDetailHeader: React.FC<{ title: string }> = ({ title }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.left} />
       <View style={styles.center}>
-        <CustomText style={styles.centerText}>Tron (TRX)</CustomText>
+        <CustomText style={styles.centerText}>{title}</CustomText>
       </View>
       <TouchableOpacity
         onPress={() => navigation.goBack()}

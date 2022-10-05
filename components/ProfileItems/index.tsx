@@ -66,6 +66,7 @@ const ProfileItems: React.FC<ProfileItemsProps> = ({ data, title }) => {
       <CustomText style={styles.title}>{title}</CustomText>
       {data.map((item, i) => (
         <ProfileItem
+          key={`${title}${i}`}
           title={item.title}
           active={item.active}
           icon={item.icon}

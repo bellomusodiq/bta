@@ -1,5 +1,5 @@
 import { SearchNormal1, Sort } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
@@ -11,19 +11,23 @@ import { HistoryStackScreenProps, TradeStackScreenProps } from "../../types";
 import styles from "./styles";
 import EmptyTransactionsImage from "../../assets/images/empty-transactions.png";
 import {
+  ActivityIndicator,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import TradeItem from "../../components/TradeItem";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import SellHistory from "../../components/SellHistory";
 import SentHistory from "../../components/SentHistory";
 import ReceivedHistory from "../../components/ReceivedHistory";
 import ReactNativeModal from "react-native-modal";
 import CloseIcon from "../../components/icons/close-icon";
 import { HistorySelectorProps } from "./types";
+import { historyApi } from "../../api/history.api";
+import { useAppSelector } from "../../store";
+import CustomButton from "../../components/CustomButton";
 
 const TAB_DATA: TabItemProps[] = [
   {
@@ -73,11 +77,19 @@ const HistorySelector: React.FC<HistorySelectorProps> = ({
 );
 
 const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
+  const isFocused = useIsFocused();
+  const { user } = useAppSelector((state) => state.auth);
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [status, setStatus] = useState<number>(0);
   const [time, setTime] = useState<number | null>(null);
   const [currency, setCurrency] = useState<any>();
+  const [buyHistory, setBuyHistory] = useState<any>([]);
+  const [sellHistory, setSellHistory] = useState<any>([]);
+  const [receiveHistory, setReceiveHistory] = useState<any>([]);
+  const [sendHistory, setSendHistory] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = () => {
@@ -87,6 +99,48 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
       navigation.navigate("SellCrypto");
     }
   };
+
+  const getTransaction = async (
+    historyType: string,
+    transactionType?: string
+  ) => {
+    const result = await historyApi(user.token, historyType, transactionType);
+    if (result.success) {
+      switch (historyType) {
+        case "transactions":
+          if (transactionType === "receive") {
+            setReceiveHistory(result.history);
+          } else {
+            setSendHistory(result.history);
+          }
+          break;
+        case "withdrawals":
+          setSellHistory(result.history);
+          break;
+        default:
+          setBuyHistory(result.history);
+          break;
+      }
+    } else {
+      setError(true);
+    }
+  };
+
+  // console.log(receiveHistory.map((h) => h.type));
+
+  const fetchTransactions = async () => {
+    setLoading(true);
+    setError(false);
+    await getTransaction("transactions", "receive");
+    await getTransaction("transactions", "send");
+    await getTransaction("withdrawals");
+    await getTransaction("deposits");
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [isFocused]);
 
   const toggleModal = () => setShowModal(!showModal);
   return (
@@ -103,21 +157,39 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
         onTabChange={(index) => setCurrentIndex(index)}
         activeIndex={curerntIndex}
       />
-      {curerntIndex === 0 && (
-        <View style={styles.emptyContainer}>
-          <Image
-            // resizeMode="contain"
-            source={EmptyTransactionsImage}
-            style={styles.image}
-          />
-          <CustomText style={styles.text}>
-            Your transactions will show here
-          </CustomText>
+      {loading || error ? (
+        <View style={styles.loadingContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <CustomText style={styles.errorText}>
+                Something went wrong
+              </CustomText>
+              <CustomButton onPress={fetchTransactions}>Try again</CustomButton>
+            </>
+          )}
         </View>
+      ) : (
+        <>
+          {curerntIndex === 0 && (
+            <SellHistory
+              data={buyHistory}
+              type="Buy"
+              arrowType="in"
+            />
+          )}
+          {curerntIndex === 1 && (
+            <SellHistory data={sellHistory} type="Sell" arrowType="out" />
+          )}
+          {curerntIndex === 2 && (
+            <SellHistory data={sendHistory} type="Sent" arrowType="out" />
+          )}
+          {curerntIndex === 3 && (
+            <SellHistory data={receiveHistory} type="Received" arrowType="in" />
+          )}
+        </>
       )}
-      {curerntIndex === 1 && <SellHistory />}
-      {curerntIndex === 2 && <SentHistory />}
-      {curerntIndex === 3 && <ReceivedHistory />}
       <ReactNativeModal
         isVisible={showModal}
         // hasBackdrop
@@ -154,11 +226,7 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
           <View style={styles.modalDivider} />
           <HistorySelector
             title="Time"
-            data={[
-              "Today (5)",
-              "Yesterday (25)",
-              "All time (259)",
-            ]}
+            data={["Today (5)", "Yesterday (25)", "All time (259)"]}
             onChange={(i: number) => setTime(i)}
             index={time}
           />

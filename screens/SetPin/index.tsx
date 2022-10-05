@@ -6,10 +6,12 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import { TagCross } from "iconsax-react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SetPinScreen: React.FC<RootStackScreenProps<"SetPin">> = ({ route }) => {
   const navigation = useNavigation();
   const [pin, setPin] = useState<string>("");
+  const [error, setError] = useState(null);
 
   const updatePin = (digit: string) => {
     if (pin.length < 4) {
@@ -23,15 +25,26 @@ const SetPinScreen: React.FC<RootStackScreenProps<"SetPin">> = ({ route }) => {
     }
   };
 
+  const updatePinStorage = async () => {
+    await AsyncStorage.setItem("@pin", pin);
+  };
+
   useEffect(() => {
+    setError(null);
     if (pin.length === 4) {
       if (route.params?.confirm) {
-        // @ts-ignore-next-line
-        navigation.replace("Root");
+        if (route.params?.pin === pin) {
+          // @ts-ignore-next-line
+          updatePinStorage();
+          navigation.replace("Root");
+        } else {
+          setError("Pin does not match, Try again!");
+        }
       } else {
         // @ts-ignore-next-line
         navigation.push("SetPin", {
           confirm: true,
+          pin: pin,
         });
       }
     }
@@ -62,7 +75,13 @@ const SetPinScreen: React.FC<RootStackScreenProps<"SetPin">> = ({ route }) => {
             </View>
           ))}
       </View>
-      <CustomText style={styles.enterPin}>Enter your pin to log in</CustomText>
+      {error ? (
+        <CustomText style={styles.error}>{error}</CustomText>
+      ) : (
+        <CustomText style={styles.enterPin}>
+          Enter your pin to log in
+        </CustomText>
+      )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => updatePin("1")}>
           <CustomText style={styles.buttonText}>1</CustomText>

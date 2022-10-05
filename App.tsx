@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import { StatusBar, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -14,6 +13,9 @@ import {
   Inter_500Medium,
   Inter_600SemiBold,
 } from "@expo-google-fonts/inter";
+import { store } from "./store";
+import { Provider } from "react-redux";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -33,13 +35,13 @@ export default function App() {
     return null;
   } else {
     return (
-      <View style={{ flex: 1 }}>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar
-          backgroundColor="white"
-          barStyle="dark-content"
-        />
-      </View>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <Navigation colorScheme={colorScheme} />
+          <Toast />
+          <StatusBar backgroundColor="white" barStyle="dark-content" />
+        </View>
+      </Provider>
     );
   }
 }

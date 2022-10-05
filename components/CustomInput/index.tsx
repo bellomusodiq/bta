@@ -14,6 +14,7 @@ const CustomInput: React.FC<
     {icon && <View style={styles.iconContainer}>{icon}</View>}
     <TextInput
       {...props}
+      autoCapitalize="none"
       style={[styles.input, { color: inputColor }]}
       placeholderTextColor="#979797"
     />

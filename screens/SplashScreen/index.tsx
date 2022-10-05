@@ -9,6 +9,7 @@ import SplashImage3 from "../../assets/images/splash3.png";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const slides = [
   {
@@ -59,8 +60,13 @@ const SplashScreen: React.FC<RootStackScreenProps<"SplashScreen">> = () => {
     }
   };
 
-  const navigateToSignin = () => {
-    navigation.navigate("SignIn");
+  const navigateToSignin = async () => {
+    const user = await AsyncStorage.getItem("@user");
+    if (user) {
+      navigation.navigate("WelcomeBack");
+    } else {
+      navigation.navigate("SignIn");
+    }
   };
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.container}>

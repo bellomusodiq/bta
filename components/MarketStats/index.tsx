@@ -1,3 +1,4 @@
+import { CurrencyToAbbreviation } from "currency-to-abbreviation";
 import {
   ArrowRight2,
   MaximizeCircle,
@@ -35,37 +36,53 @@ const MarketStatsItem: React.FC<MarketStatsItemProps> = ({
   </View>
 );
 
-const MarketStats: React.FC = () => {
+const MarketStats: React.FC<{ marketStats: any; website: string }> = ({
+  marketStats,
+  website,
+}) => {
+
+  const getAmount = (input: number) => {
+    let value = input;
+    if (input < 0) {
+      value = -1 * input;
+    }
+    if (typeof value !== "number") {
+      value = 0;
+    }
+    return `${input < 0 ? "-" : ""}${CurrencyToAbbreviation({
+      inputNumber: value,
+    })}`;
+  };
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Market stats</CustomText>
-      <View style={styles.marketStatsContainer}>
+      <View style={styles.websiteContainer}>
         <MarketStatsItem
           icon={<MoneySend size={RFValue(24)} color="#3861FB" variant="Bold" />}
           title="Market capitalization"
-          amount="$6bn"
+          amount={getAmount(marketStats?.[0]?.market_cap)}
         />
         <MarketStatsItem
           icon={<Timer size={RFValue(24)} color="#3861FB" variant="Bulk" />}
           title="24hr volume"
-          amount="$0.5bn"
+          amount={getAmount(marketStats?.[0]?.market_cap_change_24h)}
         />
         <MarketStatsItem
           icon={
             <MaximizeCircle size={RFValue(24)} color="#3861FB" variant="Bulk" />
           }
           title="Circulating supply"
-          amount="$92.5bn"
+          amount={getAmount(marketStats?.[0]?.total_supply)}
         />
         <MarketStatsItem
           icon={<StatusUp size={RFValue(24)} color="#3861FB" variant="Bold" />}
           title="All time high"
-          amount="$0.23"
+          amount={getAmount(marketStats?.[0]?.ath)}
         />
         <MarketStatsItem
           icon={<MoneySend size={RFValue(24)} color="#3861FB" />}
           title="Explorer"
-          url="tronscan.io"
+          url={website}
           noDivider
         />
       </View>

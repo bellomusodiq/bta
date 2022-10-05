@@ -11,6 +11,10 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import MomoImage from "../../assets/images/momo.png";
 import GhanaImage from "../../assets/images/ghana.png";
+import { verifyMobileMoneyNumberApi } from "../../api/profile.api";
+import { useAppSelector } from "../../store";
+import Toast from "react-native-toast-message";
+import CustomButton from "../../components/CustomButton";
 
 const countryData = [
   {
@@ -23,6 +27,7 @@ const countryData = [
 const AddMobileMoneyScreen: React.FC<
   RootStackScreenProps<"AddMobileMoney">
 > = ({ route }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const { params } = route;
 
@@ -32,9 +37,16 @@ const AddMobileMoneyScreen: React.FC<
   const [provider, setProvider] = useState<any>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const disabled =
-    !accountName || !phoneNumber || !country || !provider || !password;
+    !accountName ||
+    !phoneNumber ||
+    !country ||
+    !provider ||
+    !password ||
+    loading;
 
   const onNavigate = () => {
     if (params?.from) {
@@ -42,6 +54,28 @@ const AddMobileMoneyScreen: React.FC<
       navigation.dispatch(popAction);
     } else {
       navigation.goBack();
+    }
+  };
+
+  const verifyMobileMoney = async () => {
+    setLoading(true);
+    setError(null);
+    const result = await verifyMobileMoneyNumberApi(
+      user.token,
+      accountName,
+      phoneNumber,
+      password,
+      provider.value
+    );
+    setLoading(false);
+
+    if (result.success) {
+      // onNavigate();
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
     }
   };
 
@@ -53,9 +87,10 @@ const AddMobileMoneyScreen: React.FC<
       showShadow
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={onNavigate}
+          <CustomButton
+            onPress={verifyMobileMoney}
             disabled={disabled}
+            loading={loading}
             style={[
               styles.footerButton,
               {
@@ -64,7 +99,7 @@ const AddMobileMoneyScreen: React.FC<
             ]}
           >
             <CustomText style={styles.footerButtonText}>ADD</CustomText>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
       }
     >
@@ -77,7 +112,7 @@ const AddMobileMoneyScreen: React.FC<
           data={[
             {
               label: "MoMo - MTN mobile money",
-              value: "GHC",
+              value: "MTN",
               image: <Image source={MomoImage} style={styles.image} />,
             },
           ]}
@@ -98,7 +133,7 @@ const AddMobileMoneyScreen: React.FC<
           selectedTextStyle={{ color: "#3861FB" }}
         />
         <View style={styles.divider} />
-        <CustomText style={styles.inputTitle}>Select provider</CustomText>
+        <CustomText style={styles.inputTitle}>Select country</CustomText>
         <View style={styles.countryDropdownContainer}>
           <Dropdown
             value={country}

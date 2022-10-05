@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { height } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   header: {
@@ -22,6 +23,15 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
+  },
+  loadingContainer: {
+    flex: 1,
+    height: height(0.9),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
   },
 });
 

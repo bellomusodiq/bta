@@ -1,31 +1,59 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Eye, EyeSlash } from "iconsax-react-native";
 import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { RFValue } from "react-native-responsive-fontsize";
+import { loginApi } from "../../api/auth.api";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
+import { height } from "../../consts/dimenentions";
 import ScreenLayout from "../../layouts/ScreenLayout";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { setError, setLoading, setUser } from "../../store/auth.slice";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
 const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+  const { error, loading } = useAppSelector((state) => state.auth);
+
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [country, setCountry] = useState<any>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const nextNavigation = () => {
-    navigation.navigate("WelcomeBack");
+    navigation.navigate("Root");
   };
 
-  const disabled = !email || !password;
+  const disabled = !email || !password || loading;
+
+  const onLogin = async () => {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+    const result = await loginApi(email, password);
+    dispatch(setLoading(false));
+    if (result.success) {
+      dispatch(setUser(result.account));
+      await AsyncStorage.setItem("@user", JSON.stringify(result.account));
+      nextNavigation();
+    } else {
+      dispatch(setError(result.message));
+    }
+  };
 
   return (
-    <ScreenLayout showHeader title="">
+    <ScreenLayout scrollable showHeader title="">
       <CustomText style={styles.title}>Login to BitAfrika</CustomText>
       <CustomText style={styles.subTitle}>
         Welcome back! lets get you back into your account.
@@ -53,10 +81,12 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
           </TouchableOpacity>
         }
       />
+      {error && <CustomText style={styles.error}>{error}</CustomText>}
       <CustomButton
+        loading={loading}
         disabled={disabled}
         style={styles.button}
-        onPress={nextNavigation}
+        onPress={onLogin}
       >
         LOGIN
       </CustomButton>
