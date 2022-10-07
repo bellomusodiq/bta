@@ -82,7 +82,7 @@ export type OverviewStackParamList = {
 
 export type HistoryStackParamList = {
   HistoryHome: undefined;
-  TransactionDetail: undefined;
+  TransactionDetail: any;
 };
 
 export type TradeStackParamList = {

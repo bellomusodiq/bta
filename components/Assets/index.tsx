@@ -1,28 +1,11 @@
-import { Setting5 } from "iconsax-react-native";
 import React, { useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { TouchableOpacity, View } from "react-native";
 import CustomText from "../CustomText";
-import UpTrendIcon from "../icons/uptrend-icon";
 import styles from "./styles";
-import { AssetItemProps } from "./types";
-import BitcoinImage from "../../assets/images/BTC.png";
-import LTCImage from "../../assets/images/LTC.png";
-import TronImage from "../../assets/images/TRX.png";
-import USDTImage from "../../assets/images/USDT.png";
-import DOGEImage from "../../assets/images/DOGE.png";
 import { useNavigation } from "@react-navigation/native";
 import AssetItem from "../AssetItem";
 import { useAppSelector } from "../../store";
-
-const coinImage = {
-  BTC: BitcoinImage,
-  BCH: BitcoinImage,
-  DOGE: DOGEImage,
-  LTC: LTCImage,
-  TRX: TronImage,
-  USDT: USDTImage,
-};
+import { coinImage } from "../../consts/images";
 
 const Assets: React.FC = () => {
   const { dashboardData } = useAppSelector((state) => state.auth);

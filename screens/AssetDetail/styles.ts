@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   graphContainer: {
     width: width(1),
     marginLeft: -width(0.05),
+    justifyContent: "center",
   },
   currentPrice: {
     fontSize: RFValue(30),
@@ -166,6 +167,20 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center",
     color: "#979797",
+  },
+  loadingContainer: {
+    flex: 1,
+    height: height(0.85),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
+  },
+  graphLoadingContainer: {
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

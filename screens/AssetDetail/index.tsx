@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -27,6 +28,7 @@ import LTCImage from "../../assets/images/LTC.png";
 import TronImage from "../../assets/images/TRX.png";
 import USDTImage from "../../assets/images/USDT.png";
 import DOGEImage from "../../assets/images/DOGE.png";
+import { useIsFocused } from "@react-navigation/native";
 
 const coinImage = {
   BTC: BitcoinImage,
@@ -60,9 +62,14 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
 }) => {
   const { currency, name, cryptoValue, usdValue, marketIdentifier } =
     route.params;
+  const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [chartData, setchartData] = useState<any>([]);
+  const [dailyChart, setDailyChart] = useState<any>(null);
+  const [weeklyChart, setMWeeklyChart] = useState<any>(null);
+  const [monthlyChart, setMontlyChart] = useState<any>(null);
+  const [yearlyChart, setYearlyChart] = useState<any>(null);
   const [marketStats, setMarketStats] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -70,21 +77,59 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
 
   const toggleModal = () => setShowModal(!showModal);
 
-  const getChartData = async () => {
+  const getChartData = () => {
+    switch (trend) {
+      case "daily":
+        if (dailyChart) {
+          setchartData(dailyChart);
+          return;
+        }
+      case "weekly":
+        if (weeklyChart) {
+          setchartData(weeklyChart);
+          return;
+        }
+      case "monthly":
+        if (monthlyChart) {
+          setchartData(monthlyChart);
+          return;
+        }
+      case "yearly":
+        if (yearlyChart) {
+          setchartData(yearlyChart);
+          return;
+        }
+    }
     setLoading(true);
     setError(false);
-    const result = await chartsApi(user.token, trend, currency.toLowerCase());
-    setLoading(false);
-    if (result.success) {
-      setchartData(
-        result.dataPoints.map((point: number, i: number) => ({
+    chartsApi(user.token, trend, currency.toLowerCase()).then((result) => {
+      setLoading(false);
+      if (result.success) {
+        let dataPoints = [];
+        if (result.dataPoints) dataPoints = result.dataPoints;
+        const mappedData = dataPoints.map((point: number, i: number) => ({
           timestamp: i,
           value: point,
-        }))
-      );
-    } else {
-      setError(true);
-    }
+        }));
+        setchartData(mappedData);
+        switch (trend) {
+          case "daily":
+            setDailyChart(mappedData);
+            break;
+          case "weekly":
+            setMWeeklyChart(mappedData);
+            break;
+          case "monthly":
+            setMontlyChart(mappedData);
+            break;
+          case "yearly":
+            setYearlyChart(mappedData);
+            break;
+        }
+      } else {
+        setError(true);
+      }
+    });
   };
 
   const getMarketStats = async () => {
@@ -93,9 +138,12 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
   };
 
   useEffect(() => {
-    getMarketStats();
     getChartData();
-  }, [trend]);
+  }, [isFocused, trend]);
+
+  useEffect(() => {
+    getMarketStats();
+  }, []);
 
   const getCurrentPrice = () => {
     const currentPriceLength = chartData.length;
@@ -117,16 +165,22 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       </View>
       {/* <TrendChart /> */}
       <View style={styles.graphContainer}>
-        <LineChart.Provider data={chartData}>
-          <LineChart height={200}>
-            <LineChart.Path color="#3861FB">
-              <LineChart.Gradient color="#3861FB" />
-            </LineChart.Path>
-            <LineChart.CursorCrosshair>
-              <LineChart.Tooltip />
-            </LineChart.CursorCrosshair>
-          </LineChart>
-        </LineChart.Provider>
+        {loading ? (
+          <View style={styles.graphLoadingContainer}>
+            <ActivityIndicator size="small" />
+          </View>
+        ) : (
+          <LineChart.Provider data={chartData}>
+            <LineChart height={200}>
+              <LineChart.Path color="#3861FB">
+                <LineChart.Gradient color="#3861FB" />
+              </LineChart.Path>
+              <LineChart.CursorCrosshair>
+                <LineChart.Tooltip />
+              </LineChart.CursorCrosshair>
+            </LineChart>
+          </LineChart.Provider>
+        )}
       </View>
       <TrendFilter onSetTrend={(trend) => setTrend(trend)} />
       <View style={styles.coinBalanceContainer}>

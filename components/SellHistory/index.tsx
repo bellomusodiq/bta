@@ -9,7 +9,7 @@ import CustomText from "../CustomText";
 const SellHistory: React.FC<{ data: any; type: string; arrowType: string }> = ({
   data,
   type,
-  arrowType
+  arrowType,
 }) => {
   const navigation = useNavigation();
 
@@ -33,8 +33,14 @@ const SellHistory: React.FC<{ data: any; type: string; arrowType: string }> = ({
         item.crypto || item.tokenAmount || item.cryptoValue || item.cryptoAmount
       }
       date={formatDate(item.date || item.createdOn)}
-      // @ts-ignore-next-line
-      onPress={() => navigation.navigate("TransactionDetail")}
+      onPress={() =>
+        // @ts-ignore-next-line
+        navigation.navigate("TransactionDetail", {
+          item,
+          type: arrowType,
+          desc: type,
+        })
+      }
       status={item.status}
     />
   );

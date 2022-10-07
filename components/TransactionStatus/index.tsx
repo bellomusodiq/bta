@@ -14,6 +14,10 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({
     backgroundColor = "#FFF9E9";
     color = "#EBB101";
   }
+  if (statusType === "failed") {
+    color = "#FF5C5C";
+    backgroundColor = "#FFF3F3";
+  }
   return (
     <View
       style={[
