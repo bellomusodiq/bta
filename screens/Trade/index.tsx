@@ -5,23 +5,17 @@ import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import Tab from "../../components/Tab";
 import { TabItemProps } from "../../components/Tab/types";
-import { TradeItemProps } from "../../components/TradeItem/types";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { TradeStackScreenProps } from "../../types";
 import styles from "./styles";
-import BTCImage from "../../assets/images/BTC.png";
-import LTCImage from "../../assets/images/LTC.png";
-import TRXImage from "../../assets/images/TRX.png";
-import DOGEImage from "../../assets/images/DOGE.png";
-import USDTImage from "../../assets/images/USDT.png";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import TradeItem from "../../components/TradeItem";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setDashboardData } from "../../store/auth.slice";
 import { loadDashboard } from "../../api/dashboard.api";
-import { err } from "react-native-svg/lib/typescript/xml";
 import CustomButton from "../../components/CustomButton";
+import { coinImage } from "../../consts/images";
 
 const TAB_DATA: TabItemProps[] = [
   {
@@ -31,15 +25,6 @@ const TAB_DATA: TabItemProps[] = [
     title: "Sell crypto",
   },
 ];
-
-const coinImage = {
-  BTC: BTCImage,
-  BCH: BTCImage,
-  DOGE: DOGEImage,
-  LTC: LTCImage,
-  TRX: TRXImage,
-  USDT: USDTImage,
-};
 
 const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   route: { params },
@@ -56,11 +41,11 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const isFocused = useIsFocused();
   const navigation = useNavigation();
 
-  const navigateToBuyOrSell = () => {
+  const navigateToBuyOrSell = (item) => {
     if (currentIndex === 0) {
-      navigation.navigate("BuyCrypto");
+      navigation.navigate("BuyCrypto", item);
     } else {
-      navigation.navigate("SellCrypto");
+      navigation.navigate("SellCrypto", item);
     }
   };
 
@@ -136,7 +121,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
               price={`$${item.price}`}
               rate={currentIndex === 0 ? item.rates.buy : item.rates.sell}
               tradeType={currentIndex === 0 ? "buy" : "sell"}
-              onPress={navigateToBuyOrSell}
+              onPress={() => navigateToBuyOrSell(item)}
             />
           )}
           style={styles.tradeItems}

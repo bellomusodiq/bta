@@ -3,9 +3,11 @@ import { ArrowRight2, Flag2 } from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { reviewBuyOrderApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import SummaryItem from "../../components/SummaryItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
+import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
@@ -14,14 +16,18 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
 }) => {
   const navigation = useNavigation();
   const { params } = route;
+  const { user } = useAppSelector((state) => state.auth);
+
+  // console.log(params);
 
   const navigateToPayInstruction = () => {
     if (!params?.sell) {
-      navigation.navigate("PayInstruction");
+      navigation.navigate("PayInstruction", params);
     } else {
       navigation.navigate("Complete");
     }
   };
+
   return (
     <ScreenLayout
       scrollable
@@ -44,25 +50,38 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       <CustomText style={styles.title}>
         You are {!params?.sell ? "buying" : "selling"}
       </CustomText>
-      <CustomText style={styles.token}>1200.22 DOGE</CustomText>
+      <CustomText style={styles.token}>{params.amountCrypto}</CustomText>
       <View style={styles.summaryItem}>
-        <SummaryItem title="DOGE Price" value="$0.06" />
+        <SummaryItem
+          title={params.summary[0].name}
+          value={params.summary[0].value}
+        />
         {!params?.sell ? (
           <>
             <SummaryItem
-              title="Payment"
+              title={params.summary[1].name}
               componentValue={
                 <View style={styles.buttonTextContainer}>
                   <CustomText style={styles.buttonText}>
-                    Momo (233553610084)
+                    {params.summary[1].value}
                   </CustomText>
                   <ArrowRight2 size={16} />
                 </View>
               }
               onClick={() => {}}
             />
-            <SummaryItem title="Buy rate per dollar" value="GHS 8.15" />
-            <SummaryItem title="USD amount" value="USD 120.34" />
+            <SummaryItem
+              title={params.summary[2].name}
+              value={params.summary[2].value}
+            />
+            <SummaryItem
+              title={params.summary[3].name}
+              value={params.summary[3].value}
+            />
+            <SummaryItem
+              title={params.summary[4].name}
+              value={params.summary[4].value}
+            />
           </>
         ) : (
           <>
@@ -83,7 +102,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         )}
         <SummaryItem
           title="TOTAL"
-          value={!params?.sell ? "GHS 100" : "$20.57"}
+          value={!params?.sell ? params.total : "$20.57"}
           valueBold
           noDivider
         />

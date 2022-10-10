@@ -86,6 +86,9 @@ import NotificationsScreen from "../screens/Notifications";
 import { useAppDispatch, useAppSelector } from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setUser } from "../store/auth.slice";
+import EmailOTPScreen from "../screens/EmailOTP";
+import PasswordOTPScreen from "../screens/PasswordOTP";
+import MobileMoneyOTP from "../screens/MobileMoneyOTP";
 
 export default function Navigation({
   colorScheme,
@@ -190,6 +193,9 @@ function RootNavigator() {
       <Stack.Screen name="Portfolio" component={PortfolioScreen} />
       <Stack.Screen name="AssetDetail" component={AssetDetailScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="EmailOTP" component={EmailOTPScreen} />
+      <Stack.Screen name="PasswordOTP" component={PasswordOTPScreen} />
+      <Stack.Screen name="MobileMoneyOTP" component={MobileMoneyOTP} />
     </Stack.Navigator>
   );
 }

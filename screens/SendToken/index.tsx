@@ -12,7 +12,9 @@ import styles from "./styles";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { width } from "../../consts/dimenentions";
 
-const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
+const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
+  route,
+}) => {
   const navigation = useNavigation();
   const [currency, setCurrency] = useState<string>("BTC");
   const [amount, setAmount] = useState<number | null>();
@@ -45,10 +47,15 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
 
   const toggleCurrency = () => {
     setCurrency(currency === "BTC" ? "USD" : "BTC");
+    setAmount(
+      currency === "USD" ? +route.params?.usdValue : +route.params?.cryptoValue
+    );
   };
 
   const setMaxAmount = () => {
-    setAmount(100.5);
+    setAmount(
+      currency === "USD" ? +route.params?.usdValue : +route.params?.cryptoValue
+    );
   };
 
   const fetchCopiedText = async () => {
@@ -59,7 +66,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
   return (
     <ScreenLayout
       showHeader
-      title="Send bitcoin"
+      title={`Send ${route.params?.name}`}
       showShadow
       headerRight={headerRight}
       footer={
@@ -122,7 +129,12 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = () => {
               />
             </View>
             <CustomText style={styles.availableText}>
-              Available in wallet: 0.0034 BTC
+              Available in wallet:{" "}
+              {`${
+                currency !== "USD"
+                  ? route.params?.usdValue
+                  : route.params?.cryptoValue
+              } ${currency !== "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>
           </>
         )}

@@ -1,27 +1,40 @@
 import { useNavigation } from "@react-navigation/native";
 import { DocumentCopy, Export } from "iconsax-react-native";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Share, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import Copy from "../Copy";
 import CustomText from "../CustomText";
 import styles from "./styles";
+import Toast from "react-native-toast-message";
+import { useAppSelector } from "../../store";
 
-const CopyShareBtns: React.FC = () => {
+const CopyShareBtns: React.FC<{ text: string; token: string }> = ({
+  text,
+  token,
+}) => {
+  const { user } = useAppSelector((state) => state.auth);
+  const shareAddress = async () => {
+    try {
+      await Share.share({
+        message: `${user.email}'s ${token} wallet address: ${text}`,
+      });
+    } catch (e) {
+      Toast.show({
+        type: "error",
+        text1: e.message,
+      });
+    }
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        // onPress={() => navigation.navigate("SendCrypto")}
-        style={styles.button}
-      >
+      <Copy text={text} style={styles.button}>
         <DocumentCopy size={RFValue(20)} color="#000" />
         <CustomText style={styles.buttonText}>Copy</CustomText>
-      </TouchableOpacity>
-      <TouchableOpacity
-        // onPress={() => navigation.navigate("ReceiveCrypto")}
-        style={styles.button}
-      >
+      </Copy>
+      <TouchableOpacity style={styles.button} onPress={shareAddress}>
         <Export size={RFValue(20)} color="#000" />
-        <CustomText style={styles.buttonText}>Receive</CustomText>
+        <CustomText style={styles.buttonText}>Share</CustomText>
       </TouchableOpacity>
     </View>
   );

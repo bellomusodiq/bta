@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { width } from "../../consts/dimenentions";
+import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   container: {
@@ -143,6 +143,15 @@ const styles = StyleSheet.create({
   searchCancel: {
     color: "#3861FB",
     fontSize: RFValue(12),
+  },
+  loadingContainer: {
+    flex: 1,
+    height: height(0.9),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
   },
 });
 

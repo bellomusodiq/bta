@@ -9,6 +9,7 @@ const Copy: React.FC<{
 }> = ({ children, text, ...props }) => {
   const copyToClipBoard = async () => {
     await Clipboard.setStringAsync(text);
+
     Toast.show({
       type: "success",
       text1: "Coppied to clipboard",

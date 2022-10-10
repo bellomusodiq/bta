@@ -10,14 +10,15 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import * as Clipboard from "expo-clipboard";
 import { useNavigation } from "@react-navigation/native";
+import Copy from "../../components/Copy";
 
 const PayInstructionScreen: React.FC<
   RootStackScreenProps<"PayInstruction">
-> = () => {
+> = ({ route }) => {
+  const { params } = route;
   const navigation = useNavigation();
-  const copyToClipBoard = async () => {
-    await Clipboard.setStringAsync("42HFOG66T95");
-  };
+
+  // console.log(params)
   const HeaderRightComponent = (
     <TouchableOpacity style={styles.supportButton}>
       <Call size={RFValue(14)} color="#000" />
@@ -53,25 +54,20 @@ const PayInstructionScreen: React.FC<
         </CustomText>
         <View style={styles.copyBoxContainer}>
           <View style={styles.copyBox}>
-            <CustomText style={styles.copyBoxText}>42HFOG66T95</CustomText>
+            <CustomText style={styles.copyBoxText}>
+              {params.reference}
+            </CustomText>
           </View>
-          <TouchableOpacity onPress={copyToClipBoard} style={styles.copyButton}>
-            <CustomText style={styles.copyText}>COPY</CustomText>
-          </TouchableOpacity>
+          <Copy text={params.reference}>
+            <View style={styles.copyButton}>
+              <CustomText style={styles.copyText}>COPY</CustomText>
+            </View>
+          </Copy>
         </View>
       </StepItem>
       <StepItem title="Step 2:">
         <CustomText style={styles.itemTitle}>
-          Pay exactly GHS 100 into the account below via mobile money. Please do
-          not use a different reference when making your payment
-        </CustomText>
-        <CustomText style={styles.accountText}>
-          <CustomText style={{ color: "#979797" }}>Account:</CustomText>{" "}
-          0243037706
-        </CustomText>
-        <CustomText style={styles.accountText}>
-          <CustomText style={{ color: "#979797" }}>Name:</CustomText> BITAFRIKA
-          LTD EMMANUEL KWABENA NKRUMAH
+          {params.paymentInstruction}
         </CustomText>
       </StepItem>
       <TouchableOpacity

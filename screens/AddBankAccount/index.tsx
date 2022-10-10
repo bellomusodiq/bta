@@ -14,17 +14,57 @@ import GhanaImage from "../../assets/images/ghana.png";
 import AccessImage from "../../assets/images/access-bank.png";
 import CitiImage from "../../assets/images/citi-bank.png";
 import EcobankImage from "../../assets/images/ecobank.png";
+import { addBankAccountApi } from "../../api/profile.api";
+import { useAppSelector } from "../../store";
+import CustomButton from "../../components/CustomButton";
+import Toast from "react-native-toast-message";
 
 const AddBankAccountScreen: React.FC<
   RootStackScreenProps<"AddBankAccount">
 > = () => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const [query, setQuery] = useState<string>("");
   const [accountName, setAccountName] = useState<string>("");
-  const [bank, setBank] = useState<any>("");
+  const [bank, setBank] = useState<any>({
+    label: "Access bank GH",
+    value: "ACCESS",
+    image: (
+      <Image source={AccessImage} style={styles.image} resizeMode="contain" />
+    ),
+  });
   const [accountNumber, setAccountNumber] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const disabled = !accountName || !accountNumber || !bank;
+  const disabled = !accountName || !accountNumber || !bank || loading;
+
+  const addBankAccount = async () => {
+    setLoading(true);
+    const result = await addBankAccountApi(
+      user.token,
+      bank.value,
+      password,
+      accountName,
+      accountNumber
+    );
+    setLoading(false);
+    console.log(result);
+
+    if (result?.success) {
+      navigation.goBack();
+      Toast.show({
+        type: "success",
+        text1: result?.message,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result?.message,
+      });
+    }
+  };
 
   return (
     <ScreenLayout title="Add bank account" scrollable showHeader showShadow>
@@ -58,32 +98,10 @@ const AddBankAccountScreen: React.FC<
           data={[
             {
               label: "Access bank GH",
-              value: "Access bank Ltd",
+              value: "ACCESS",
               image: (
                 <Image
                   source={AccessImage}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-              ),
-            },
-            {
-              label: "Citibank",
-              value: "Citibank Ltd",
-              image: (
-                <Image
-                  source={CitiImage}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-              ),
-            },
-            {
-              label: "Ecobank",
-              value: "Ecobank Ghana Ltd",
-              image: (
-                <Image
-                  source={EcobankImage}
                   style={styles.image}
                   resizeMode="contain"
                 />
@@ -127,13 +145,35 @@ const AddBankAccountScreen: React.FC<
               placeholder="Enter account number"
             />
           </View>
+          <View style={styles.inputContainer}>
+            <CustomText style={styles.inputTitle}>Password</CustomText>
+            <CustomInput
+              style={styles.input}
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+              placeholder="Enter password"
+              secureTextEntry={!showPassword}
+              rightComponent={
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  {!showPassword ? (
+                    <Eye color="black" variant="Bold" size={RFValue(20)} />
+                  ) : (
+                    <EyeSlash color="black" variant="Bold" size={RFValue(20)} />
+                  )}
+                </TouchableOpacity>
+              }
+            />
+          </View>
           <CustomText style={styles.inputTitle1}>
             Please add accounts that belongs to you only. Adding an account with
             a diferent name from your KYC details will require extra
             verifications
           </CustomText>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
+          <CustomButton
+            loading={loading}
+            onPress={addBankAccount}
             disabled={disabled}
             style={[
               styles.footerButton,
@@ -143,7 +183,7 @@ const AddBankAccountScreen: React.FC<
             ]}
           >
             <CustomText style={styles.footerButtonText}>SAVE</CustomText>
-          </TouchableOpacity>
+          </CustomButton>
           <View style={styles.margin} />
         </>
       ) : null}

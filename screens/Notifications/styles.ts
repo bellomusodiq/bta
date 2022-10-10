@@ -10,6 +10,14 @@ const styles = StyleSheet.create({
   headerRight: {
     color: "#3861FB",
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
+  },
 });
 
 export default styles;

@@ -89,7 +89,8 @@ export const verifyMobileMoneyNumberApi = async (
   momoName: string,
   momoUserPhone: string,
   accountPassword: string,
-  selectedUserNetwork: string
+  selectedUserNetwork: string,
+  method: string
 ) => {
   try {
     const data = {
@@ -98,9 +99,9 @@ export const verifyMobileMoneyNumberApi = async (
       momoUserPhone,
       selectedUserNetwork,
       accountPassword,
+      method,
     };
-    console.log(data);
-    const result = await axios.post(`${BASE_URL}/payments/add`, data);
+    console.log(result.data);
     return result.data;
   } catch (e) {
     console.log(e);
@@ -123,6 +124,182 @@ export const verifyMobileMoneyNumberOTPApi = async (
       accountPassword,
       otpCode,
     });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const changeEmail = async (
+  token: string,
+  accountPassword: string,
+  currentEmail: string,
+  newEmail: string
+) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/account/2/updateEmail`, {
+      token,
+      accountPassword,
+      currentEmail,
+      newEmail,
+    });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const verifyChangeEmail = async (token: string, usercode: string) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/password/passwordCode`, {
+      token,
+      usercode,
+    });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const changePassword = async (
+  token: string,
+  currentPassword: string,
+  newPassword: string
+) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/password/request`, {
+      token,
+      currentPassword,
+      newPassword,
+    });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const verifyChangePassword = async (token: string, userCode: string) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/password/passwordCode`, {
+      token,
+      userCode,
+    });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const verifyMobileMoneyApi = async (
+  token: string,
+  method: string,
+  momoName: string,
+  momoUserPhone: string,
+  selectedUserNetwork: string,
+  accountPassword: string,
+  otpCode: string
+) => {
+  const data = {
+    token,
+    method,
+    momoName,
+    momoUserPhone,
+    selectedUserNetwork,
+    accountPassword,
+    otpCode,
+  };
+  try {
+    const result = await axios.post(
+      `${BASE_URL}/payments/verifyPayAccount`,
+      data
+    );
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addBankAccountApi = async (
+  token: string,
+  bankCode: string,
+  accountPassword: string,
+  userBankAccountName: string,
+  userBankAccountNumber: string
+) => {
+  const data = {
+    token,
+    method: "bank",
+    bankCode,
+    userBankSwiftBic: "3043",
+    accountPassword,
+    userBankRouting: "3343",
+    userBankAccountName,
+    userBankAccountNumber,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(`${BASE_URL}/payments/add`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const buyAccountApi = async (token: string) => {
+  const data = {
+    token,
+  };
+  try {
+    const result = await axios.post(`${BASE_URL}/payments/2/buyAccounts`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const sellAccountApi = async (token: string) => {
+  const data = {
+    token,
+  };
+  try {
+    const result = await axios.post(`${BASE_URL}/payments/2/sellAccounts`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const reviewBuyOrderApi = async (
+  token: string,
+  cryptoSymbol: string,
+  coinName: string,
+  paymentType: string,
+  platform: string,
+  contract: string,
+  amount: string,
+  seletedMethod: string,
+  methodType: string
+) => {
+  const data = {
+    token,
+    cryptoSymbol,
+    coinName,
+    paymentType,
+    platform,
+    contract,
+    amount,
+    seletedMethod,
+    methodType,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(`${BASE_URL}/payments/2/topupSummary`, data);
+
     return result.data;
   } catch (e) {
     console.log(e);

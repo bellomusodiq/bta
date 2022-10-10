@@ -41,9 +41,9 @@ const TrendFilter: React.FC<{ onSetTrend: (currentTrend: string) => {} }> = ({
     {
       title: "monthly",
     },
-    {
-      title: "yearly",
-    },
+    // {
+    //   title: "yearly",
+    // },
   ];
 
   useEffect(() => {

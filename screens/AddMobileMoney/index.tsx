@@ -19,7 +19,7 @@ import CustomButton from "../../components/CustomButton";
 const countryData = [
   {
     label: "",
-    value: "+233",
+    value: "233",
     image: <Image source={GhanaImage} style={styles.image} />,
   },
 ];
@@ -65,16 +65,32 @@ const AddMobileMoneyScreen: React.FC<
       accountName,
       phoneNumber,
       password,
-      provider.value
+      provider.value,
+      "momo"
     );
     setLoading(false);
 
     if (result.success) {
-      // onNavigate();
+      console.log("password", password);
+
+      navigation.navigate("MobileMoneyOTP", {
+        method: "momo",
+        momoName: accountName,
+        momoUserPhone: phoneNumber,
+        selectedUserNetwork: provider.value,
+        password: password,
+      });
+      Toast.show({
+        type: "success",
+        text1: result.message,
+      });
     } else {
       Toast.show({
         type: "error",
         text1: result.message,
+        props: {
+          text1NumberOfLines: 3,
+        },
       });
     }
   };

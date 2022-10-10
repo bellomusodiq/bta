@@ -7,47 +7,24 @@ import CustomInput from "../../components/CustomInput";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import BitcoinImage from "../../assets/images/BTC.png";
-import LTCImage from "../../assets/images/LTC.png";
-import TronImage from "../../assets/images/TRX.png";
 import { useNavigation } from "@react-navigation/native";
-
-const data = [
-  {
-    image: BitcoinImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "BTC",
-    title: "Bitcoin",
-  },
-  {
-    image: LTCImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "LTC",
-    title: "Litecoin",
-  },
-  {
-    image: TronImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "TRX",
-    title: "Tron",
-  },
-];
+import { useAppSelector } from "../../store";
+import { coinImage } from "../../consts/images";
 
 const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
-  const [filterData, setFilterData] = useState<any>(data);
+  const { dashboardData } = useAppSelector((state) => state.auth);
+
+  const [filterData, setFilterData] = useState<any>(dashboardData?.currencies);
   const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
-  const navigateToSendToken = () => navigation.navigate("SendToken");
+  const navigateToSendToken = (item) => navigation.navigate("SendToken", item);
 
   const onSearch = (text: string) => {
     setQuery(text);
-    const result = data.filter(
+    const result = dashboardData.currencies.filter(
       (item) =>
-        item.title.toLowerCase().includes(text.toLowerCase()) ||
-        item.currency.toLowerCase().includes(text.toLowerCase())
+        item.name.toLowerCase().includes(text.toLowerCase()) ||
+        item.symbol.toLowerCase().includes(text.toLowerCase())
     );
     setFilterData(result);
   };
@@ -66,12 +43,12 @@ const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
         data={filterData}
         renderItem={({ item }) => (
           <AssetItem
-            image={item.image}
-            amountUSD={item.amountUSD}
-            amountCrypto={item.amountCrypto}
-            currency={item.currency}
-            title={item.title}
-            onPress={navigateToSendToken}
+            image={coinImage[item.symbol]}
+            amountUSD={item.usdValue}
+            amountCrypto={item.cryptoValue}
+            currency={item.symbol}
+            title={item.name}
+            onPress={() => navigateToSendToken(item)}
             hideTrend
           />
         )}

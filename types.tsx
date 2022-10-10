@@ -61,6 +61,9 @@ export type RootStackParamList = {
     confirm?: boolean;
     pin?: string;
   };
+  EmailOTP: undefined;
+  PasswordOTP: undefined;
+  MobileMoneyOTP: any;
   SplashScreen: undefined;
   SignIn: undefined;
   SignUp: undefined;

@@ -94,11 +94,11 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
           setchartData(monthlyChart);
           return;
         }
-      case "yearly":
-        if (yearlyChart) {
-          setchartData(yearlyChart);
-          return;
-        }
+      // case "yearly":
+      //   if (yearlyChart) {
+      //     setchartData(yearlyChart);
+      //     return;
+      //   }
     }
     setLoading(true);
     setError(false);
@@ -112,20 +112,20 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
           value: point,
         }));
         setchartData(mappedData);
-        switch (trend) {
-          case "daily":
-            setDailyChart(mappedData);
-            break;
-          case "weekly":
-            setMWeeklyChart(mappedData);
-            break;
-          case "monthly":
-            setMontlyChart(mappedData);
-            break;
-          case "yearly":
-            setYearlyChart(mappedData);
-            break;
-        }
+        // switch (trend) {
+        //   case "daily":
+        //     setDailyChart(mappedData);
+        //     break;
+        //   case "weekly":
+        //     setMWeeklyChart(mappedData);
+        //     break;
+        //   case "monthly":
+        //     setMontlyChart(mappedData);
+        //     break;
+        //   case "yearly":
+        //     setYearlyChart(mappedData);
+        //     break;
+        // }
       } else {
         setError(true);
       }

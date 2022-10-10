@@ -13,16 +13,19 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   route,
 }) => {
   const { params } = route;
+  console.log(params);
+
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const [currency, setCurrency] = useState<string>("DOGE");
+  const [currency, setCurrency] = useState<string>(params.symbol);
+  const [amount, setAmount] = useState<string>("0");
   // navigate to Histor > sell tab, sorting by only token
   const HeaderRightComponent = (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("Root", {
           screen: "History",
-          token: "DOGE",
+          token: params.symbol,
         })
       }
     >
@@ -33,7 +36,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   const onContinue = () => {
     setPaymentMethod("");
     if (!params?.accountNumber) {
-      navigation.navigate("SelectAccount");
+      navigation.navigate("SelectAccount", params);
     } else {
       navigation.navigate("Summary", {
         sell: true,
@@ -46,6 +49,13 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
       return false;
     }
     return !paymentMethod;
+  };
+
+  const setPercentageAmount = (percentage: number) => {
+    const value = percentage * Number(params.cryptoValue);
+    console.log(value);
+
+    setAmount(String(value));
   };
   return (
     <ScreenLayout
@@ -76,14 +86,17 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
         <View style={styles.amountContainer}>
           <View style={styles.inputContainer}>
             <TextInput
-              defaultValue="0"
               keyboardType="numeric"
               style={styles.input}
+              value={amount}
+              onChangeText={(text) => setAmount(text)}
             />
             <CustomText style={styles.usd}>{currency}</CustomText>
           </View>
           <TouchableOpacity
-            onPress={() => setCurrency(currency === "USD" ? "DOGE" : "USD")}
+            onPress={() =>
+              setCurrency(currency === "USD" ? params.symbol : "USD")
+            }
             style={styles.currencyContainer}
           >
             <CustomText style={styles.currency}>{currency}</CustomText>
@@ -93,26 +106,41 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           <View style={styles.divider} />
           <View style={styles.balance}>
             <CustomText style={styles.balanceText}>
-              <CustomText style={styles.balanceTitle}>Bal:</CustomText> 120.89
-              DOGE ($100.65)
+              <CustomText style={styles.balanceTitle}>Bal:</CustomText>{" "}
+              {params.cryptoValue} {params.symbol} (${params.usdValue})
             </CustomText>
           </View>
           <View style={styles.divider} />
         </View>
         <View style={styles.percentageContainer}>
-          <TouchableOpacity style={styles.percentage}>
+          <TouchableOpacity
+            onPress={() => setPercentageAmount(0.1)}
+            style={styles.percentage}
+          >
             <CustomText style={styles.percentageText}>10%</CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.percentage}>
+          <TouchableOpacity
+            onPress={() => setPercentageAmount(0.25)}
+            style={styles.percentage}
+          >
             <CustomText style={styles.percentageText}>25%</CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.percentage}>
+          <TouchableOpacity
+            onPress={() => setPercentageAmount(0.5)}
+            style={styles.percentage}
+          >
             <CustomText style={styles.percentageText}>50%</CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.percentage}>
+          <TouchableOpacity
+            onPress={() => setPercentageAmount(0.75)}
+            style={styles.percentage}
+          >
             <CustomText style={styles.percentageText}>75%</CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.percentage}>
+          <TouchableOpacity
+            onPress={() => setPercentageAmount(1)}
+            style={styles.percentage}
+          >
             <CustomText style={styles.percentageText}>max</CustomText>
           </TouchableOpacity>
         </View>
