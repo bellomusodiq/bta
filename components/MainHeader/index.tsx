@@ -30,13 +30,13 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         onPress={() => navigation.goBack()}
         style={styles.headerLeft}
       >
-        <ArrowLeft size={RFValue(24)} color="#292D32" />
+        <ArrowLeft size={24} color="#292D32" />
       </TouchableOpacity>
       <CustomText style={styles.header}>{title}</CustomText>
       <View
         style={[
           styles.headerRight,
-          { width: flexibleHeader ? "30%" : RFValue(38) },
+          { width: flexibleHeader ? "30%" : 38 },
         ]}
       >
         {headerRight}

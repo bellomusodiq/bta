@@ -142,6 +142,14 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: RFValue(15),
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
+  },
 });
 
 export default styles;

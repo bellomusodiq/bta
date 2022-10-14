@@ -2,21 +2,16 @@ import { DocumentCopy, Export, SearchNormal1 } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   TextInput,
   View,
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import AssetItem from "../../components/AssetItem";
-import CustomInput from "../../components/CustomInput";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import BitcoinImage from "../../assets/images/BTC.png";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
-import BarcodeImage from "../../assets/images/barcode.png";
 import CustomText from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CopyShareBtns from "../../components/CopyShareBtns";
@@ -29,7 +24,7 @@ const ReceiveCryptoSummaryScreen: React.FC<
   RootStackScreenProps<"ReceiveCryptoSummary">
 > = ({ route }) => {
   const isFocused = useIsFocused();
-  const { token: selectedToken, tokenName } = route.params;
+  const { token: selectedToken } = route.params;
 
   const { dashboardData, user } = useAppSelector((state) => state.auth);
   const data = dashboardData?.currencies.map((currency: any) => ({
@@ -54,7 +49,6 @@ const ReceiveCryptoSummaryScreen: React.FC<
   const [error, setError] = useState<boolean>(false);
   const navigation = useNavigation();
   const [tokenDetails, setTokenDetails] = useState({});
-  const navigateToSendToken = () => navigation.navigate("SendToken");
 
   const getTokenDetails = async () => {
     setLoading(true);

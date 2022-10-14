@@ -1,9 +1,15 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Add, Bank } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
-import { FlatList, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { buyAccountApi } from "../../api/profile.api";
+import { buyAccountApi, sellAccountApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import PaymentItem from "../../components/PaymentItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -16,6 +22,9 @@ const data = Array(10).fill(1);
 const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   route,
 }) => {
+  const { params } = route;
+  // console.log("select account", params);
+
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
@@ -29,11 +38,13 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
     </TouchableOpacity>
   );
 
-  const onContinue = () => {
-    navigation.navigate("SellCrypto", {
-      accountName: "Kwabena",
-      accountNumber: "00333423324",
-    });
+  const onContinue = (item) => {
+    const newItem = { ...item };
+    newItem.accountName = item.name;
+    console.log(newItem);
+
+    delete newItem.name;
+    navigation.navigate("SellCrypto", { ...params, ...newItem });
   };
 
   // @ts-ignore-next-line
@@ -55,7 +66,7 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   const fetchPaymentDetails = async () => {
     setLoading(true);
     setError(false);
-    const result = await buyAccountApi(user.token);
+    const result = await sellAccountApi(user.token);
     setLoading(false);
     if (result.success) {
       setPaymentAccounts(result.paymentAccounts);
@@ -73,10 +84,29 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
       showShadow
       title="Select account"
     >
-      <CustomText style={styles.paymentTitle2}>
-        Select withdrawal account
-      </CustomText>
-      <FlatList renderItem={renderItem} data={paymentAccounts} />
+      {loading || error ? (
+        <View style={styles.loadingContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <CustomText style={styles.errorText}>
+                Something went wrong
+              </CustomText>
+              <CustomButton onPress={fetchPaymentDetails}>
+                Try again
+              </CustomButton>
+            </>
+          )}
+        </View>
+      ) : (
+        <>
+          <CustomText style={styles.paymentTitle2}>
+            Select withdrawal account
+          </CustomText>
+          <FlatList renderItem={renderItem} data={paymentAccounts} />
+        </>
+      )}
     </ScreenLayout>
   );
 };

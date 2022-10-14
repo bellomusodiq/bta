@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { DocumentCopy, Export } from "iconsax-react-native";
 import React from "react";
 import { Share, TouchableOpacity, View } from "react-native";

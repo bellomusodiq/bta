@@ -35,6 +35,7 @@ export type RootStackParamList = {
   SelectAccount: undefined;
   Complete: undefined;
   Pending: undefined;
+  Failed: undefined;
   SendCrypto: undefined;
   SendToken: undefined;
   SendTokenSummary: undefined;

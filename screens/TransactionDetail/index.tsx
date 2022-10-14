@@ -36,7 +36,6 @@ const TransactionDetailScreen: React.FC<
   HistoryStackScreenProps<"TransactionDetail">
 > = ({ route }) => {
   const { params } = route;
-  console.log(params);
 
   const cryptoCurrency =
     params?.item.cryptoCurrency ||

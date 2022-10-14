@@ -7,36 +7,10 @@ import CustomInput from "../../components/CustomInput";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import BitcoinImage from "../../assets/images/BTC.png";
-import LTCImage from "../../assets/images/LTC.png";
-import TronImage from "../../assets/images/TRX.png";
 import { useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "../../store";
 import { coinImage } from "../../consts/images";
 
-const data = [
-  {
-    image: BitcoinImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "BTC",
-    title: "Bitcoin",
-  },
-  {
-    image: LTCImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "LTC",
-    title: "LiteCoin",
-  },
-  {
-    image: TronImage,
-    amountUSD: 20.44,
-    amountCrypto: 0.007,
-    currency: "TRX",
-    title: "Tron",
-  },
-];
 
 const ReceiveCryptoScreen: React.FC<
   RootStackScreenProps<"ReceiveCrypto">

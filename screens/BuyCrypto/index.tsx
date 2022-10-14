@@ -19,6 +19,8 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const { params } = route;
+  console.log(params);
+
 
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");

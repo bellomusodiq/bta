@@ -1,13 +1,18 @@
-import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Image, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import BitcoinImage from "../../assets/images/BTC.png";
-import { DocumentCopy, Flag2, Timer, Timer1 } from "iconsax-react-native";
+import { DocumentCopy, Flag2, Timer1 } from "iconsax-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
+import { coinImage } from "../../consts/images";
+import Copy from "../../components/Copy";
+import CustomButton from "../../components/CustomButton";
+import { sendCryptoApi } from "../../api/profile.api";
+import { useAppSelector } from "../../store";
+import Toast from "react-native-toast-message";
 
 const CryptoItem: React.FC<{
   title: string;
@@ -26,11 +31,46 @@ const CryptoItem: React.FC<{
 
 const SendTokenSummaryScreen: React.FC<
   RootStackScreenProps<"SendTokenSummary">
-> = () => {
+> = ({ route }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { user } = useAppSelector((state) => state.auth);
+  const { params } = route;
+  // console.log("params", params);
+
   const navigation = useNavigation();
-  const onContinue = () => {
+  const onContinue = async () => {
     // @ts-ignore-next-line
-    navigation.navigate("Complete");
+    setLoading(true);
+    const result = await sendCryptoApi(
+      user.token,
+      params.preview.cryptoSymbol,
+      params.preview.to,
+      params.transmissionMode,
+      params.transmissionMode === "USD"
+        ? params.preview.usdAmount
+        : params.preview.cryptoAmount,
+      params.preview.coinName,
+      params.preview.selectedNetworkFee,
+      params.contract,
+      params.platform,
+      params.preview.eTag
+    );
+    setLoading(false);
+    if (result.success) {
+      let navigateRoute = "Pending";
+      if (result.t?.status === "success") {
+        navigateRoute = "Success";
+      }
+      if (result.t?.status === "failed") {
+        navigateRoute = "Failed";
+      }
+      navigation.navigate(navigateRoute);
+    } else {
+      Toast.snow({
+        type: "error",
+        text1: result.message,
+      });
+    }
   };
   return (
     <ScreenLayout
@@ -40,9 +80,10 @@ const SendTokenSummaryScreen: React.FC<
       title="Send bitcoin"
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity
+          <CustomButton
+            loading={loading}
             onPress={onContinue}
-            // disabled={!Boolean(paymentMethod)}
+            disabled={loading}
             style={[
               styles.footerButton,
               {
@@ -51,19 +92,26 @@ const SendTokenSummaryScreen: React.FC<
             ]}
           >
             <CustomText style={styles.footerButtonText}>CONTINUE</CustomText>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
       }
     >
       <CustomText style={styles.sendingText}>You are sending</CustomText>
-      <CustomText style={styles.tokenText}>0.9226 BTC</CustomText>
+      <CustomText style={styles.tokenText}>
+        {params.preview.cryptoAmount} {params.preview.cryptoSymbol}
+      </CustomText>
       <View style={styles.marketStatsContainer}>
         <CryptoItem
           title="Pay with"
           value={
             <View style={styles.tokenContainer}>
-              <Image source={BitcoinImage} style={styles.tokenImage} />
-              <CustomText style={styles.tokenTitle}>BTC Wallet</CustomText>
+              <Image
+                source={coinImage[params.preview.cryptoSymbol]}
+                style={styles.tokenImage}
+              />
+              <CustomText style={styles.tokenTitle}>
+                {params.preview.cryptoSymbol} Wallet
+              </CustomText>
             </View>
           }
         />
@@ -71,20 +119,32 @@ const SendTokenSummaryScreen: React.FC<
           title="To"
           value={
             <View style={styles.tokenContainer}>
-              <TouchableOpacity>
+              <Copy text={params.preview.to}>
                 <DocumentCopy size={24} color="#292D32" />
-              </TouchableOpacity>
-              <CustomText style={styles.token}>bc1quke47...wmkfa8m</CustomText>
+              </Copy>
+              <CustomText style={styles.token}>
+                {`${params.preview.to.slice(0, 15)}${
+                  params.preview.to.length > 15 ? "..." : ""
+                }`}
+              </CustomText>
             </View>
           }
         />
         <CryptoItem
           title="Network fee"
-          value={<CustomText style={styles.fee}>$1.23</CustomText>}
+          value={
+            <CustomText style={styles.fee}>
+              ${params.preview.networkFeeUSD}
+            </CustomText>
+          }
         />
         <CryptoItem
           title="Total"
-          value={<CustomText style={styles.total}>$12,560.87</CustomText>}
+          value={
+            <CustomText style={styles.total}>
+              ${params.preview.totalChargeUSD}
+            </CustomText>
+          }
           noDivider
         />
       </View>

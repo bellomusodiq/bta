@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   nameContainer: {
-    width: "50%",
+    width: "45%",
   },
   trendContainer: {
-    width: "20%",
+    width: "17%",
     alignSelf: "center",
   },
   valueContainer: {

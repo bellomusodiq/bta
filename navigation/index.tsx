@@ -89,6 +89,7 @@ import { setUser } from "../store/auth.slice";
 import EmailOTPScreen from "../screens/EmailOTP";
 import PasswordOTPScreen from "../screens/PasswordOTP";
 import MobileMoneyOTP from "../screens/MobileMoneyOTP";
+import FailedScreen from "../screens/Failed";
 
 export default function Navigation({
   colorScheme,
@@ -150,6 +151,7 @@ function RootNavigator() {
       <Stack.Screen name="SelectAccount" component={SelectAccountScreen} />
       <Stack.Screen name="Complete" component={CompleteScreen} />
       <Stack.Screen name="Pending" component={PendingScreen} />
+      <Stack.Screen name="Failed" component={FailedScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
       <Stack.Screen name="SendCrypto" component={SendCryptoScreen} />

@@ -3,17 +3,21 @@ import { Bank, ReceiptSearch } from "iconsax-react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { validateWithdrawalRequestApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import PaymentItem from "../../components/PaymentItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
+import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
+import Toast from "react-native-toast-message";
 
 const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   route,
 }) => {
   const { params } = route;
-  console.log(params);
+  // console.log(params);
+  const { user } = useAppSelector((state) => state.auth);
 
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
@@ -35,12 +39,10 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
 
   const onContinue = () => {
     setPaymentMethod("");
-    if (!params?.accountNumber) {
+    if (!params?.accountName) {
       navigation.navigate("SelectAccount", params);
     } else {
-      navigation.navigate("Summary", {
-        sell: true,
-      });
+      validateWithdrawalRequest();
     }
   };
 
@@ -53,9 +55,33 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
 
   const setPercentageAmount = (percentage: number) => {
     const value = percentage * Number(params.cryptoValue);
-    console.log(value);
-
     setAmount(String(value));
+  };
+
+  const validateWithdrawalRequest = async () => {
+    const result = await validateWithdrawalRequestApi(
+      user.token,
+      params.symbol,
+      params.name,
+      currency === params.symbol ? "CRYPTO" : "USD",
+      params.platform,
+      params.contract,
+      amount,
+      params.value,
+      params.id.toString()
+    );
+    if (result.success) {
+      navigation.navigate("Summary", {
+        ...result,
+        requestData: { ...params, amount, currency },
+        sell: true,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
+    }
   };
   return (
     <ScreenLayout
@@ -148,7 +174,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
       <CustomText style={styles.paymentTitle2}>
         {params?.accountName ? "Withdrawal account" : "Payment"}
       </CustomText>
-      {!params?.accountNumber ? (
+      {!params?.accountName ? (
         <PaymentItem
           title="Choose a payment method"
           description="Debit cards, Mobile money etc..."
@@ -163,8 +189,8 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
         />
       ) : (
         <PaymentItem
-          title="ACCESSGH - 0692XXXXX"
-          description="Tap to change withdrawal bank"
+          title={params.accountName}
+          description={params.text}
           icon={
             <View style={styles.iconContainer}>
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />

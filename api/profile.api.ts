@@ -265,7 +265,10 @@ export const sellAccountApi = async (token: string) => {
     token,
   };
   try {
-    const result = await axios.post(`${BASE_URL}/payments/2/sellAccounts`, data);
+    const result = await axios.post(
+      `${BASE_URL}/payments/2/sellAccounts`,
+      data
+    );
 
     return result.data;
   } catch (e) {
@@ -298,7 +301,153 @@ export const reviewBuyOrderApi = async (
   console.log(data);
 
   try {
-    const result = await axios.post(`${BASE_URL}/payments/2/topupSummary`, data);
+    const result = await axios.post(
+      `${BASE_URL}/payments/2/topupSummary`,
+      data
+    );
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const validateWithdrawalRequestApi = async (
+  token: string,
+  cryptoSymbol: string,
+  coinName: string,
+  transmissionMode: string,
+  platform: string,
+  contract: string,
+  amount: string,
+  seletedMethod: string,
+  methodType: string
+) => {
+  const data = {
+    token,
+    cryptoSymbol,
+    coinName,
+    transmissionMode,
+    platform,
+    contract,
+    amount,
+    seletedMethod,
+    methodType,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}/account/2/validateWithdrawalRequest`,
+      data
+    );
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const sellConfirmationApi = async (
+  token: string,
+  cryptoSymbol: string,
+  coinName: string,
+  transmissionMode: string,
+  platform: string,
+  contract: string,
+  amount: string,
+  seletedMethod: string,
+  methodType: string
+) => {
+  const data = {
+    token,
+    cryptoSymbol,
+    coinName,
+    transmissionMode,
+    platform,
+    contract,
+    amount,
+    seletedMethod,
+    methodType,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(`${BASE_URL}/account/2/withdrawCash`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const validateSendCryptoApi = async (
+  token: string,
+  cryptoSymbol: string,
+  walletAddress: string,
+  transmissionMode: string,
+  amount: string,
+  coinName: string,
+  selectedNetworkFee: string,
+  contract: string,
+  platform: string
+) => {
+  const data = {
+    token,
+    cryptoSymbol,
+    walletAddress,
+    transmissionMode,
+    amount,
+    coinName,
+    selectedNetworkFee,
+    contract,
+    platform,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}/account/2/validateRequest`,
+      data
+    );
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const sendCryptoApi = async (
+  token: string,
+  cryptoSymbol: string,
+  walletAddress: string,
+  transmissionMode: string,
+  amount: string,
+  coinName: string,
+  selectedNetworkFee: string,
+  contract: string,
+  platform: string,
+  eTag: string
+) => {
+  const data = {
+    token,
+    cryptoSymbol,
+    walletAddress,
+    transmissionMode,
+    amount,
+    coinName,
+    selectedNetworkFee,
+    contract,
+    platform,
+    eTag,
+  };
+  console.log(data);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}/account/2/sendout`,
+      data
+    );
 
     return result.data;
   } catch (e) {

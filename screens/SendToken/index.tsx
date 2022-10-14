@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Scan } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
@@ -10,13 +10,16 @@ import { RootStackScreenProps } from "../../types";
 import * as Clipboard from "expo-clipboard";
 import styles from "./styles";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { width } from "../../consts/dimenentions";
+import { validateSendCryptoApi } from "../../api/profile.api";
+import { useAppSelector } from "../../store";
+import Toast from "react-native-toast-message";
 
 const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   route,
 }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
-  const [currency, setCurrency] = useState<string>("BTC");
+  const [currency, setCurrency] = useState<string>(route.params?.symbol);
   const [amount, setAmount] = useState<number | null>();
   const [address, setAddress] = useState<string>("");
   const [openBarcode, setOpenBarcode] = useState<boolean>(false);
@@ -37,19 +40,47 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const headerRight = (
     <TouchableOpacity onPress={() => setOpenBarcode(true)}>
-      <Scan size={RFValue(20)} color="#000" />
+      <Scan size={20} color="#000" />
     </TouchableOpacity>
   );
 
-  const onContinue = () => {
-    navigation.navigate("SendTokenSummary");
+  const getAmount = () => {
+    if (route.params?.symbol === "TRX" || route.params?.symbol === "USDT") {
+      return Math.trunc(amount);
+    }
+    return amount;
+  };
+
+  const onContinue = async () => {
+    const result = await validateSendCryptoApi(
+      user.token,
+      route.params?.symbol,
+      address,
+      currency === "USD" ? "USD" : "CRYPTO",
+      getAmount()?.toString(),
+      route.params?.name,
+      "FASTEST",
+      route.params?.contract,
+      route.params?.platform
+    );
+    if (result.success) {
+      console.log(result);
+      navigation.navigate("SendTokenSummary", {
+        ...result,
+        transmissionMode: currency === "USD" ? "USD" : "CRYPTO",
+        contract: route.params?.contract,
+        platform: route.params?.platform,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
+    }
   };
 
   const toggleCurrency = () => {
-    setCurrency(currency === "BTC" ? "USD" : "BTC");
-    setAmount(
-      currency === "USD" ? +route.params?.usdValue : +route.params?.cryptoValue
-    );
+    setCurrency(currency !== "USD" ? "USD" : route.params?.symbol);
   };
 
   const setMaxAmount = () => {
@@ -132,9 +163,9 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
               Available in wallet:{" "}
               {`${
                 currency !== "USD"
-                  ? route.params?.usdValue
-                  : route.params?.cryptoValue
-              } ${currency !== "USD" ? "USD" : route.params?.symbol}`}
+                  ? route.params?.cryptoValue
+                  : route.params?.usdValue
+              } ${currency === "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>
           </>
         )}
