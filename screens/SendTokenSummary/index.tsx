@@ -35,7 +35,6 @@ const SendTokenSummaryScreen: React.FC<
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAppSelector((state) => state.auth);
   const { params } = route;
-  // console.log("params", params);
 
   const navigation = useNavigation();
   const onContinue = async () => {
@@ -77,7 +76,7 @@ const SendTokenSummaryScreen: React.FC<
       showHeader
       showShadow
       scrollable
-      title="Send bitcoin"
+      title={`Send ${params.preview.coinName}`}
       footer={
         <View style={styles.footer}>
           <CustomButton

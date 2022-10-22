@@ -24,7 +24,6 @@ const data = Array(4).fill(1);
 const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   route,
 }) => {
-
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
@@ -35,12 +34,21 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
 
   const onContinue = (item: any) => {
     const newItem = { ...item };
-    newItem.accountName = item.name;
-    delete newItem.name;
-    navigation.navigate("BuyCrypto", {
-      ...route.params,
-      ...newItem,
-    });
+    if (item.name) {
+      newItem.accountName = item.name;
+      delete newItem.name;
+    }
+    if (route.params?.fromSummary) {
+      navigation.navigate("Summary", {
+        ...route.params,
+        ...newItem,
+      });
+    } else {
+      navigation.navigate("BuyCrypto", {
+        ...route.params,
+        ...newItem,
+      });
+    }
   };
 
   const getPaymentList = async () => {
@@ -57,7 +65,6 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   useEffect(() => {
     getPaymentList();
   }, [isFocused]);
-
 
   // @ts-ignore-next-line
   const renderItem = ({ item }) => (

@@ -34,7 +34,6 @@ const Assets: React.FC = () => {
     navigation.navigate("ManageAsset");
   };
 
-  // console.log(dashboardData?.currencies);
   return (
     <View style={styles.container}>
       <View style={styles.tab}>

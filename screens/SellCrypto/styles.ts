@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: RFValue(134),
+    width: "90%",
   },
   footerButtonText: {
     color: "white",

@@ -66,6 +66,10 @@ const styles = StyleSheet.create({
   hilight: {
     color: "#3861FB",
   },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
+  },
 });
 
 export default styles;

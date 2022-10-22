@@ -50,7 +50,6 @@ const AddBankAccountScreen: React.FC<
       accountNumber
     );
     setLoading(false);
-    console.log(result);
 
     if (result?.success) {
       navigation.goBack();

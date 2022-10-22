@@ -22,7 +22,7 @@ const MobileMoneyOTP: React.FC<RootStackScreenProps<"MobileMoneyOTP">> = ({
   const [pin, setPin] = useState<string>("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
-  // console.log(route.params)
+
   const {
     method,
     momoName,
@@ -55,7 +55,6 @@ const MobileMoneyOTP: React.FC<RootStackScreenProps<"MobileMoneyOTP">> = ({
       pin
     );
     setLoading(false);
-    console.log(result);
 
     if (result.success) {
       navigation.goBack();

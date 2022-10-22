@@ -69,12 +69,13 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   WelcomeBack: undefined;
-  VerifyEmail: undefined;
+  VerifyEmail: any;
   PaymentMethod: undefined;
   AddPaymentMethod: undefined;
   Portfolio: undefined;
   AssetDetail: undefined;
   Notifications: undefined;
+  Instruction: any;
 };
 
 export type OverviewStackParamList = {

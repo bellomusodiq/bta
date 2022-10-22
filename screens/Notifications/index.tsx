@@ -49,7 +49,6 @@ const NotificationsScreen: React.FC<
     const result = await getNotificationsApi(user?.token);
     setLoading(false);
     if (result.success) {
-      console.log(result);
     } else {
       setError(true);
     }

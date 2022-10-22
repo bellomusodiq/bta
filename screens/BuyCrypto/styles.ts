@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   footerButton: {
-    backgroundColor: "#3861FB",
     marginVertical: RFValue(10),
     marginHorizontal: width(0.05),
     width: "90%",

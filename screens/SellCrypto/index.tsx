@@ -11,17 +11,18 @@ import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import Toast from "react-native-toast-message";
+import CustomButton from "../../components/CustomButton";
 
 const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   route,
 }) => {
   const { params } = route;
-  // console.log(params);
   const { user } = useAppSelector((state) => state.auth);
 
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [currency, setCurrency] = useState<string>(params.symbol);
+  const [loading, setLoading] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>("0");
   // navigate to Histor > sell tab, sorting by only token
   const HeaderRightComponent = (
@@ -39,18 +40,14 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
 
   const onContinue = () => {
     setPaymentMethod("");
-    if (!params?.accountName) {
-      navigation.navigate("SelectAccount", params);
-    } else {
-      validateWithdrawalRequest();
-    }
+    validateWithdrawalRequest();
   };
 
   const disableButton = () => {
-    if (params?.accountName) {
+    if (params?.accountName && +amount > 0) {
       return false;
     }
-    return !paymentMethod;
+    return true;
   };
 
   const setPercentageAmount = (percentage: number) => {
@@ -59,6 +56,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   };
 
   const validateWithdrawalRequest = async () => {
+    setLoading(true);
     const result = await validateWithdrawalRequestApi(
       user.token,
       params.symbol,
@@ -70,6 +68,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
       params.value,
       params.id.toString()
     );
+    setLoading(false);
     if (result.success) {
       navigation.navigate("Summary", {
         ...result,
@@ -89,21 +88,17 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
       headerRight={HeaderRightComponent}
       scrollable
       showShadow
-      title="Sell DOGE"
+      title={`Sell ${params.symbol}`}
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity
+          <CustomButton
+            loading={loading}
             onPress={onContinue}
             disabled={disableButton()}
-            style={[
-              styles.footerButton,
-              {
-                backgroundColor: !disableButton() ? "#3861FB" : "#979797",
-              },
-            ]}
+            style={styles.footerButton}
           >
             <CustomText style={styles.footerButtonText}>CONTINUE</CustomText>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
       }
     >
@@ -184,8 +179,8 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />
             </View>
           }
-          onPress={() => setPaymentMethod("payment-method")}
-          active={paymentMethod === "payment-method"}
+          onPress={() => navigation.navigate("SelectAccount", params)}
+          // active={paymentMethod === "payment-method"}
         />
       ) : (
         <PaymentItem

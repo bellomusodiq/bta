@@ -4,27 +4,77 @@ import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { RFValue } from "react-native-responsive-fontsize";
+import { signupApi } from "../../api/auth.api";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
+import Toast from "react-native-toast-message";
 
 const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const navigation = useNavigation();
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [country, setCountry] = useState<any>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const nextNavigation = () => {
     navigation.navigate("VerifyEmail");
   };
 
-  const disabled = !email || !password || !username || !country || !acceptTerms;
+  const disabled =
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !username ||
+    !country ||
+    !acceptTerms;
+
+  const onSignup = async () => {
+    setLoading(true);
+    setError(null);
+    console.log(country);
+
+    const result = await signupApi(
+      email,
+      country.label,
+      country.value,
+      country.code,
+      country.currency,
+      username,
+      password
+    );
+
+    setLoading(false);
+
+    if (result.success) {
+      navigation.navigate("VerifyEmail", {
+        token: result.token,
+        email,
+        country: country.label,
+        countryCode: country.value,
+        countryCurrency: country.code,
+        countryCallingCode: country.currency,
+        username,
+        password,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
+      setError(result.message);
+    }
+  };
 
   return (
     <ScreenLayout showHeader title="" scrollable>
@@ -63,13 +113,15 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       />
       <CustomInput
         style={styles.input}
-        value={password}
-        secureTextEntry={!showPassword}
-        onChangeText={(value) => setPassword(value)}
+        value={confirmPassword}
+        secureTextEntry={!showConfirmPassword}
+        onChangeText={(value) => setConfirmPassword(value)}
         placeholder="Re-enter password"
         rightComponent={
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            {!showPassword ? (
+          <TouchableOpacity
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {!showConfirmPassword ? (
               <Eye color="black" variant="Bold" size={RFValue(20)} />
             ) : (
               <EyeSlash color="black" variant="Bold" size={RFValue(20)} />
@@ -81,7 +133,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
         value={country}
         onChange={(val) => setCountry(val)}
         style={styles.dropdown}
-        data={[{ label: "Ghana", value: "GH" }]}
+        data={[{ label: "Ghana", value: "GH", code: "233", currency: "GHS" }]}
         placeholder={"Select country"}
         labelField="label"
         valueField="value"
@@ -104,10 +156,12 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
           <CustomText style={styles.hilight}>Privacy policy</CustomText>
         </CustomText>
       </View>
+      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
       <CustomButton
         disabled={disabled}
         style={styles.button}
-        onPress={nextNavigation}
+        onPress={onSignup}
+        loading={loading}
       >
         SIGNUP
       </CustomButton>

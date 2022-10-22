@@ -11,7 +11,6 @@ import { width } from "../../consts/dimenentions";
 import CustomText from "../CustomText";
 
 const Tooltip: React.FC = ({ value, position }) => {
-  console.log(position);
   return (
     <View
       style={{
@@ -90,7 +89,6 @@ const TrendChart: React.FC = () => {
       />
       <Line
         tooltipComponent={<Tooltip />}
-        // onTooltipSelect={(e) => console.log(e)}
         theme={{
           stroke: { color: "#3861FB", width: 2 },
           scatter: {

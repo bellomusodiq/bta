@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Bank, ReceiptSearch } from "iconsax-react-native";
 import React, { useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, TextInput, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { reviewBuyOrderApi } from "../../api/profile.api";
 import CustomButton from "../../components/CustomButton";
@@ -19,8 +19,6 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const { params } = route;
-  console.log(params);
-
 
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
@@ -52,7 +50,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
     );
     setLoading(false);
     if (result.success) {
-      navigation.navigate("Summary", {
+      navigation.navigate("Instruction", {
         ...result,
         sell: false,
       });
@@ -63,6 +61,8 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
       });
     }
   };
+
+  const disabled = !params?.name || !params?.accountName;
   return (
     <ScreenLayout
       showHeader
@@ -75,13 +75,8 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
           <CustomButton
             loading={loading}
             onPress={topUpSummary}
-            disabled={!Boolean(params?.name)}
-            style={[
-              styles.footerButton,
-              {
-                backgroundColor: params?.name ? "#3861FB" : "#979797",
-              },
-            ]}
+            disabled={disabled}
+            style={styles.footerButton}
           >
             <CustomText style={styles.footerButtonText}>CONTINUE</CustomText>
           </CustomButton>
@@ -128,7 +123,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />
             </View>
           }
-          onPress={() => navigation.navigate("PaymentMethod")}
+          onPress={() => navigation.navigate("PaymentMethod", { ...params })}
         />
       )}
     </ScreenLayout>

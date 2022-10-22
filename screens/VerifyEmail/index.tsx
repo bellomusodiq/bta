@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import CustomText from "../../components/CustomText";
-import FaceIcon from "../../components/icons/face-icon";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import FaceImage from "../../assets/images/face.png";
 import { TagCross } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
+import { verifyEmailApi } from "../../api/auth.api";
+import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppDispatch } from "../../store";
+import { setUser } from "../../store/auth.slice";
 
-const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = () => {
+const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = ({
+  route,
+}) => {
+  const { params } = route;
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const [pin, setPin] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const updatePin = (digit: string) => {
-    if (pin.length < 5) {
+    if (pin.length < 4) {
       setPin(`${pin}${digit}`);
     }
   };
@@ -25,10 +34,40 @@ const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = () => {
     }
   };
 
+  const verifyEmail = async () => {
+    setLoading(true);
+    setError(null);
+    const result = await verifyEmailApi(
+      params.token,
+      params.email,
+      params.country,
+      params.countryCode,
+      params.countryCurrency,
+      params.countryCallingCode,
+      params.username,
+      params.password,
+      pin
+    );
+
+    setLoading(false);
+
+    if (result.success) {
+      await AsyncStorage.setItem("@user", JSON.stringify(result));
+      dispatch(setUser(result));
+      navigation.navigate("SetPin");
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
+      setError(result.message);
+    }
+  };
+
   useEffect(() => {
-    if (pin.length === 5) {
+    if (pin.length === 4) {
       // @ts-ignore-next-line
-      navigation.replace("SetPin");
+      verifyEmail();
     }
   }, [pin]);
 
@@ -39,12 +78,13 @@ const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = () => {
         <CustomText style={styles.title}>Verify your email address</CustomText>
       </View>
       <CustomText style={styles.subTitle}>
-        Enter the 5-digit OTP code we sent to your email address:{" "}
-        <CustomText style={styles.hilight}>Emmanuelbit@gmail.com</CustomText>
+        Enter the 4-digit OTP code we sent to your email address:{" "}
+        <CustomText style={styles.hilight}>{params.email}</CustomText>
       </CustomText>
+
       <View style={styles.divider} />
       <View style={styles.pinContainer}>
-        {Array(5)
+        {Array(4)
           .fill(1)
           .map((_, i) => (
             <View key={i} style={styles.pin}>

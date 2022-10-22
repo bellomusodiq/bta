@@ -90,6 +90,7 @@ import EmailOTPScreen from "../screens/EmailOTP";
 import PasswordOTPScreen from "../screens/PasswordOTP";
 import MobileMoneyOTP from "../screens/MobileMoneyOTP";
 import FailedScreen from "../screens/Failed";
+import InstructionScreen from "../screens/Instruction";
 
 export default function Navigation({
   colorScheme,
@@ -198,6 +199,7 @@ function RootNavigator() {
       <Stack.Screen name="EmailOTP" component={EmailOTPScreen} />
       <Stack.Screen name="PasswordOTP" component={PasswordOTPScreen} />
       <Stack.Screen name="MobileMoneyOTP" component={MobileMoneyOTP} />
+      <Stack.Screen name="Instruction" component={InstructionScreen} />
     </Stack.Navigator>
   );
 }

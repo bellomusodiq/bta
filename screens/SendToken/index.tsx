@@ -64,7 +64,6 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
       route.params?.platform
     );
     if (result.success) {
-      console.log(result);
       navigation.navigate("SendTokenSummary", {
         ...result,
         transmissionMode: currency === "USD" ? "USD" : "CRYPTO",

@@ -60,7 +60,6 @@ const ReceiveCryptoSummaryScreen: React.FC<
     );
     setLoading(false);
     if (result.success) {
-      console.log(result);
       setTokenDetails(result.info);
     } else {
       setError(true);

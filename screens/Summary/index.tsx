@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { ArrowRight2, Flag2 } from "iconsax-react-native";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { sellConfirmationApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
@@ -21,6 +21,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
 
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
+
+  // console.log(params);
 
   const sellConfirm = async () => {
     setLoading(true);
@@ -63,6 +65,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
+  // console.log(params);
+
   return (
     <ScreenLayout
       scrollable
@@ -94,15 +98,25 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         />
         {!params?.sell ? (
           <>
+            <SummaryItem title="Reference" value={params.reference} />
             <SummaryItem
               title={params.summary[1].name}
               componentValue={
-                <View style={styles.buttonTextContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(params);
+                    navigation.navigate("PaymentMethod", {
+                      ...params,
+                      fromSummary: true,
+                    });
+                  }}
+                  style={styles.buttonTextContainer}
+                >
                   <CustomText style={styles.buttonText}>
                     {params.summary[1].value}
                   </CustomText>
                   <ArrowRight2 size={16} />
-                </View>
+                </TouchableOpacity>
               }
               onClick={() => {}}
             />
@@ -127,7 +141,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             />
             <SummaryItem
               title={params.summary[1].name}
-              value={params.summary[1].name}
+              value={params.summary[1].value}
             />
             <SummaryItem
               title={params.summary[2].name}
@@ -154,8 +168,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         <View style={styles.note}>
           <Flag2 size={RFValue(24)} color="#3861FB" />
           <CustomText style={styles.noteText}>
-            Kindly follow all the outlined steps in the next page accordingly to
-            complete your purchase
+            {params.paymentInstruction}
           </CustomText>
         </View>
       )}

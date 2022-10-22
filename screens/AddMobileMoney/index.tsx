@@ -71,7 +71,6 @@ const AddMobileMoneyScreen: React.FC<
     setLoading(false);
 
     if (result.success) {
-      console.log("password", password);
 
       navigation.navigate("MobileMoneyOTP", {
         method: "momo",

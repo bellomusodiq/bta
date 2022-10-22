@@ -17,8 +17,6 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
 
-  console.log(user);
-
   const [oldEmail, setOldEmail] = useState<string>("");
   const [newEmail, setNewEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

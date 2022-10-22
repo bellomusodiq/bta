@@ -23,7 +23,6 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   route,
 }) => {
   const { params } = route;
-  // console.log("select account", params);
 
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -41,8 +40,6 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   const onContinue = (item) => {
     const newItem = { ...item };
     newItem.accountName = item.name;
-    console.log(newItem);
-
     delete newItem.name;
     navigation.navigate("SellCrypto", { ...params, ...newItem });
   };

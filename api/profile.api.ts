@@ -101,7 +101,6 @@ export const verifyMobileMoneyNumberApi = async (
       accountPassword,
       method,
     };
-    console.log(result.data);
     return result.data;
   } catch (e) {
     console.log(e);
@@ -236,7 +235,6 @@ export const addBankAccountApi = async (
     userBankAccountName,
     userBankAccountNumber,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(`${BASE_URL}/payments/add`, data);
@@ -298,7 +296,6 @@ export const reviewBuyOrderApi = async (
     seletedMethod,
     methodType,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(
@@ -334,7 +331,6 @@ export const validateWithdrawalRequestApi = async (
     seletedMethod,
     methodType,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(
@@ -370,7 +366,6 @@ export const sellConfirmationApi = async (
     seletedMethod,
     methodType,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(`${BASE_URL}/account/2/withdrawCash`, data);
@@ -403,7 +398,6 @@ export const validateSendCryptoApi = async (
     contract,
     platform,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(
@@ -441,7 +435,6 @@ export const sendCryptoApi = async (
     platform,
     eTag,
   };
-  console.log(data);
 
   try {
     const result = await axios.post(

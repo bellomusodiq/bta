@@ -18,7 +18,6 @@ const PayInstructionScreen: React.FC<
   const { params } = route;
   const navigation = useNavigation();
 
-  // console.log(params)
   const HeaderRightComponent = (
     <TouchableOpacity style={styles.supportButton}>
       <Call size={RFValue(14)} color="#000" />

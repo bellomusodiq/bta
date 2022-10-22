@@ -126,8 +126,6 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
     }
   };
 
-  // console.log(receiveHistory.map((h) => h.type));
-
   const fetchTransactions = async () => {
     setLoading(true);
     setError(false);
