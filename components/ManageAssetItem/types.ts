@@ -1,7 +1,7 @@
 export interface ManageAssetItemProps {
   title: string;
-  active?: boolean;
+  active: boolean;
   confirmations: number;
-  onChangeStatus?: () => void;
+  toggleOn?: () => void;
   image: any;
 }

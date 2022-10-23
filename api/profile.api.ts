@@ -148,12 +148,20 @@ export const changeEmail = async (
   }
 };
 
-export const verifyChangeEmail = async (token: string, usercode: string) => {
+export const verifyChangeEmail = async (
+  token: string,
+  oldEmailCode: string,
+  userCode: string
+) => {
   try {
-    const result = await axios.post(`${BASE_URL}/password/passwordCode`, {
+    const data = {
       token,
-      usercode,
-    });
+      userCode,
+      oldEmailCode,
+    };
+    console.log(data);
+
+    const result = await axios.post(`${BASE_URL}/account/2/emailCode`, data);
     return result.data;
   } catch (e) {
     console.log(e);
@@ -437,10 +445,55 @@ export const sendCryptoApi = async (
   };
 
   try {
-    const result = await axios.post(
-      `${BASE_URL}/account/2/sendout`,
-      data
-    );
+    const result = await axios.post(`${BASE_URL}/account/2/sendout`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const manageCryptoAssetApi = async (token: string) => {
+  const data = {
+    token,
+  };
+
+  try {
+    const result = await axios.post(`${BASE_URL}/account/2/coins`, data);
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const enableCryptoAssetApi = async (
+  token: string,
+  cryptoSymbol: string,
+  platform: string
+) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/account/enableCurrency`, {
+      token,
+      cryptoSymbol,
+      platform,
+    });
+
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deactivateAccountApi = async (
+  token: string,
+  accountPassword: string
+) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/account/2/deactivate`, {
+      token,
+      accountPassword,
+    });
 
     return result.data;
   } catch (e) {

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { width } from "../../consts/dimenentions";
+import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -78,7 +78,134 @@ const styles = StyleSheet.create({
   noteTextTitle: {
     color: "#EBB101",
     fontFamily: "Inter_700Bold",
-    marginBottom: 5
+    marginBottom: 5,
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    paddingBottom: height(0.08),
+    minHeight: height(0.5),
+    paddingTop: RFValue(12),
+    borderTopLeftRadius: RFValue(18),
+    borderTopRightRadius: RFValue(18),
+  },
+  modal: {
+    justifyContent: "flex-end",
+    width: width(1),
+    position: "absolute",
+    left: -width(0.05),
+    bottom: -height(0.05),
+  },
+  backDrop: {
+    backgroundColor: "black",
+    flex: 1,
+  },
+  modalHeaderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: width(0.05),
+  },
+  modalHeader: {
+    fontSize: RFValue(16),
+    lineHeight: RFValue(24),
+  },
+  modalHeaderButton: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  modalHeaderButtonText: {
+    marginRight: 5,
+    fontSize: RFValue(16),
+    lineHeight: RFValue(24),
+  },
+  modalDivider: {
+    marginVertical: RFValue(15),
+    height: 1,
+    backgroundColor: "#F0F0F0",
+  },
+  statusContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    paddingHorizontal: width(0.05),
+  },
+  statusTitle: {
+    color: "#979797",
+    fontSize: RFValue(12),
+    lineHeight: RFValue(20),
+  },
+  statusItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 120,
+    borderWidth: 1,
+    marginHorizontal: 5,
+    marginBottom: 15,
+    borderColor: "#F0F0F0",
+  },
+  statusItemText: {
+    color: "black",
+    fontSize: RFValue(12),
+    lineHeight: RFValue(20),
+  },
+  dropdownContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: width(0.05),
+  },
+  dropdown: {
+    flex: 0.7,
+    marginLeft: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderRadius: 124,
+  },
+  modalFooter: {
+    backgroundColor: "white",
+
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: width(0.05),
+    paddingVertical: height(0.02),
+    marginTop: height(0.04),
+    alignSelf: "flex-end",
+  },
+  footerButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 16,
+    borderWidth: 1,
+    borderRadius: 130,
+    borderColor: "#FF5C5C",
+    backgroundColor: "#FF5C5C",
+  },
+  footerButtonText: {
+    color: "white",
+    fontSize: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 16,
+  },
+  modalContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  modalText: {
+    textAlign: "center",
+    fontSize: 20,
+  },
+  inputLabel: {
+    fontSize: 18,
+    marginVertical: 5,
+    marginTop: 15,
   },
 });
 

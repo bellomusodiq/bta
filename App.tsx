@@ -15,7 +15,20 @@ import {
 } from "@expo-google-fonts/inter";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import Toast from "react-native-toast-message";
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+
+const toastConfig = {
+  success: (props) => (
+    <BaseToast {...props} text1NumberOfLines={3} text2NumberOfLines={3} />
+  ),
+  error: (props) => (
+    <ErrorToast
+      {...props}
+      text1NumberOfLines={3}
+      text2NumberOfLines={3}
+    />
+  ),
+};
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -38,7 +51,7 @@ export default function App() {
       <Provider store={store}>
         <View style={{ flex: 1 }}>
           <Navigation colorScheme={colorScheme} />
-          <Toast />
+          <Toast config={toastConfig} />
           <StatusBar backgroundColor="white" barStyle="dark-content" />
         </View>
       </Provider>

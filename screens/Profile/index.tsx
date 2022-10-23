@@ -11,6 +11,8 @@ import {
   BitcoinCard,
   DirectboxReceive,
   Edit2,
+  Eye,
+  EyeSlash,
   FingerScan,
   MedalStar,
   MessageQuestion,
@@ -32,21 +34,41 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions } from "@react-navigation/native";
 import { logoutHandler } from "../../utils/logout";
 import {
+  deactivateAccountApi,
   disableNotificationApi,
   enableNotificationApi,
   getNotificationStatusApi,
 } from "../../api/profile.api";
 import { useAppSelector } from "../../store";
+import ReactNativeModal from "react-native-modal";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import CloseIcon from "../../components/icons/close-icon";
+import CustomInput from "../../components/CustomInput";
+import Toast from "react-native-toast-message";
+import CustomButton from "../../components/CustomButton";
 
 const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const [biometrics, setBiometrics] = useState<boolean>(true);
   const [notification, setNotification] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const onSignOut = async () => {
-    await AsyncStorage.removeItem("@user");
-    navigation.dispatch(StackActions.popToTop());
+  const deactivateAccount = async () => {
+    setLoading(true);
+    const result = await deactivateAccountApi(user.token, password);
+    setLoading(false);
+    if (result.success) {
+      logoutHandler(navigation);
+    } else {
+      Toast.show({
+        type: "error",
+        text1: result.message,
+      });
+    }
   };
 
   const toggleNotification = async () => {
@@ -67,10 +89,77 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
 
   useEffect(() => {
     getNotificationStatus();
-  }, [])
+  }, []);
 
   return (
     <ScreenLayout scrollable>
+      <ReactNativeModal
+        isVisible={showModal}
+        // hasBackdrop
+        backdropOpacity={0.4}
+        customBackdrop={
+          <TouchableWithoutFeedback onPress={() => setShowModal(!showModal)}>
+            <View style={styles.backDrop} />
+          </TouchableWithoutFeedback>
+        }
+        swipeDirection={["up", "left", "right", "down"]}
+        onSwipeComplete={() => setShowModal(!showModal)}
+        style={styles.modal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeaderContainer}>
+            <CustomText style={styles.modalHeader}>
+              Deactivate Account
+            </CustomText>
+            <TouchableOpacity
+              onPress={() => setShowModal(!showModal)}
+              style={styles.modalHeaderButton}
+            >
+              <CustomText style={styles.modalHeaderButtonText}>
+                Close
+              </CustomText>
+              <CloseIcon />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.modalDivider} />
+          <View style={styles.modalContent}>
+            <CustomText style={styles.modalText}>
+              Are you sure you want to deactivate you account?
+            </CustomText>
+            <CustomText style={styles.inputLabel}>
+              Enter password to confirm
+            </CustomText>
+            <CustomInput
+              style={styles.input}
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+              placeholder="Enter password"
+              secureTextEntry={!showPassword}
+              rightComponent={
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  {!showPassword ? (
+                    <Eye color="black" variant="Bold" size={RFValue(20)} />
+                  ) : (
+                    <EyeSlash color="black" variant="Bold" size={RFValue(20)} />
+                  )}
+                </TouchableOpacity>
+              }
+            />
+          </View>
+          <View style={styles.modalFooter}>
+            <CustomButton
+              loading={loading}
+              disabled={!password}
+              onPress={deactivateAccount}
+              style={styles.footerButton}
+            >
+              <CustomText style={styles.footerButtonText}>Confirm</CustomText>
+            </CustomButton>
+          </View>
+        </View>
+      </ReactNativeModal>
       <View style={styles.headerContainer}>
         <Image source={ProfileImage} style={styles.profileImage} />
         <CustomText style={styles.profileName}>Emmanuel Nkrumah</CustomText>
@@ -204,7 +293,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Deactivate account",
-            onPress: () => {},
+            onPress: () => setShowModal(true),
             icon: <UserRemove size={24} color="#3861FB" variant="Bulk" />,
           },
         ]}

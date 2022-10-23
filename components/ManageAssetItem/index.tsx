@@ -10,7 +10,7 @@ const ManageAssetItem: React.FC<ManageAssetItemProps> = ({
   title,
   active,
   confirmations,
-  onChangeStatus,
+  toggleOn,
   image,
 }) => {
   const [on, setOn] = useState<boolean>(true);
@@ -25,8 +25,8 @@ const ManageAssetItem: React.FC<ManageAssetItemProps> = ({
           </CustomText>
         </View>
         <SwitchToggle
-          switchOn={on}
-          onPress={() => setOn(!on)}
+          switchOn={active}
+          onPress={toggleOn}
           circleColorOff="#6e6e6e"
           circleColorOn="#FFFFFF"
           backgroundColorOn="#3861FB"

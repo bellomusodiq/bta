@@ -31,12 +31,14 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
     setLoading(false);
 
     if (result.success) {
-      navigation.navigate("EmailOTP")
+      navigation.navigate("EmailOTP");
       Toast.show({
         type: "success",
         text1: "OTP sent to your email",
       });
     } else {
+      console.log(result.message);
+
       Toast.show({
         type: "error",
         text1: result.message,

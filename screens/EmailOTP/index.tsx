@@ -15,12 +15,17 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
 }) => {
   const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
-  const [pin, setPin] = useState<string>("");
+  const [oldPin, setOldPin] = useState<string>("");
+  const [newPin, setNewPin] = useState<string>("");
+  const [pinType, setPinType] = useState<"old" | "new">("old");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const pin = pinType === "new" ? newPin : oldPin;
+  const setPin = pinType === "new" ? setNewPin : setOldPin;
+
   const updatePin = (digit: string) => {
-    if (pin.length < 4) {
+    if (pin.length < 5) {
       setPin(`${pin}${digit}`);
     }
   };
@@ -33,9 +38,8 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
 
   const verifyEmail = async () => {
     setLoading(true);
-    const result = await verifyChangeEmail(user.token, pin);
+    const result = await verifyChangeEmail(user.token, newPin, oldPin);
     setLoading(false);
-
     if (result.success) {
       navigation.goBack();
       Toast.show({
@@ -52,15 +56,18 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
 
   useEffect(() => {
     setError(null);
-    if (pin.length === 4) {
-      // @ts-ignore-next-line
+    if (newPin.length === 5) {
       verifyEmail();
+      return;
     }
-  }, [pin]);
+    if (oldPin.length === 5) {
+      setPinType("new");
+    }
+  }, [oldPin, newPin]);
 
-  useEffect(() => {
-    setPin("");
-  }, [route.params?.confirm]);
+  // useEffect(() => {
+  //   setPin("");
+  // }, [route.params?.confirm]);
 
   const splitPin = pin.split("");
   return (
@@ -70,7 +77,7 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
       </View>
       <View style={styles.divider} />
       <View style={styles.pinContainer}>
-        {Array(4)
+        {Array(5)
           .fill(1)
           .map((_, i) => (
             <View key={i} style={styles.pin}>
@@ -82,7 +89,7 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
         <CustomText style={styles.error}>{error}</CustomText>
       ) : (
         <CustomText style={styles.enterPin}>
-          Enter OTP sent to your email
+          Enter OTP sent to your {pinType} email
         </CustomText>
       )}
       <View style={styles.buttonContainer}>
