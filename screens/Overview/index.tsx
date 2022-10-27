@@ -37,7 +37,7 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
 
   useEffect(() => {
     getDashboardData();
-  }, [isFocused]);
+  }, []);
   return (
     <ScreenLayout scrollable>
       {loading || error ? (

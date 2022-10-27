@@ -138,7 +138,7 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
 
   useEffect(() => {
     fetchTransactions();
-  }, [isFocused]);
+  }, []);
 
   const toggleModal = () => setShowModal(!showModal);
   return (

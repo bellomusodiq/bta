@@ -68,7 +68,7 @@ const ReceiveCryptoSummaryScreen: React.FC<
 
   useEffect(() => {
     getTokenDetails();
-  }, [isFocused, token]);
+  }, [ token]);
 
   return (
     <ScreenLayout showHeader showShadow scrollable title="Receive">

@@ -81,7 +81,7 @@ const PaymentAccountsScreen: React.FC<
 
   useEffect(() => {
     fetchPaymentDetails();
-  }, [isFocused]);
+  }, []);
 
   return (
     <ScreenLayout scrollable showHeader showShadow title="Payment accounts">

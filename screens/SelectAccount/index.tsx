@@ -72,7 +72,7 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
 
   useEffect(() => {
     fetchPaymentDetails();
-  }, [isFocused]);
+  }, []);
 
   return (
     <ScreenLayout

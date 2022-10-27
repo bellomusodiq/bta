@@ -139,7 +139,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
 
   useEffect(() => {
     getChartData();
-  }, [isFocused, trend]);
+  }, [ trend]);
 
   useEffect(() => {
     getMarketStats();

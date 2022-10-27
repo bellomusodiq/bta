@@ -41,7 +41,7 @@ const ManageAssetScreen: React.FC<
 
   useEffect(() => {
     fetchCryptoAssets();
-  }, [isFocused]);
+  }, []);
 
   const toggleAsset = async (item) => {
     if (item.enabled) return false;

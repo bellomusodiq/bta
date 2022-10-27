@@ -56,7 +56,7 @@ const NotificationsScreen: React.FC<
 
   useEffect(() => {
     getNotifications();
-  }, [isFocused]);
+  }, []);
   return (
     <ScreenLayout
       showHeader

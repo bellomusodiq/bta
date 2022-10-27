@@ -64,7 +64,7 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
 
   useEffect(() => {
     getPaymentList();
-  }, [isFocused]);
+  }, []);
 
   // @ts-ignore-next-line
   const renderItem = ({ item }) => (

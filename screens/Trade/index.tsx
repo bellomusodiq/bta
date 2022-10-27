@@ -77,7 +77,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
 
   useEffect(() => {
     getDashboardData();
-  }, [isFocused]);
+  }, []);
 
   return (
     <ScreenLayout>
