@@ -17,7 +17,8 @@ const Assets: React.FC = () => {
     name: string,
     cryptoValue: string,
     usdValue: string,
-    marketIdentifier: string
+    marketIdentifier: string,
+    marketPrice: string,
   ) => {
     // @ts-ignore-next-line
     navigation.navigate("AssetDetail", {
@@ -26,6 +27,7 @@ const Assets: React.FC = () => {
       cryptoValue,
       usdValue,
       marketIdentifier,
+      marketPrice
     });
   };
 
@@ -70,7 +72,8 @@ const Assets: React.FC = () => {
                 currency.name,
                 currency.cryptoValue,
                 currency.usdValue,
-                currency.marketIdentifier
+                currency.marketIdentifier,
+                currency.price
               )
             }
             hideTrend

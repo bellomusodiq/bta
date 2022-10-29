@@ -1,9 +1,13 @@
+import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   View,
 } from "react-native";
 import MainHeader from "../../components/MainHeader";
@@ -21,9 +25,14 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   showShadow,
   footer,
   flexibleHeader,
+  removeSafeArea,
+  canRefresh,
+  refreshing,
+  onRefresh,
 }) => {
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+  const inset = useSafeAreaInsets();
+  const childComponent = (
+    <>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -41,6 +50,11 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.container}
+            refreshControl={
+              canRefresh ? (
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              ) : null
+            }
           >
             {children}
           </ScrollView>
@@ -49,7 +63,22 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
         )}
       </KeyboardAvoidingView>
       {footer}
+    </>
+  );
+  return !removeSafeArea ? (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      {childComponent}
     </SafeAreaView>
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        paddingTop: inset.top,
+      }}
+    >
+      {childComponent}
+    </View>
   );
 };
 

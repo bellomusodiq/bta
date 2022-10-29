@@ -1,27 +1,19 @@
-import { SearchNormal1, Sort } from "iconsax-react-native";
-import React, { useEffect, useMemo, useState } from "react";
-import { RFValue } from "react-native-responsive-fontsize";
-import CustomInput from "../../components/CustomInput";
+import React, { useEffect, useState } from "react";
 import CustomText from "../../components/CustomText";
 import Tab from "../../components/Tab";
 import { TabItemProps } from "../../components/Tab/types";
 import { Dropdown } from "react-native-element-dropdown";
 import ScreenLayout from "../../layouts/ScreenLayout";
-import { HistoryStackScreenProps, TradeStackScreenProps } from "../../types";
+import { HistoryStackScreenProps } from "../../types";
 import styles from "./styles";
-import EmptyTransactionsImage from "../../assets/images/empty-transactions.png";
 import {
   ActivityIndicator,
-  Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import TradeItem from "../../components/TradeItem";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import SellHistory from "../../components/SellHistory";
-import SentHistory from "../../components/SentHistory";
-import ReceivedHistory from "../../components/ReceivedHistory";
 import ReactNativeModal from "react-native-modal";
 import CloseIcon from "../../components/icons/close-icon";
 import { HistorySelectorProps } from "./types";
@@ -77,7 +69,6 @@ const HistorySelector: React.FC<HistorySelectorProps> = ({
 );
 
 const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
-  const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -145,10 +136,10 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
     <ScreenLayout>
       <View style={styles.headerContainer}>
         <CustomText style={styles.header}>History</CustomText>
-        <TouchableOpacity onPress={toggleModal} style={styles.sortButton}>
+        {/* <TouchableOpacity onPress={toggleModal} style={styles.sortButton}>
           <Sort size="20" color="#3861FB" />
           <CustomText style={styles.sortButtonText}>Sort by</CustomText>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <Tab
         tabs={TAB_DATA}

@@ -71,7 +71,6 @@ const AddMobileMoneyScreen: React.FC<
     setLoading(false);
 
     if (result.success) {
-
       navigation.navigate("MobileMoneyOTP", {
         method: "momo",
         momoName: accountName,
@@ -80,11 +79,15 @@ const AddMobileMoneyScreen: React.FC<
         password: password,
       });
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: result.message,
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
         props: {

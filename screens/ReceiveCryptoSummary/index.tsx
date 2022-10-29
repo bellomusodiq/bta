@@ -10,7 +10,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
 import CustomText from "../../components/CustomText";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -23,7 +23,6 @@ import { width } from "../../consts/dimenentions";
 const ReceiveCryptoSummaryScreen: React.FC<
   RootStackScreenProps<"ReceiveCryptoSummary">
 > = ({ route }) => {
-  const isFocused = useIsFocused();
   const { token: selectedToken } = route.params;
 
   const { dashboardData, user } = useAppSelector((state) => state.auth);
@@ -115,7 +114,7 @@ const ReceiveCryptoSummaryScreen: React.FC<
                 onChange={(val) => setToken(val)}
                 style={styles.dropdown}
                 data={data}
-                renderLeftIcon={() => (bank ? bank.image : null)}
+                renderLeftIcon={() => (token ? token.image : null)}
                 renderItem={(item, selected) => (
                   <View style={styles.dropdownItem}>
                     {item.image}

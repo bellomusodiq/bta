@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
   titleContainer: {
@@ -29,9 +30,10 @@ const styles = StyleSheet.create({
   pinContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+    paddingHorizontal: width(0.06),
   },
   pin: {
-    width: 40,
+    width: 48,
     height: 48,
     borderRadius: 8,
     borderWidth: 1,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
   },
   pinText: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: 40,
+    fontSize: 30,
     marginTop: 4,
   },
   enterPin: {

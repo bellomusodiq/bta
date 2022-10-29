@@ -33,6 +33,8 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
     if (result.success) {
       navigation.navigate("EmailOTP");
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: "OTP sent to your email",
       });
@@ -40,6 +42,8 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
       console.log(result.message);
 
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

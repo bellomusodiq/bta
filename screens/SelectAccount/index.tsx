@@ -1,15 +1,14 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Add, Bank } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { buyAccountApi, sellAccountApi } from "../../api/profile.api";
+import { sellAccountApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import PaymentItem from "../../components/PaymentItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -25,7 +24,6 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   const { params } = route;
 
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

@@ -5,39 +5,27 @@
  */
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-  useIsFocused,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   ArrowSwapHorizontal,
-  ChartSquare,
   Clock,
   Element4,
   ProfileCircle,
-  User,
 } from "iconsax-react-native";
 import * as React from "react";
-import { ColorSchemeName, Pressable, SafeAreaView } from "react-native";
+import { ColorSchemeName, Pressable } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   HistoryStackParamList,
   OverviewStackParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
-  TradeStackParamList,
 } from "../types";
 import colors from "../consts/colors";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -114,12 +102,23 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const [firstLogin, setFirstLogin] = React.useState<boolean>(false);
+  const [isPinSet, setIsPinSet] = React.useState<boolean>(false);
+  const [checkingFirstLogin, setCheckingFirstLogin] =
+    React.useState<boolean>(true);
 
   const getUser = async () => {
+    setCheckingFirstLogin(true);
     const result = await AsyncStorage.getItem("@user");
+    const isLogedIn = await AsyncStorage.getItem("@firstLogin");
+    const pin = await AsyncStorage.getItem("@pin");
+
+    setFirstLogin(Boolean(isLogedIn));
+    setIsPinSet(Boolean(pin));
+    setCheckingFirstLogin(false);
+
     if (result) {
       const user = JSON.parse(result);
       dispatch(setUser(user));
@@ -128,14 +127,29 @@ function RootNavigator() {
 
   React.useEffect(() => {
     getUser();
-  }, [user, isFocused]);
+  }, []);
+
+  const getIntialRouteName = () => {
+    if (!firstLogin) {
+      return "SplashScreen";
+    } else {
+      if (isPinSet) {
+        return "WelcomeBack";
+      } else {
+        return "SignIn";
+      }
+    }
+  };
+
+  console.log("isLogedIn", firstLogin);
+  if (checkingFirstLogin) return null;
 
   return (
     <Stack.Navigator
       screenOptions={{
         header: () => null,
       }}
-      initialRouteName="SplashScreen"
+      initialRouteName={getIntialRouteName()}
     >
       <Stack.Screen
         name="Root"

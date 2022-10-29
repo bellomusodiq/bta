@@ -1,6 +1,6 @@
 import { Call, Mobile, Timer1 } from "iconsax-react-native";
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomText from "../../components/CustomText";
 import SupportIcon from "../../components/icons/support-icon";
@@ -24,6 +24,23 @@ const PayInstructionScreen: React.FC<
       <CustomText style={styles.supportText}>Support</CustomText>
     </TouchableOpacity>
   );
+
+  const showInstruction = () => {
+    Alert.alert(
+      "REFERENCE WARNING",
+      "Always make sure to copy the\n REFERENCE using the blue 'Copy Reference' button.\n\nFaliure to enter the REFERENCE stated in the payment instructions will cause your buy order to fail. \n\n All failed refunds to your Mobile Money account will attract a 0.5% fee \n\n Thank you",
+      [
+        {
+          text: "I understand",
+        },
+      ]
+    );
+  };
+
+  useEffect(() => {
+    showInstruction();
+  }, []);
+
   return (
     <ScreenLayout
       scrollable

@@ -54,11 +54,15 @@ const AddBankAccountScreen: React.FC<
     if (result?.success) {
       navigation.goBack();
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: result?.message,
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result?.message,
       });

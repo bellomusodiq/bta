@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   assetAbbr: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(20),
     color: "#979797",
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   amountValue: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(20),
     color: "#979797",
     textAlign: "right",

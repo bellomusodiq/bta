@@ -17,11 +17,12 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   let shadowStyle = {};
   if (showShadow) {
     shadowStyle = {
-      shadowOffset: { width: 0, height: 4 },
-      shadowColor: "#333333",
-      shadowOpacity: 0.08,
-      shadowRadius: 4,
-      elevation: 3,
+      shadowOffset: { width: 0, height: 3 },
+      backgroundColor: "white",
+      shadowColor: "#000",
+      shadowOpacity: 0.06,
+      shadowRadius: 1.41,
+      elevation: 2,
     };
   }
   return (

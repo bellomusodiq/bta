@@ -11,6 +11,8 @@ const Copy: React.FC<{
     await Clipboard.setStringAsync(text);
 
     Toast.show({
+      autoHide: true,
+      visibilityTime: 7000,
       type: "success",
       text1: "Coppied to clipboard",
     });

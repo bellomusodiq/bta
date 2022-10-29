@@ -13,6 +13,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { validateSendCryptoApi } from "../../api/profile.api";
 import { useAppSelector } from "../../store";
 import Toast from "react-native-toast-message";
+import CustomButton from "../../components/CustomButton";
 
 const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   route,
@@ -25,6 +26,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   const [openBarcode, setOpenBarcode] = useState<boolean>(false);
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -52,6 +54,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   };
 
   const onContinue = async () => {
+    setLoading(true);
     const result = await validateSendCryptoApi(
       user.token,
       route.params?.symbol,
@@ -63,6 +66,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
       route.params?.contract,
       route.params?.platform
     );
+    setLoading(false);
     if (result.success) {
       navigation.navigate("SendTokenSummary", {
         ...result,
@@ -72,6 +76,8 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });
@@ -93,6 +99,8 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
     setAddress(text);
   };
 
+  const disabled = !address || !amount;
+
   return (
     <ScreenLayout
       showHeader
@@ -101,18 +109,14 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
       headerRight={headerRight}
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity
+          <CustomButton
+            loading={loading}
             onPress={onContinue}
-            // disabled={!Boolean(paymentMethod)}
-            style={[
-              styles.footerButton,
-              {
-                backgroundColor: "#3861FB",
-              },
-            ]}
+            disabled={disabled}
+            style={[styles.footerButton]}
           >
             <CustomText style={styles.footerButtonText}>CONTINUE</CustomText>
-          </TouchableOpacity>
+          </CustomButton>
         </View>
       }
     >

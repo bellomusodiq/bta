@@ -15,19 +15,17 @@ import {
 } from "@expo-google-fonts/inter";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import Toast, { ErrorToast, SuccessToast } from "react-native-toast-message";
 
 const toastConfig = {
   success: (props) => (
-    <BaseToast {...props} text1NumberOfLines={3} text2NumberOfLines={3} />
+    <SuccessToast {...props} text1NumberOfLines={20} text2NumberOfLines={20} />
   ),
   error: (props) => (
-    <ErrorToast
-      {...props}
-      text1NumberOfLines={3}
-      text2NumberOfLines={3}
-    />
+    <ErrorToast {...props} text1NumberOfLines={20} text2NumberOfLines={20} />
   ),
+  autoHide: true,
+  visibilityTime: 7000,
 };
 
 export default function App() {

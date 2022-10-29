@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
   coinBalanceContainer: {
     borderWidth: 1,
     borderColor: "#F0F0F0",
-    paddingVertical: RFValue(16),
-    paddingHorizontal: RFValue(24),
-    marginTop: RFValue(24),
+    paddingVertical: RFValue(8),
+    paddingHorizontal: RFValue(12),
+    marginTop: RFValue(12),
     borderRadius: RFValue(8),
     flexDirection: "row",
     justifyContent: "space-between",
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
   },
   coinAbbr: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     color: "#979797",
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   balanceCurrency: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     color: "#979797",
     textAlign: "right",
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 0.9,
   },
   buySellButton: {
-    marginTop: RFValue(14),
+    marginTop: RFValue(8),
     justifyContent: "center",
     alignItems: "center",
     padding: RFValue(16),

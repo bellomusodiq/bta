@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
     fontFamily: "Inter_600SemiBold",
     marginRight: 5,
+    alignItems: "center",
+    flex: 1,
   },
   currency: {
     color: "#3861FB",
@@ -70,7 +72,6 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   footerButton: {
-    backgroundColor: "#3861FB",
     marginVertical: RFValue(10),
     marginHorizontal: width(0.05),
     padding: RFValue(16),
@@ -87,7 +88,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
+    marginRight: 5,
   },
   usd: {
     color: "#979797",

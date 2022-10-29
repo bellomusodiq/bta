@@ -20,6 +20,8 @@ const CopyShareBtns: React.FC<{ text: string; token: string }> = ({
       });
     } catch (e) {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: e.message,
       });
@@ -28,8 +30,10 @@ const CopyShareBtns: React.FC<{ text: string; token: string }> = ({
   return (
     <View style={styles.container}>
       <Copy text={text} style={styles.button}>
-        <DocumentCopy size={RFValue(20)} color="#000" />
-        <CustomText style={styles.buttonText}>Copy</CustomText>
+        <DocumentCopy size={RFValue(20)} color="#3861FB" />
+        <CustomText style={[styles.buttonText, { color: "#3861FB" }]}>
+          Copy
+        </CustomText>
       </Copy>
       <TouchableOpacity style={styles.button} onPress={shareAddress}>
         <Export size={RFValue(20)} color="#000" />

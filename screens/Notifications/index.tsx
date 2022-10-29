@@ -5,7 +5,6 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import { NotificationItemProps } from "../../components/NotificationItem/types";
 import NotificationItem from "../../components/NotificationItem";
-import { useIsFocused } from "@react-navigation/native";
 import { getNotificationsApi } from "../../api/dashboard.api";
 import { useAppSelector } from "../../store";
 import CustomButton from "../../components/CustomButton";
@@ -39,7 +38,6 @@ const NotificationsScreen: React.FC<
   RootStackScreenProps<"Notifications">
 > = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const isFocused = useIsFocused();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 

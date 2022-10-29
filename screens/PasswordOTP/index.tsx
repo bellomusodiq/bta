@@ -39,11 +39,15 @@ const PasswordOTPScreen: React.FC<RootStackScreenProps<"PasswordOTP">> = ({
     if (result.success) {
       navigation.goBack();
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: "your password is changed successfully",
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

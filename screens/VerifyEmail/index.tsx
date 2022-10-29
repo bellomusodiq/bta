@@ -57,6 +57,8 @@ const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = ({
       navigation.navigate("SetPin");
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

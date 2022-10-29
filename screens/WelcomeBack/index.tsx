@@ -10,6 +10,7 @@ import { TagCross } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppSelector } from "../../store";
+import { logoutHandler } from "../../utils/logout";
 
 const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
   const navigation = useNavigation();
@@ -74,13 +75,17 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
     checkForFingerprints();
   }, []);
 
+  const signOut = () => {
+    logoutHandler(navigation);
+  };
+
   const splitPin = pin.split("");
   return (
     <ScreenLayout showHeader title="">
       <View style={styles.titleContainer}>
         <CustomText style={styles.title}>Welcome back!</CustomText>
-        <TouchableOpacity>
-          <CustomText style={styles.nameText}>Not Emmanuel?</CustomText>
+        <TouchableOpacity onPress={signOut}>
+          <CustomText style={styles.nameText}>Not {user.firstName}?</CustomText>
         </TouchableOpacity>
       </View>
       <CustomText style={styles.email}>{user.email}</CustomText>

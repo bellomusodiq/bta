@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderRadius: RFValue(45),
-    padding: RFValue(16),
+    padding: RFValue(8),
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#F0F0F0",

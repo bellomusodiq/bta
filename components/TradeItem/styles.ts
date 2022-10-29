@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
   },
   price: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     color: "#979797",
   },
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
   },
   rate: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     color: "#979797",
   },
@@ -41,15 +41,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F0F0F0",
     borderRadius: RFValue(46),
-    paddingVertical: RFValue(10),
-    paddingHorizontal: RFValue(24),
+    paddingVertical: RFValue(6),
+    paddingHorizontal: RFValue(18),
+    justifyContent: "center",
+    alignSelf: "center",
   },
   buttonText: {
     color: "#3861FB",
-    fontSize: RFValue(16),
-    lineHeight: RFValue(24),
+    fontSize: RFValue(12),
   },
-
 });
 
 export default styles;

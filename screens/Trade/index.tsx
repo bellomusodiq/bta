@@ -10,7 +10,7 @@ import { TradeStackScreenProps } from "../../types";
 import styles from "./styles";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import TradeItem from "../../components/TradeItem";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {  useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setDashboardData } from "../../store/auth.slice";
 import { loadDashboard } from "../../api/dashboard.api";
@@ -38,10 +38,10 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const dispatch = useAppDispatch();
-  const isFocused = useIsFocused();
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = (item) => {
+
     if (currentIndex === 0) {
       navigation.navigate("BuyCrypto", item);
     } else {

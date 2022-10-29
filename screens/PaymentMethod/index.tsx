@@ -1,4 +1,4 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Add, Bank, Mobile } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -25,7 +25,6 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   route,
 }) => {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,16 +32,16 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   const [paymentAccounts, setPaymentAccounts] = useState<any>({});
 
   const onContinue = (item: any) => {
-    const newItem = { ...item };
+    const newItem = { ...item, ...route.params };
     if (item.name) {
       newItem.accountName = item.name;
       delete newItem.name;
     }
     if (route.params?.fromSummary) {
-      navigation.navigate("Summary", {
-        ...route.params,
-        ...newItem,
-      });
+      newItem.text = item.text;
+      const index = newItem.summary.findIndex(i => i.name === "Payment Method");
+      newItem.summary[index].value = `Momo (${item.text})`
+      navigation.navigate("Summary", newItem);
     } else {
       navigation.navigate("BuyCrypto", {
         ...route.params,

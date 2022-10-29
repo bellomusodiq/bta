@@ -1,4 +1,4 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Bank, Mobile } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -22,7 +22,6 @@ const PaymentAccountsScreen: React.FC<
 > = ({ route }) => {
   const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

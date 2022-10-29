@@ -22,7 +22,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
 
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   // filter only token histories in the history page
   const HeaderRightComponent = (
@@ -50,12 +50,14 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
     );
     setLoading(false);
     if (result.success) {
-      navigation.navigate("Instruction", {
+      navigation.navigate("Summary", {
         ...result,
         sell: false,
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });
@@ -87,10 +89,11 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
         <CustomText style={styles.paymentTitle}>I want to pay</CustomText>
         <View style={styles.amountContainer}>
           <TextInput
-            defaultValue="0"
+            placeholder="0"
             keyboardType="numeric"
             style={styles.input}
             value={amount}
+            placeholderTextColor="gray"
             onChangeText={(value) => setAmount(value)}
           />
           <CustomText style={styles.currency}>GHS</CustomText>

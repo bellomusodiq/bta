@@ -1,4 +1,3 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { loadDashboard } from "../../api/dashboard.api";
@@ -8,12 +7,10 @@ import CustomText from "../../components/CustomText";
 import HomeHeader from "../../components/HomeHeader";
 import PortfolioCard from "../../components/PortfolioCard";
 import SendReceiveBtns from "../../components/SendReceiveBtns";
-import { height } from "../../consts/dimenentions";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setDashboardData } from "../../store/auth.slice";
 import { OverviewStackScreenProps } from "../../types";
-import { logoutHandler } from "../../utils/logout";
 import styles from "./styles";
 
 const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
@@ -21,7 +18,6 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   const { dashboardData, user } = useAppSelector((state) => state.auth);
   const [error, setError] = useState<string>(false);
   const dispatch = useAppDispatch();
-  const isFocused = useIsFocused();
 
   const getDashboardData = async () => {
     setLoading(true);
@@ -39,7 +35,12 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     getDashboardData();
   }, []);
   return (
-    <ScreenLayout scrollable>
+    <ScreenLayout
+      scrollable
+      canRefresh
+      refreshing={loading}
+      onRefresh={getDashboardData}
+    >
       {loading || error ? (
         <View style={styles.loadingContainer}>
           {loading ? (

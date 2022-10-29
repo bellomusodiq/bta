@@ -69,6 +69,8 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

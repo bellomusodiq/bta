@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { ArrowRight2, Flag2 } from "iconsax-react-native";
-import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { sellConfirmationApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
@@ -43,7 +43,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     if (result.success) {
       let navigateRoute = "Pending";
       if (result.t?.status === "success") {
-        navigateRoute = "Success";
+        navigateRoute = "Complete";
       }
       if (result.t?.status === "failed") {
         navigateRoute = "Failed";
@@ -51,6 +51,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       navigation.navigate(navigateRoute);
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });
@@ -65,7 +67,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
-  // console.log(params);
+  // console.log(params)
 
   return (
     <ScreenLayout
@@ -77,7 +79,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         <View style={styles.footer}>
           <CustomButton
             loading={loading}
-            onPress={sellConfirm}
+            onPress={navigateToPayInstruction}
             style={styles.footerButton}
           >
             <CustomText style={styles.footerButtonText}>
@@ -98,7 +100,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         />
         {!params?.sell ? (
           <>
-            <SummaryItem title="Reference" value={params.reference} />
             <SummaryItem
               title={params.summary[1].name}
               componentValue={
@@ -153,7 +154,24 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             />
             <SummaryItem
               title={params.summary[4].name}
-              value={params.summary[4].value}
+              componentValue={
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(params);
+                    navigation.navigate("PaymentMethod", {
+                      ...params,
+                      fromSummary: true,
+                    });
+                  }}
+                  style={styles.buttonTextContainer}
+                >
+                  <CustomText style={styles.buttonText}>
+                    {params.summary[4].value}
+                  </CustomText>
+                  <ArrowRight2 size={16} />
+                </TouchableOpacity>
+              }
+              onClick={() => {}}
             />
             <SummaryItem
               title={params.summary[5].name}

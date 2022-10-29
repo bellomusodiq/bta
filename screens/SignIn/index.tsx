@@ -32,8 +32,13 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const [country, setCountry] = useState<any>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const nextNavigation = () => {
-    navigation.navigate("Root");
+  const nextNavigation = async () => {
+    const pin = await AsyncStorage.getItem("@pin");
+    if (pin) {
+      navigation.navigate("Root");
+    } else {
+      navigation.navigate("SetPin");
+    }
   };
 
   const disabled = !email || !password || loading;
@@ -46,6 +51,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     if (result.success) {
       dispatch(setUser(result.account));
       await AsyncStorage.setItem("@user", JSON.stringify(result.account));
+      await AsyncStorage.setItem("@firstLogin", "true");
       nextNavigation();
     } else {
       dispatch(setError(result.message));

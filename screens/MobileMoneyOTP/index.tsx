@@ -23,13 +23,8 @@ const MobileMoneyOTP: React.FC<RootStackScreenProps<"MobileMoneyOTP">> = ({
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const {
-    method,
-    momoName,
-    momoUserPhone,
-    selectedUserNetwork,
-    password,
-  } = route.params;
+  const { method, momoName, momoUserPhone, selectedUserNetwork, password } =
+    route.params;
 
   const updatePin = (digit: string) => {
     if (pin.length < 4) {
@@ -59,11 +54,15 @@ const MobileMoneyOTP: React.FC<RootStackScreenProps<"MobileMoneyOTP">> = ({
     if (result.success) {
       navigation.goBack();
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: result.message,
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

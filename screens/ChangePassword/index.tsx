@@ -38,11 +38,15 @@ const ChangePasswordScreen: React.FC<
     if (result.success) {
       navigation.navigate("PasswordOTP");
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "success",
         text1: "OTP sent to your email",
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

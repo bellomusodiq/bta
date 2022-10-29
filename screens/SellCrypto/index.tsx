@@ -23,7 +23,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const [currency, setCurrency] = useState<string>(params.symbol);
   const [loading, setLoading] = useState<boolean>(false);
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<string>("");
   // navigate to Histor > sell tab, sorting by only token
   const HeaderRightComponent = (
     <TouchableOpacity
@@ -77,6 +77,8 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });
@@ -108,6 +110,8 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           <View style={styles.inputContainer}>
             <TextInput
               keyboardType="numeric"
+              placeholder="0"
+              placeholderTextColor="gray"
               style={styles.input}
               value={amount}
               onChangeText={(text) => setAmount(text)}

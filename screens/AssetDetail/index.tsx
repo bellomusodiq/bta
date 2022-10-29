@@ -8,12 +8,11 @@ import {
 } from "react-native";
 import AssetDetailHeader from "../../components/AssetDetailHeader";
 import CustomText from "../../components/CustomText";
-import TrendChart from "../../components/TrendChart";
 import TrendFilter from "../../components/TrendFilter";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { OverviewStackScreenProps } from "../../types";
 import styles from "./styles";
-import { ArrowRight, Scan, Send2 } from "iconsax-react-native";
+import { ArrowRight } from "iconsax-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import MarketStats from "../../components/MarketStats";
 import ReactNativeModal from "react-native-modal";
@@ -21,23 +20,8 @@ import BuySellItem from "../../components/BuySellItem";
 import { LineChart } from "react-native-wagmi-charts";
 import { chartsApi, marketAssetsApi } from "../../api/assets.api";
 import { useAppSelector } from "../../store";
-import { CurrencyToAbbreviation } from "currency-to-abbreviation";
-
-import BitcoinImage from "../../assets/images/BTC.png";
-import LTCImage from "../../assets/images/LTC.png";
-import TronImage from "../../assets/images/TRX.png";
-import USDTImage from "../../assets/images/USDT.png";
-import DOGEImage from "../../assets/images/DOGE.png";
-import { useIsFocused } from "@react-navigation/native";
-
-const coinImage = {
-  BTC: BitcoinImage,
-  BCH: BitcoinImage,
-  DOGE: DOGEImage,
-  LTC: LTCImage,
-  TRX: TronImage,
-  USDT: USDTImage,
-};
+import { useNavigation } from "@react-navigation/native";
+import { coinImage } from "../../consts/images";
 
 const coinDescription = {
   BTC: "Bitcoin is the first and most widely recognized cryptocurrency. It enables peer-to-peer exchange of value in the digital realm through the use of a decentralized protocol, cryptography, and a mechanism to achieve global consensus on the state of a periodically updated public transaction ledger called a 'blockchain.'",
@@ -60,9 +44,15 @@ const coinUrl = {
 const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
   route,
 }) => {
-  const { currency, name, cryptoValue, usdValue, marketIdentifier } =
-    route.params;
-  const isFocused = useIsFocused();
+  const {
+    currency,
+    name,
+    cryptoValue,
+    usdValue,
+    marketIdentifier,
+    marketPrice,
+  } = route.params;
+  const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [chartData, setchartData] = useState<any>([]);
@@ -139,11 +129,36 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
 
   useEffect(() => {
     getChartData();
-  }, [ trend]);
+  }, [trend]);
 
   useEffect(() => {
     getMarketStats();
   }, []);
+
+  const buyCoin = () => {
+    navigation.navigate("BuyCrypto", {
+      currency,
+      name,
+      cryptoValue,
+      usdValue,
+      marketIdentifier,
+      marketPrice,
+      symbol: currency,
+    });
+    setShowModal(false);
+  };
+  const sellCoin = () => {
+    navigation.navigate("SellCrypto", {
+      currency,
+      name,
+      cryptoValue,
+      usdValue,
+      marketIdentifier,
+      marketPrice,
+      symbol: currency,
+    });
+    setShowModal(false);
+  };
 
   const getCurrentPrice = () => {
     const currentPriceLength = chartData.length;
@@ -155,13 +170,11 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
   };
 
   return (
-    <ScreenLayout scrollable>
+    <ScreenLayout removeSafeArea scrollable>
       <AssetDetailHeader title={`${name} (${currency})`} />
       <View style={styles.currentPriceContainer}>
         <CustomText style={styles.currentPriceTitle}>Current price</CustomText>
-        <CustomText style={styles.currentPrice}>
-          ${getCurrentPrice()}
-        </CustomText>
+        <CustomText style={styles.currentPrice}>${marketPrice}</CustomText>
       </View>
       {/* <TrendChart /> */}
       <View style={styles.graphContainer}>
@@ -218,9 +231,10 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
             <View style={styles.backDrop} />
           </TouchableWithoutFeedback>
         }
-        swipeDirection={["up", "left", "right", "down"]}
+        swipeDirection={["down"]}
         onSwipeComplete={toggleModal}
         style={styles.modal}
+        useNativeDriver
       >
         <View style={styles.modalContainer}>
           <View style={styles.indicator} />
@@ -239,8 +253,8 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
               </CustomText>
             </View>
           </View>
-          <BuySellItem type="buy" title={name} />
-          <BuySellItem type="sell" title={name} />
+          <BuySellItem onPress={buyCoin} type="buy" title={name} />
+          <BuySellItem onPress={sellCoin} type="sell" title={name} />
           <CustomText style={styles.footerText}>
             Crypto market prices are highly volatile and so market prices are
             quoted every 60 seconds

@@ -37,6 +37,8 @@ const InstructionScreen: React.FC<RootStackScreenProps<"Instruction">> = ({
       });
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

@@ -19,57 +19,68 @@ const AssetItem: React.FC<AssetItemProps> = ({
   percentageChange = 0,
   noPercentage,
   tokenPrice,
-}) => (
-  <>
-    <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
-      <Image
-        source={image}
-        style={styles.assetImage}
-        resizeMode="contain"
-        resizeMethod="scale"
-      />
-      <View style={styles.nameContainer}>
-        <CustomText style={styles.assetTitle}>{title}</CustomText>
-        <CustomText style={styles.assetAbbr}>
-          {tokenPrice || currency}
-          {"   "}
-          {!noPercentage && (
-            <CustomText
-              style={{
-                color: percentageChange >= 0 ? "#25D366" : "#FF5C5C",
-              }}
-            >
-              {percentageChange === 0
-                ? "+0.0"
-                : `${percentageChange >= 0 ? "+" : ""}${percentageChange}`}
+}) => {
+  const toDecimalPlace = () => {
+    if (currency === "USDT" || currency === "TRX") {
+      return Number.parseFloat(amountCrypto).toFixed(2);
+    }
+    if (currency === "BTC") {
+      return Number.parseFloat(amountCrypto).toFixed(8);
+    }
+    return Number.parseFloat(amountCrypto).toFixed(3);
+  };
+  return (
+    <>
+      <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
+        <Image
+          source={image}
+          style={styles.assetImage}
+          resizeMode="contain"
+          resizeMethod="scale"
+        />
+        <View style={styles.nameContainer}>
+          <CustomText style={styles.assetTitle}>{title}</CustomText>
+          <CustomText style={styles.assetAbbr}>
+            {tokenPrice || currency}
+            {"   "}
+            {!noPercentage && (
               <CustomText
                 style={{
-                  fontSize: 12,
+                  color: percentageChange >= 0 ? "#25D366" : "#FF5C5C",
                 }}
               >
-                %
+                {percentageChange === 0
+                  ? "+0.0"
+                  : `${percentageChange >= 0 ? "+" : ""}${percentageChange}`}
+                <CustomText
+                  style={{
+                    fontSize: 12,
+                  }}
+                >
+                  %
+                </CustomText>
               </CustomText>
+            )}
+          </CustomText>
+        </View>
+        {!showArrow ? (
+          <View style={styles.valueContainer}>
+            <CustomText style={styles.amount}>
+              {hideTrend ? `${toDecimalPlace()} ${currency}` : `$${amountUSD}`}
             </CustomText>
-          )}
-        </CustomText>
-      </View>
-      {!showArrow ? (
-        <View style={styles.valueContainer}>
-          <CustomText style={styles.amount}>
-            {hideTrend ? `${amountCrypto} ${currency}` : `$${amountUSD}`}
-          </CustomText>
-          <CustomText style={styles.amountValue}>
-            {hideTrend ? `$${amountUSD}` : `${amountCrypto} ${currency}`}
-          </CustomText>
-        </View>
-      ) : (
-        <View style={styles.arrowContainer}>
-          <ArrowRight2 size={RFValue(20)} color="#000" />
-        </View>
-      )}
-    </TouchableOpacity>
-    <View style={styles.divider} />
-  </>
-);
+            <CustomText style={styles.amountValue}>
+              {hideTrend ? `$${amountUSD}` : `${toDecimalPlace()} ${currency}`}
+            </CustomText>
+          </View>
+        ) : (
+          <View style={styles.arrowContainer}>
+            <ArrowRight2 size={RFValue(20)} color="#000" />
+          </View>
+        )}
+      </TouchableOpacity>
+      <View style={styles.divider} />
+    </>
+  );
+};
 
 export default AssetItem;

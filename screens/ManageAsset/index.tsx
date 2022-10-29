@@ -3,11 +3,7 @@ import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { OverviewStackScreenProps } from "../../types";
 import styles from "./styles";
-import {
-  ActivityIndicator,
-  FlatList,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import ManageAssetItem from "../../components/ManageAssetItem";
 import {
   enableCryptoAssetApi,
@@ -15,14 +11,12 @@ import {
 } from "../../api/profile.api";
 import { useAppSelector } from "../../store";
 import CustomButton from "../../components/CustomButton";
-import { useIsFocused } from "@react-navigation/native";
 import { coinImage } from "../../consts/images";
 import Toast from "react-native-toast-message";
 
 const ManageAssetScreen: React.FC<
   OverviewStackScreenProps<"ManageAsset">
 > = () => {
-  const isFocused = useIsFocused();
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -59,6 +53,8 @@ const ManageAssetScreen: React.FC<
       setAssets(newAssets);
     } else {
       Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
         type: "error",
         text1: result.message,
       });

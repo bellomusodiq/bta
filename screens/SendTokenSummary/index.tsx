@@ -35,6 +35,7 @@ const SendTokenSummaryScreen: React.FC<
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAppSelector((state) => state.auth);
   const { params } = route;
+  // console.log(params)
 
   const navigation = useNavigation();
   const onContinue = async () => {
@@ -58,7 +59,7 @@ const SendTokenSummaryScreen: React.FC<
     if (result.success) {
       let navigateRoute = "Pending";
       if (result.t?.status === "success") {
-        navigateRoute = "Success";
+        navigateRoute = "Complete";
       }
       if (result.t?.status === "failed") {
         navigateRoute = "Failed";
