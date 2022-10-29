@@ -39,7 +39,6 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
         text1: "OTP sent to your email",
       });
     } else {
-      console.log(result.message);
 
       Toast.show({
         autoHide: true,

@@ -61,8 +61,6 @@ const InstructionScreen: React.FC<RootStackScreenProps<"Instruction">> = ({
     showInstruction();
   }, []);
 
-  console.log(params);
-
   return (
     <ScreenLayout showHeader title="Payment Instructions">
       <View style={styles.container}>

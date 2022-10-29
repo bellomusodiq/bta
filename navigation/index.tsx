@@ -141,7 +141,6 @@ function RootNavigator() {
     }
   };
 
-  console.log("isLogedIn", firstLogin);
   if (checkingFirstLogin) return null;
 
   return (

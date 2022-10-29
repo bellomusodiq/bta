@@ -22,8 +22,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
 
-  // console.log(params);
-
   const sellConfirm = async () => {
     setLoading(true);
     const result = await sellConfirmationApi(
@@ -67,8 +65,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
-  // console.log(params)
-
   return (
     <ScreenLayout
       scrollable
@@ -105,7 +101,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
               componentValue={
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(params);
                     navigation.navigate("PaymentMethod", {
                       ...params,
                       fromSummary: true,
@@ -157,7 +152,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
               componentValue={
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(params);
                     navigation.navigate("PaymentMethod", {
                       ...params,
                       fromSummary: true,

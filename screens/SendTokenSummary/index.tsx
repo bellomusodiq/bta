@@ -35,7 +35,6 @@ const SendTokenSummaryScreen: React.FC<
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAppSelector((state) => state.auth);
   const { params } = route;
-  // console.log(params)
 
   const navigation = useNavigation();
   const onContinue = async () => {

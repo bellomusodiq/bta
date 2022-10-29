@@ -42,8 +42,6 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const onSignup = async () => {
     setLoading(true);
     setError(null);
-    console.log(country);
-
     const result = await signupApi(
       email,
       country.label,
