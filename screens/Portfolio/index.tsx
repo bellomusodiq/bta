@@ -7,7 +7,7 @@ import {
   More,
   SearchNormal1,
 } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomInput from "../../components/CustomInput";
@@ -22,6 +22,9 @@ import TronImage from "../../assets/images/TRX.png";
 import USDTImage from "../../assets/images/USDT.png";
 import UpTrendIcon from "../../components/icons/uptrend-icon";
 import { useNavigation } from "@react-navigation/native";
+import { useAppSelector } from "../../store";
+import { manageCryptoAssetApi } from "../../api/profile.api";
+import { coinImage } from "../../consts/images";
 
 const data = [
   {
@@ -87,9 +90,11 @@ const AssetItem: React.FC<any> = ({
   </>
 );
 const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
+  const { dashboardData } = useAppSelector((state) => state.auth);
   const [showBalance, setShowBalance] = useState<boolean>(true);
-  const [assetItems, setAssetItems] = useState(data);
+  const [assetItems, setAssetItems] = useState(dashboardData);
   const [query, setQuery] = useState<string>("");
+
   const navigation = useNavigation();
   const navigateToDetail = () => {
     // @ts-ignore-next-line
@@ -106,6 +111,16 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
         item.currency.toLowerCase().includes(text.toLowerCase())
     );
     setAssetItems(result);
+  };
+
+  const toDecimalPlace = (currency, amountCrypto) => {
+    if (currency === "USDT" || currency === "TRX") {
+      return Number.parseFloat(amountCrypto).toFixed(2);
+    }
+    if (currency === "BTC") {
+      return Number.parseFloat(amountCrypto).toFixed(8);
+    }
+    return Number.parseFloat(amountCrypto).toFixed(3);
   };
 
   return (
@@ -125,7 +140,7 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
     >
       <CustomText style={styles.holdings}>Total holdings</CustomText>
       <CustomText style={styles.amount1}>
-        ${showBalance ? "1,567.88" : "****"}
+        ${showBalance ? dashboardData.totalPortfolioSummary?.usd : "****"}
       </CustomText>
       <View style={styles.growthContainer}>
         <CustomText style={styles.growth}>
@@ -133,7 +148,7 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
         </CustomText>
       </View>
       <CustomText style={styles.holdingAsset}>
-        You hold a total of 4 assets
+        You hold a total of {dashboardData.currencies.length} assets
       </CustomText>
       <View style={styles.btnContainer}>
         <TouchableOpacity
@@ -163,7 +178,9 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
         <View style={styles.assetTitleContainer}>
           <CustomText style={styles.assetText}>Assets</CustomText>
           <View style={styles.assetCountContainer}>
-            <CustomText style={styles.assetCount}>9</CustomText>
+            <CustomText style={styles.assetCount}>
+              {dashboardData.currencies.length}
+            </CustomText>
           </View>
         </View>
         <TouchableOpacity onPress={toggleBalance} style={styles.toggleTitle}>
@@ -184,14 +201,14 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
         value={query}
         onChangeText={onSearch}
       />
-      {assetItems.map((asset) => (
+      {assetItems.currencies.map((asset) => (
         <AssetItem
           key={asset.currency}
-          image={asset.image}
-          amountUSD={asset.amountUSD}
-          amountCrypto={asset.amountCrypto}
-          currency={asset.currency}
-          title={asset.title}
+          image={coinImage[asset.symbol]}
+          amountUSD={asset.usdValue}
+          amountCrypto={toDecimalPlace(asset.symbol, asset.cryptoValue)}
+          currency={asset.symbol}
+          title={asset.name}
           onPress={navigateToDetail}
           noPercentage
         />

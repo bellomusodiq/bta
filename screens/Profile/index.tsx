@@ -30,8 +30,6 @@ import ProfileItems from "../../components/ProfileItems";
 import BitAfrikaImage from "../../assets/images/bitafrika.png";
 import { useNavigation } from "@react-navigation/native";
 import SendIcon from "../../components/icons/send-icon";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StackActions } from "@react-navigation/native";
 import { logoutHandler } from "../../utils/logout";
 import {
   deactivateAccountApi,
