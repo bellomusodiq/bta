@@ -159,7 +159,6 @@ export const verifyChangeEmail = async (
       userCode,
       oldEmailCode,
     };
-    console.log(data);
 
     const result = await axios.post(`${BASE_URL}/account/2/emailCode`, data);
     return result.data;
