@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   token: {
-    marginTop: RFValue(16),
+    marginTop: RFValue(4),
     color: "#000",
     fontSize: RFValue(32),
     lineHeight: RFValue(40),

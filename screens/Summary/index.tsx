@@ -132,10 +132,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         ) : (
           <>
             <SummaryItem
-              title={params.summary[0].name}
-              value={params.summary[0].value}
-            />
-            <SummaryItem
               title={params.summary[1].name}
               value={params.summary[1].value}
             />
@@ -149,6 +145,10 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             />
             <SummaryItem
               title={params.summary[4].name}
+              value={params.summary[4].value}
+            />
+            <SummaryItem
+              title={params.summary[5].name}
               componentValue={
                 <TouchableOpacity
                   onPress={() => {
@@ -160,16 +160,12 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
                   style={styles.buttonTextContainer}
                 >
                   <CustomText style={styles.buttonText}>
-                    {params.summary[4].value}
+                    {params.summary[5].value}
                   </CustomText>
                   <ArrowRight2 size={16} />
                 </TouchableOpacity>
               }
               onClick={() => {}}
-            />
-            <SummaryItem
-              title={params.summary[5].name}
-              value={params.summary[5].value}
               onClick={() => {}}
             />
           </>
@@ -180,7 +176,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         <View style={styles.note}>
           <Flag2 size={RFValue(24)} color="#3861FB" />
           <CustomText style={styles.noteText}>
-            {params.paymentInstruction}
+            Kindly follow all the steps in the next page accordingly to complete
+            your purchase
           </CustomText>
         </View>
       )}

@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     borderRadius: RFValue(8),
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 6,
   },
   modalBalanceContainer: {
     borderBottomWidth: 1,

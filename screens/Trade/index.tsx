@@ -8,9 +8,14 @@ import { TabItemProps } from "../../components/Tab/types";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { TradeStackScreenProps } from "../../types";
 import styles from "./styles";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  View,
+} from "react-native";
 import TradeItem from "../../components/TradeItem";
-import {  useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setDashboardData } from "../../store/auth.slice";
 import { loadDashboard } from "../../api/dashboard.api";
@@ -41,7 +46,6 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = (item) => {
-
     if (currentIndex === 0) {
       navigation.navigate("BuyCrypto", item);
     } else {
@@ -113,12 +117,16 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
         </View>
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl onRefresh={getDashboardData} refreshing={loading} />
+          }
           data={filterData}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <TradeItem
               title={item.name}
               image={coinImage[item.symbol]}
-              price={`$${item.price}`}
+              price={`$${Number(item.price).toFixed(2)}`}
               rate={currentIndex === 0 ? item.rates.buy : item.rates.sell}
               tradeType={currentIndex === 0 ? "buy" : "sell"}
               onPress={() => navigateToBuyOrSell(item)}

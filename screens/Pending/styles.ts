@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     width: "35%",
     marginBottom: RFValue(10),
     height: 100,
+    marginTop: -RFValue(40),
   },
   text: {
     color: "#979797",
@@ -53,13 +54,11 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
   },
   buttonText: {
-    color: "#000000",
+    color: "#3861FB",
     fontSize: RFValue(14),
     fontFamily: "Inter_500Medium",
-    marginLeft: 5,
   },
 });
 

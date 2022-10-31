@@ -64,7 +64,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
     }
   };
 
-  const disabled = !params?.name || !params?.accountName;
+  const disabled = !params?.name || !params?.accountName || !amount;
   return (
     <ScreenLayout
       showHeader

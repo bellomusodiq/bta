@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import CustomText from "../CustomText";
 import styles from "./styles";
 import { TrendFilterItemProps } from "./types";
@@ -50,18 +50,20 @@ const TrendFilter: React.FC<{ onSetTrend: (currentTrend: string) => {} }> = ({
     onSetTrend(currentTrend);
   }, [currentTrend]);
   return (
-    <FlatList
-      data={data}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
-        <TrendFilterItem
-          onPress={() => setCurrentTrend(item.title)}
-          title={item.title}
-          active={currentTrend === item.title}
-        />
-      )}
-    />
+    <View style={{ marginTop: 6, marginBottom: 6 }}>
+      <FlatList
+        data={data}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TrendFilterItem
+            onPress={() => setCurrentTrend(item.title)}
+            title={item.title}
+            active={currentTrend === item.title}
+          />
+        )}
+      />
+    </View>
   );
 };
 

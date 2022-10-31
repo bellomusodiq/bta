@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
-    width: width(0.9) - RFValue(24),
+    width: width(0.9),
     alignSelf: "flex-end",
   },
   tokenContainer: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
     fontSize: RFValue(32),
     lineHeight: RFValue(40),
-    marginVertical: RFValue(16),
+    marginBottom: RFValue(16),
     textAlign: "center",
   },
   timerContainer: {

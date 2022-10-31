@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    paddingBottom: RFValue(18),
-    paddingTop: RFValue(18),
+    paddingBottom: RFValue(14),
+    paddingTop: RFValue(14),
   },
   assetImage: {
     width: "10%",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     lineHeight: RFValue(20),
     fontFamily: "Inter_600SemiBold",
-    marginBottom: 8,
+    marginBottom: 3,
   },
   assetAbbr: {
     fontSize: RFValue(12),
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(20),
     textAlign: "right",
     fontFamily: "Inter_600SemiBold",
-    marginBottom: 8,
+    marginBottom: 3,
   },
   amountValue: {
     fontSize: RFValue(12),

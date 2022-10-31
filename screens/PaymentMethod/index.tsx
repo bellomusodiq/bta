@@ -24,6 +24,8 @@ const data = Array(4).fill(1);
 const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   route,
 }) => {
+  // console.log(route.params);
+
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -36,11 +38,13 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
     if (item.name) {
       newItem.accountName = item.name;
       delete newItem.name;
+      newItem.text = item.text;
     }
     if (route.params?.fromSummary) {
-      newItem.text = item.text;
-      const index = newItem.summary.findIndex(i => i.name === "Payment Method");
-      newItem.summary[index].value = `Momo (${item.text})`
+      const index = newItem.summary.findIndex(
+        (i) => i.name === "Payment Method"
+      );
+      newItem.summary[index].value = `Momo (${item.text})`;
       navigation.navigate("Summary", newItem);
     } else {
       navigation.navigate("BuyCrypto", {

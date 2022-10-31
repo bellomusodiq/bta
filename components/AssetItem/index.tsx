@@ -41,7 +41,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
         <View style={styles.nameContainer}>
           <CustomText style={styles.assetTitle}>{title}</CustomText>
           <CustomText style={styles.assetAbbr}>
-            {tokenPrice || currency}
+            {Number.parseFloat(tokenPrice).toFixed(2) || currency}
             {"   "}
             {!noPercentage && (
               <CustomText
@@ -66,10 +66,14 @@ const AssetItem: React.FC<AssetItemProps> = ({
         {!showArrow ? (
           <View style={styles.valueContainer}>
             <CustomText style={styles.amount}>
-              {hideTrend ? `${toDecimalPlace()} ${currency}` : `$${amountUSD}`}
+              {hideTrend
+                ? `${toDecimalPlace()} ${currency}`
+                : `$${Number.parseFloat(amountUSD).toFixed(2)}`}
             </CustomText>
             <CustomText style={styles.amountValue}>
-              {hideTrend ? `$${amountUSD}` : `${toDecimalPlace()} ${currency}`}
+              {hideTrend
+                ? `$${Number.parseFloat(amountUSD).toFixed(2)}`
+                : `${toDecimalPlace()} ${currency}`}
             </CustomText>
           </View>
         ) : (

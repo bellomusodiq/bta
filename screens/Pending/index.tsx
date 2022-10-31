@@ -15,16 +15,7 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = () => {
     navigation.navigate("Root");
   };
   return (
-    <ScreenLayout
-      footer={
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={onNavigate} style={[styles.footerButton]}>
-            <CustomText style={styles.footerButtonText}>CLOSE</CustomText>
-          </TouchableOpacity>
-        </View>
-      }
-      title=""
-    >
+    <ScreenLayout title="">
       <View style={styles.container}>
         <Image
           source={PendingImage}
@@ -38,18 +29,14 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = () => {
         <CustomText style={styles.text}>
           We’re working on your request, please check back in a minute
         </CustomText>
+        <TouchableOpacity style={styles.button}>
+          <CustomText style={styles.buttonText}>View transaction</CustomText>
+        </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setAlert(!alert)}
-          style={styles.button}
+          onPress={() => navigation.replace("Root")}
+          style={[styles.button, { marginTop: 20 }]}
         >
-          <TickCircle
-            size="20"
-            color="#979797"
-            variant={alert ? "Bold" : "Linear"}
-          />
-          <CustomText style={styles.buttonText}>
-            Send me alerts about transaction status
-          </CustomText>
+          <CustomText style={styles.buttonText}>Go to homepage</CustomText>
         </TouchableOpacity>
       </View>
     </ScreenLayout>

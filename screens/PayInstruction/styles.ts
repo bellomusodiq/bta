@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F0F0",
   },
   itemTitle: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(12),
+    fontFamily: "Inter_400Regular",
   },
   copyBoxContainer: {
     flexDirection: "row",
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: RFValue(45),
+    marginTop: RFValue(0),
   },
   buttonText: {
     color: "white",

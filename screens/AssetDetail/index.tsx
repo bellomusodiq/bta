@@ -174,7 +174,9 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       <AssetDetailHeader title={`${name} (${currency})`} />
       <View style={styles.currentPriceContainer}>
         <CustomText style={styles.currentPriceTitle}>Current price</CustomText>
-        <CustomText style={styles.currentPrice}>${marketPrice}</CustomText>
+        <CustomText style={styles.currentPrice}>
+          ${Number.parseFloat(marketPrice).toFixed(2)}
+        </CustomText>
       </View>
       {/* <TrendChart /> */}
       <View style={styles.graphContainer}>
@@ -243,7 +245,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
             <View style={styles.titleContainer}>
               <CustomText style={styles.coinTitle}>{name}</CustomText>
               <CustomText style={styles.coinAbbr}>
-                {coinImage[currency]}
+                {Number(marketPrice).toFixed(2)}
               </CustomText>
             </View>
             <View style={styles.balanceContainer}>
