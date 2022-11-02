@@ -41,7 +41,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
         <View style={styles.nameContainer}>
           <CustomText style={styles.assetTitle}>{title}</CustomText>
           <CustomText style={styles.assetAbbr}>
-            {Number.parseFloat(tokenPrice).toFixed(2) || currency}
+            {tokenPrice ? Number.parseFloat(tokenPrice).toFixed(2) : currency}
             {"   "}
             {!noPercentage && (
               <CustomText

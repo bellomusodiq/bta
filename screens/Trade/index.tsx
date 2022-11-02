@@ -39,6 +39,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const [filterData, setFilterData] = useState<any>(
     dashboardData?.currencies || []
   );
+
   const [query, setQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
@@ -126,7 +127,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
             <TradeItem
               title={item.name}
               image={coinImage[item.symbol]}
-              price={`$${Number(item.price).toFixed(2)}`}
+              price={`$${Number(item.usdValue).toFixed(2)}`}
               rate={currentIndex === 0 ? item.rates.buy : item.rates.sell}
               tradeType={currentIndex === 0 ? "buy" : "sell"}
               onPress={() => navigateToBuyOrSell(item)}

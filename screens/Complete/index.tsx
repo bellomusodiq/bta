@@ -25,7 +25,7 @@ const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = () => {
         <CustomText style={styles.text}>
           Check the status of your withdrawal in your transaction history
         </CustomText>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate("History")} style={styles.button}>
           <CustomText style={styles.buttonText}>View transaction</CustomText>
         </TouchableOpacity>
         <TouchableOpacity

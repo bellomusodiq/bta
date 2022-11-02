@@ -41,17 +41,22 @@ const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
 
       <FlatList
         data={filterData}
-        renderItem={({ item }) => (
-          <AssetItem
-            image={coinImage[item.symbol]}
-            amountUSD={item.usdValue}
-            amountCrypto={item.cryptoValue}
-            currency={item.symbol}
-            title={item.name}
-            onPress={() => navigateToSendToken(item)}
-            hideTrend
-          />
-        )}
+        renderItem={({ item }) => {
+          console.log(item.symbol);
+
+          return (
+            <AssetItem
+              image={coinImage[item.symbol]}
+              amountUSD={item.usdValue}
+              amountCrypto={item.cryptoValue}
+              currency={item.symbol}
+              title={item.name}
+              onPress={() => navigateToSendToken(item)}
+              hideTrend
+              noPercentage
+            />
+          );
+        }}
       />
     </ScreenLayout>
   );

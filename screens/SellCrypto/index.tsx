@@ -120,7 +120,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           </View>
           <TouchableOpacity
             onPress={() =>
-              setCurrency(currency === "USD" ? "USD" : params.symbol)
+              setCurrency(currency !== "USD" ? "USD" : params.symbol)
             }
             style={styles.currencyContainer}
           >

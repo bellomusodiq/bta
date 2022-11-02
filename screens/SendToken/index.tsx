@@ -155,7 +155,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
                       style={styles.tablet}
                     >
                       <CustomText style={styles.tabletText}>
-                        {currency}
+                        {currency === "USD" ? route.params?.symbol : "USD"}
                       </CustomText>
                     </TouchableOpacity>
                   </View>

@@ -34,7 +34,7 @@ const TransactionDetailItem: React.FC<TransactonDetailItemProps> = ({
 
 const TransactionDetailScreen: React.FC<
   HistoryStackScreenProps<"TransactionDetail">
-> = ({ route }) => {
+> = ({ route, navigation }) => {
   const { params } = route;
 
   const cryptoCurrency =
@@ -104,7 +104,10 @@ const TransactionDetailScreen: React.FC<
           />
         )}
         <TransactionDetailItem title="Transaction id" value={_id} canCopy />
-        <TouchableOpacity style={styles.explorerButton}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("History")}
+          style={styles.explorerButton}
+        >
           <CustomText style={styles.explorerText}>
             View Transaction on explorer
           </CustomText>
