@@ -42,7 +42,6 @@ const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
       <FlatList
         data={filterData}
         renderItem={({ item }) => {
-          console.log(item.symbol);
 
           return (
             <AssetItem

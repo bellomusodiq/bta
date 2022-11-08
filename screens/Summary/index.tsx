@@ -46,7 +46,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       if (result.t?.status === "failed") {
         navigateRoute = "Failed";
       }
-      navigation.navigate(navigateRoute);
+      navigation.navigate(navigateRoute, { tab: "Sell" });
     } else {
       Toast.show({
         autoHide: true,
@@ -145,14 +145,10 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             />
             <SummaryItem
               title={params.summary[4].name}
-              value={params.summary[4].value}
-            />
-            <SummaryItem
-              title={params.summary[5].name}
               componentValue={
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("PaymentMethod", {
+                    navigation.navigate("SelectAccount", {
                       ...params,
                       fromSummary: true,
                     });
@@ -160,13 +156,16 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
                   style={styles.buttonTextContainer}
                 >
                   <CustomText style={styles.buttonText}>
-                    {params.summary[5].value}
+                    {params.summary[4].value}
                   </CustomText>
                   <ArrowRight2 size={16} />
                 </TouchableOpacity>
               }
               onClick={() => {}}
-              onClick={() => {}}
+            />
+            <SummaryItem
+              title={params.summary[5].name}
+              value={params.summary[5].value}
             />
           </>
         )}

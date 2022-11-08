@@ -8,7 +8,10 @@ import styles from "./styles";
 import PendingImage from "../../assets/images/pending.png";
 import { ArrowCircleDown, TickCircle } from "iconsax-react-native";
 
-const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = () => {
+const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
+  route,
+}) => {
+  console.log("PendingScreen", route.params.tab);
   const [alert, setAlert] = useState<boolean>(true);
   const navigation = useNavigation();
   const onNavigate = () => {
@@ -29,7 +32,12 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = () => {
         <CustomText style={styles.text}>
           We’re working on your request, please check back in a minute
         </CustomText>
-        <TouchableOpacity onPress={() => navigation.navigate("History")} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("History", { tab: "Sell" })
+          }}
+          style={styles.button}
+        >
           <CustomText style={styles.buttonText}>View transaction</CustomText>
         </TouchableOpacity>
         <TouchableOpacity

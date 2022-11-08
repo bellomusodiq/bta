@@ -21,7 +21,6 @@ const data = Array(10).fill(1);
 const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   route,
 }) => {
-  const { params } = route;
 
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
@@ -36,10 +35,22 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   );
 
   const onContinue = (item) => {
-    const newItem = { ...item };
-    newItem.accountName = item.name;
-    delete newItem.name;
-    navigation.navigate("SellCrypto", { ...params, ...newItem });
+    const newItem = { ...item, ...route.params };
+    if (item.name) {
+      newItem.accountName = item.name;
+      delete newItem.name;
+      newItem.text = item.text;
+      newItem.id = item.id;
+    }
+    if (route.params?.fromSummary) {
+      const index = newItem.summary.findIndex(
+        (i) => i.name === "Payment Method"
+      );
+      newItem.summary[index].value = `Momo (${item.text})`;
+      navigation.navigate("Summary", newItem);
+    } else {
+      navigation.navigate("SellCrypto", { ...route.params, ...newItem });
+    }
   };
 
   // @ts-ignore-next-line

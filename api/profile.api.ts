@@ -339,8 +339,6 @@ export const validateWithdrawalRequestApi = async (
     methodType,
   };
 
-  console.log(data);
-
   try {
     const result = await axios.post(
       `${BASE_URL}/account/2/validateWithdrawalRequest`,

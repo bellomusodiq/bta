@@ -51,7 +51,9 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   };
 
   const setPercentageAmount = (percentage: number) => {
-    const value = percentage * Number(params.cryptoValue);
+    const value =
+      percentage *
+      Number(currency === "USD" ? params.usdValue : params.cryptoValue);
     setAmount(String(value));
   };
 
@@ -119,9 +121,10 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
             <CustomText style={styles.usd}>{currency}</CustomText>
           </View>
           <TouchableOpacity
-            onPress={() =>
-              setCurrency(currency !== "USD" ? "USD" : params.symbol)
-            }
+            onPress={() => {
+              setCurrency(currency !== "USD" ? "USD" : params.symbol);
+              setAmount("");
+            }}
             style={styles.currencyContainer}
           >
             <CustomText style={styles.currency}>
@@ -197,7 +200,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
               <Bank size={RFValue(20)} color="#FFF" variant="Bulk" />
             </View>
           }
-          onPress={() => navigation.navigate("SelectAccount")}
+          onPress={() => navigation.navigate("SelectAccount", params)}
         />
       )}
     </ScreenLayout>

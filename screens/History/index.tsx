@@ -68,7 +68,9 @@ const HistorySelector: React.FC<HistorySelectorProps> = ({
   </View>
 );
 
-const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
+const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
+  route,
+}) => {
   const { user } = useAppSelector((state) => state.auth);
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -127,7 +129,22 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
     setLoading(false);
   };
 
+  console.log(route);
+
   useEffect(() => {
+    if (route.params?.tab) {
+      switch (route.params?.tab) {
+        case "Buy":
+          setCurrentIndex(0);
+          break;
+        case "Sell":
+          setCurrentIndex(1);
+          break;
+        case "Sent":
+          setCurrentIndex(2);
+          break;
+      }
+    }
     fetchTransactions();
   }, []);
 
@@ -163,19 +180,39 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = () => {
         <>
           {curerntIndex === 0 && (
             <SellHistory
+              refresh={fetchTransactions}
+              loading={loading}
               data={buyHistory}
               type="Buy"
               arrowType="in"
             />
           )}
           {curerntIndex === 1 && (
-            <SellHistory data={sellHistory} type="Sell" arrowType="out" />
+            <SellHistory
+              refresh={fetchTransactions}
+              loading={loading}
+              data={sellHistory}
+              type="Sell"
+              arrowType="out"
+            />
           )}
           {curerntIndex === 2 && (
-            <SellHistory data={sendHistory} type="Sent" arrowType="out" />
+            <SellHistory
+              refresh={fetchTransactions}
+              loading={loading}
+              data={sendHistory}
+              type="Sent"
+              arrowType="out"
+            />
           )}
           {curerntIndex === 3 && (
-            <SellHistory data={receiveHistory} type="Received" arrowType="in" />
+            <SellHistory
+              refresh={fetchTransactions}
+              loading={loading}
+              data={receiveHistory}
+              type="Received"
+              arrowType="in"
+            />
           )}
         </>
       )}

@@ -1,16 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { FlatList, Image, View } from "react-native";
+import { FlatList, Image, RefreshControl, View } from "react-native";
 import HistoryItem from "../HistoryItem";
 import styles from "./styles";
 import EmptyTransactionsImage from "../../assets/images/empty-transactions.png";
 import CustomText from "../CustomText";
 
-const SellHistory: React.FC<{ data: any; type: string; arrowType: string }> = ({
-  data,
-  type,
-  arrowType,
-}) => {
+const SellHistory: React.FC<{
+  data: any;
+  type: string;
+  arrowType: string;
+  refresh: () => void;
+  loading: boolean;
+}> = ({ data, type, arrowType, refresh, loading }) => {
   const navigation = useNavigation();
 
   const formatDate = (date: any) => {
@@ -50,6 +52,9 @@ const SellHistory: React.FC<{ data: any; type: string; arrowType: string }> = ({
       data={data}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.divider} />}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={refresh} />
+      }
       ListEmptyComponent={
         <View style={styles.emptyContainer}>
           <Image

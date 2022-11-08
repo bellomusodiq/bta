@@ -3,7 +3,6 @@ import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { HistoryStackScreenProps } from "../../types";
 import styles from "./styles";
-import TRXImage from "../../assets/images/TRX.png";
 import { Image, TouchableOpacity, View } from "react-native";
 import TransactionStatus from "../../components/TransactionStatus";
 import { TransactonDetailItemProps } from "./types";
@@ -105,7 +104,9 @@ const TransactionDetailScreen: React.FC<
         )}
         <TransactionDetailItem title="Transaction id" value={_id} canCopy />
         <TouchableOpacity
-          onPress={() => navigation.navigate("History")}
+          onPress={() =>
+            navigation.navigate("History", { tab: route.params.tab })
+          }
           style={styles.explorerButton}
         >
           <CustomText style={styles.explorerText}>

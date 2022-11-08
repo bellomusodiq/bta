@@ -41,6 +41,7 @@ const PayInstructionScreen: React.FC<
     showInstruction();
   }, []);
 
+
   return (
     <ScreenLayout
       scrollable
@@ -87,7 +88,7 @@ const PayInstructionScreen: React.FC<
         </CustomText>
       </StepItem>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Pending")}
+        onPress={() => navigation.navigate("Pending", { tab: "Buy" })}
         style={styles.button}
       >
         <CustomText style={styles.buttonText}>DONE</CustomText>

@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
   sendingText: {
     color: "#979797",
     textAlign: "center",
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     marginTop: RFValue(24),
   },
   tokenText: {
     fontFamily: "Inter_600SemiBold",
-    fontSize: RFValue(32),
+    fontSize: RFValue(20),
     lineHeight: RFValue(40),
     marginBottom: RFValue(16),
     textAlign: "center",
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   timerText: {
     marginLeft: 10,
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     color: "#979797",
   },
   note: {

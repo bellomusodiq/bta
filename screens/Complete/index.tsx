@@ -8,7 +8,9 @@ import styles from "./styles";
 import SuccessImage from "../../assets/images/success.png";
 import FailedImage from "../../assets/images/failed.png";
 
-const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = () => {
+const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
+  route,
+}) => {
   const navigation = useNavigation();
   return (
     <ScreenLayout title="">
@@ -25,7 +27,12 @@ const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = () => {
         <CustomText style={styles.text}>
           Check the status of your withdrawal in your transaction history
         </CustomText>
-        <TouchableOpacity onPress={() => navigation.navigate("History")} style={styles.button}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("History", { tab: route.params.tab })
+          }
+          style={styles.button}
+        >
           <CustomText style={styles.buttonText}>View transaction</CustomText>
         </TouchableOpacity>
         <TouchableOpacity

@@ -8,7 +8,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   read,
   title,
   description,
-  date,
+  // date,
 }) => (
   <TouchableOpacity style={styles.container}>
     {read ? (
@@ -28,7 +28,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         {title}
       </Text>
       <Text style={styles.description}>{description}</Text>
-      <Text style={styles.date}>{date}</Text>
+      {/* <Text style={styles.date}>{date}</Text> */}
     </View>
   </TouchableOpacity>
 );

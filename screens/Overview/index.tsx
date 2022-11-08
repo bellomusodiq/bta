@@ -15,6 +15,7 @@ import styles from "./styles";
 
 const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [firstLoad, setFirstLoad] = useState<boolean>(false);
   const { dashboardData, user } = useAppSelector((state) => state.auth);
   const [error, setError] = useState<string>(false);
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
+      setFirstLoad(true);
     } else {
       setError("Something went wrong, Try again!");
     }
@@ -44,7 +46,7 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
       {loading || error ? (
         <View style={styles.loadingContainer}>
           {loading ? (
-            <ActivityIndicator size="large" />
+            !firstLoad && <ActivityIndicator size="large" />
           ) : (
             <>
               <CustomText style={styles.errorText}>

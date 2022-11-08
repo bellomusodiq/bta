@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
@@ -40,6 +46,7 @@ const NotificationsScreen: React.FC<
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [notifications, setNotifications] = useState<any>([]);
 
   const getNotifications = async () => {
     setLoading(true);
@@ -47,6 +54,7 @@ const NotificationsScreen: React.FC<
     const result = await getNotificationsApi(user?.token);
     setLoading(false);
     if (result.success) {
+      setNotifications(result.emergenciesNotifications);
     } else {
       setError(true);
     }
@@ -81,13 +89,13 @@ const NotificationsScreen: React.FC<
       ) : (
         <FlatList
           style={styles.container}
-          data={data}
+          data={notifications}
           renderItem={({ item }) => (
             <NotificationItem
-              read={item.read}
+              // read={item.read}
               title={item.title}
               description={item.description}
-              date={item.date}
+              // date={item.date}
             />
           )}
         />
