@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
     paddingTop: height(0.035),
   },
   welcomeText: {
-    fontSize: RFValue(19),
+    fontSize: RFValue(16),
     lineHeight: RFValue(24),
     fontWeight: "600",
-    color: "#333333",
+    color: "white",
     fontFamily: "Inter_600SemiBold",
   },
   grayText: {
-    color: "#979797",
+    color: "white",
   },
   notificationContainer: {
     position: "relative",

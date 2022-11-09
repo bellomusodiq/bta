@@ -1,5 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { Candle, ChartSquare, Scan, Send2 } from "iconsax-react-native";
+import {
+  Candle,
+  Cards,
+  ChartSquare,
+  Export,
+  Import,
+  Scan,
+  Send2,
+} from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -15,38 +23,29 @@ const MenuBtns: React.FC = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("SendCrypto")}
-          style={[styles.button, { backgroundColor: "#F1F4FF" }]}
+          style={[styles.button]}
         >
-          <HomeSendIcon />
+          <Export variant="Bold" color="#3861FB" />
+          <CustomText style={styles.title}>Send</CustomText>
         </TouchableOpacity>
-        <CustomText style={styles.title}>Send</CustomText>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("ReceiveCrypto")}
-          style={[styles.button, { backgroundColor: "#EDFDF3" }]}
+          style={[styles.button]}
         >
-          <HomeReceiveIcon />
+          <Import variant="Bold" color="#3861FB" />
+          <CustomText style={styles.title}>Receive</CustomText>
         </TouchableOpacity>
-        <CustomText style={styles.title}>Receive</CustomText>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Portfolio")}
-          style={[styles.button, { backgroundColor: "#F8F2FF" }]}
+          style={[styles.button]}
         >
-          <ChartSquare variant="Bold" color="#9747FF" size={20} />
+          <Cards variant="Bold" color="#3861FB" />
+          <CustomText style={styles.title}>Cards</CustomText>
         </TouchableOpacity>
-        <CustomText style={styles.title}>Portfolio</CustomText>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-        onPress={() => navigation.navigate("ManageAsset")}
-          style={[styles.button, { backgroundColor: "#FFF3EC" }]}
-        >
-          <Candle variant="Bold" color="#F45D01" size={20} />
-        </TouchableOpacity>
-        <CustomText style={styles.title}>Manage</CustomText>
       </View>
     </View>
   );

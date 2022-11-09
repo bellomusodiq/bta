@@ -20,9 +20,9 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ balance }) => {
       </View>
       <TouchableOpacity style={styles.eyeIcon} onPress={toggleBalance}>
         {!showBalance ? (
-          <Eye size={RFValue(20)} color="black" variant="Bold" />
+          <Eye size={RFValue(20)} color="white" variant="Bold" />
         ) : (
-          <EyeSlash size={RFValue(20)} color="black" variant="Bold" />
+          <EyeSlash size={RFValue(20)} color="white" variant="Bold" />
         )}
       </TouchableOpacity>
     </View>

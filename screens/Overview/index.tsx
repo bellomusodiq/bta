@@ -42,6 +42,7 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
       canRefresh
       refreshing={loading}
       onRefresh={getDashboardData}
+      SafeAreaBackground="#3861FB"
     >
       {loading || error ? (
         <View style={styles.loadingContainer}>
@@ -58,9 +59,11 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
         </View>
       ) : (
         <>
-          <HomeHeader name={user.firstName} />
-          <PortfolioCard balance={dashboardData?.totalPortfolio} />
-          <SendReceiveBtns />
+          <View style={styles.headerContainer}>
+            <HomeHeader name={user.firstName} />
+            <PortfolioCard balance={dashboardData?.totalPortfolio} />
+            <SendReceiveBtns />
+          </View>
           <Assets />
         </>
       )}

@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 16,
   },
+  headerContainer: {
+    backgroundColor: "#3861FB",
+    width: width(1),
+    marginLeft: -width(0.05),
+    paddingHorizontal: width(0.05),
+    paddingBottom: 15,
+  },
 });
 
 export default styles;

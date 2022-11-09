@@ -18,7 +18,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ name, whatsappNumber }) => {
         onPress={() => navigation.navigate("Notifications")}
         style={styles.notificationContainer}
       >
-        <Notification color="black" size={28} />
+        <Notification color="white" size={22} variant="Outline" />
         {/* <View style={styles.indicator}>
           <CustomText style={styles.indicatorText}>9</CustomText>
         </View> */}

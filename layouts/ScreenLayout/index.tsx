@@ -29,6 +29,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   canRefresh,
   refreshing,
   onRefresh,
+  SafeAreaBackground,
 }) => {
   const inset = useSafeAreaInsets();
   const childComponent = (
@@ -66,7 +67,9 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
     </>
   );
   return !removeSafeArea ? (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: SafeAreaBackground || "white" }}
+    >
       {childComponent}
     </SafeAreaView>
   ) : (

@@ -7,19 +7,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: RFValue(15),
-    paddingHorizontal: RFValue(22),
   },
   buttonContainer: {
     alignItems: "center",
+    width: "30%",
   },
   button: {
-    borderRadius: RFValue(45),
+    borderRadius: RFValue(5),
     padding: RFValue(8.5),
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    width: RFValue(38),
     height: RFValue(38),
+    width: "100%",
+    backgroundColor: "white",
   },
   buttonText: {
     fontSize: RFValue(16),
@@ -31,6 +32,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
     marginTop: 0,
+    marginLeft: 5,
+    color: "#3861FB",
   },
 });
 

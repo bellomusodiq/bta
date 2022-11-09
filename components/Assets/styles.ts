@@ -3,9 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: RFValue(25),
-  },
+  container: {},
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -81,23 +79,75 @@ const styles = StyleSheet.create({
     width: width(1),
     marginLeft: -width(0.05),
     marginBottom: 6,
+    paddingTop: 5,
   },
   tabItem: {
-    paddingTop: 10,
-    marginHorizontal: 24,
+    paddingTop: 20,
+    marginHorizontal: 15,
+    flexDirection: "row",
+    paddingBottom: 12,
+    position: "relative",
   },
   tabItemText: {
     color: "#979797",
     fontSize: RFValue(16),
     fontFamily: "Inter_600SemiBold",
+    marginLeft: 5,
   },
   tabDivider: {
     height: 2,
     backgroundColor: "#3861FB",
     borderRadius: 1,
-    position: "relative",
+    position: "absolute",
     marginTop: 10,
     marginBottom: -1,
+    bottom: 0,
+    width: "100%",
+  },
+  utilityContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  image: {
+    width: "65%",
+    height: 250,
+    marginTop: 30,
+  },
+  utilityHeader: {
+    fontFamily: "Inter_600SemiBold",
+    fontSize: 20,
+    lineHeight: 24,
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  utilityText: {
+    textAlign: "center",
+    color: "#979797",
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 24,
+  },
+  comingSoon: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 100,
+    backgroundColor: "#F0F0F0",
+    width: "100%",
+    marginBottom: 50,
+  },
+  comingSoonText: {
+    fontSize: 16,
+    color: "#979797",
+  },
+  tabContainer: {
+    flexDirection: "row",
+    position: "relative",
+  },
+  settings: {
+    position: "absolute",
+    right: 0,
+    bottom: 20,
   },
 });
 
