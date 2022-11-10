@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import MainHeader from "../../components/MainHeader";
 import { MainHeaderProps } from "../../components/MainHeader/types";
-import { height } from "../../consts/dimenentions";
+import { height, width } from "../../consts/dimenentions";
 import styles from "./styles";
 import { ScreenLayoutProps } from "./types";
 
@@ -30,6 +30,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   refreshing,
   onRefresh,
   SafeAreaBackground,
+  noPadding
 }) => {
   const inset = useSafeAreaInsets();
   const childComponent = (
@@ -50,7 +51,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
         {scrollable ? (
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={styles.container}
+            style={[styles.container, {paddingHorizontal: noPadding ? width(0) : width(0.05)}]}
             refreshControl={
               canRefresh ? (
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

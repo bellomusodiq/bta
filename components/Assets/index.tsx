@@ -49,6 +49,7 @@ const Assets: React.FC = () => {
             <MoneyArchive
               variant="Bold"
               color={currentTab === "assets" ? "#3861FB" : "#979797"}
+              size={20}
             />
             <CustomText
               style={[
@@ -69,6 +70,7 @@ const Assets: React.FC = () => {
             <ReceiptText
               variant="Bold"
               color={currentTab === "utility" ? "#3861FB" : "#979797"}
+              size={20}
             />
             <CustomText
               style={[
@@ -82,6 +84,9 @@ const Assets: React.FC = () => {
             </CustomText>
             {currentTab === "utility" && <View style={styles.tabDivider} />}
           </TouchableOpacity>
+          {currentTab === "utility" && <View style={[styles.tabItem, {marginLeft: -15, backgroundColor: "#FFF9E9", alignSelf: "flex-end"}]}>
+            <CustomText style={[styles.tabItemText, {color: "#EBB101"}]}>Coming Soon</CustomText>
+          </View>}
         </View>
         <TouchableOpacity style={styles.settings}>
           <Candle color="#3861FB" variant="Bold" />

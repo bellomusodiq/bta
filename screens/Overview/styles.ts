@@ -21,10 +21,12 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: "#3861FB",
     width: width(1),
-    marginLeft: -width(0.05),
     paddingHorizontal: width(0.05),
     paddingBottom: 15,
   },
+  assetContainer: {
+    paddingHorizontal: width(0.05)
+  }
 });
 
 export default styles;

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   tabItemText: {
     color: "#979797",
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     fontFamily: "Inter_600SemiBold",
     marginLeft: 5,
   },

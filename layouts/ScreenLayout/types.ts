@@ -7,4 +7,5 @@ export interface ScreenLayoutProps {
   refreshing?: boolean;
   onRefresh?: () => void;
   SafeAreaBackground?: string;
+  noPadding?: boolean;
 }
