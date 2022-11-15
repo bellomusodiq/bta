@@ -78,11 +78,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: width(1),
     marginLeft: -width(0.05),
-    marginBottom: 6,
-    paddingTop: 5,
+    marginBottom: 7,
   },
   tabItem: {
-    paddingTop: 20,
+    paddingTop: 15,
     marginHorizontal: 15,
     flexDirection: "row",
     paddingBottom: 12,

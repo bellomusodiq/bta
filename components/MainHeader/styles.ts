@@ -7,15 +7,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: RFValue(15),
-    backgroundColor: "white",
+    backgroundColor: "#3861FB",
     paddingHorizontal: width(0.05),
     zIndex: 3,
   },
   headerLeft: {
     width: RFValue(28),
+    color: "white",
   },
   headerRight: {
     width: RFValue(28),
+    color: "white",
   },
   header: {
     flex: 1,
@@ -23,6 +25,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: RFValue(18),
     fontFamily: "Inter_600SemiBold",
+    color: "white",
   },
   shadow: {
     // minHeight: 10,

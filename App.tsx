@@ -50,7 +50,7 @@ export default function App() {
         <View style={{ flex: 1 }}>
           <Navigation colorScheme={colorScheme} />
           <Toast config={toastConfig} />
-          <StatusBar backgroundColor="white" barStyle="dark-content" />
+          <StatusBar backgroundColor="white" barStyle="light-content" />
         </View>
       </Provider>
     );

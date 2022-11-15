@@ -84,12 +84,34 @@ const Assets: React.FC = () => {
             </CustomText>
             {currentTab === "utility" && <View style={styles.tabDivider} />}
           </TouchableOpacity>
-          {currentTab === "utility" && <View style={[styles.tabItem, {marginLeft: -15, backgroundColor: "#FFF9E9", alignSelf: "flex-end"}]}>
-            <CustomText style={[styles.tabItemText, {color: "#EBB101"}]}>Coming Soon</CustomText>
-          </View>}
+          {/* {currentTab === "utility" && ( */}
+          <View
+            style={[
+              styles.tabItem,
+              {
+                marginLeft: -10,
+                backgroundColor: "#FFF9E9",
+                alignSelf: "center",
+                paddingTop: 4,
+                paddingBottom: 4,
+                padding: 4,
+                borderRadius: 7,
+              },
+            ]}
+          >
+            <CustomText
+              style={[styles.tabItemText, { color: "#EBB101", fontSize: 12 }]}
+            >
+              Coming Soon
+            </CustomText>
+          </View>
+          {/* )} */}
         </View>
-        <TouchableOpacity style={styles.settings}>
-          <Candle color="#3861FB" variant="Bold" />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ManageAsset")}
+          style={styles.settings}
+        >
+          <Candle color="#3861FB" size={20} variant="Bold" />
         </TouchableOpacity>
       </View>
       {currentTab === "assets" &&

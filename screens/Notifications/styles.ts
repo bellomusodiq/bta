@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   headerRight: {
-    color: "#3861FB",
+    color: "white",
   },
   loadingContainer: {
     flex: 1,

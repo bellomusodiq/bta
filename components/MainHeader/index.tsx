@@ -15,23 +15,23 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 }) => {
   const navigation = useNavigation();
   let shadowStyle = {};
-  if (showShadow) {
-    shadowStyle = {
-      shadowOffset: { width: 0, height: 3 },
-      backgroundColor: "white",
-      shadowColor: "#000",
-      shadowOpacity: 0.06,
-      shadowRadius: 1.41,
-      elevation: 2,
-    };
-  }
+  // if (showShadow) {
+  //   shadowStyle = {
+  //     shadowOffset: { width: 0, height: 3 },
+  //     backgroundColor: "white",
+  //     shadowColor: "#000",
+  //     shadowOpacity: 0.06,
+  //     shadowRadius: 1.41,
+  //     elevation: 2,
+  //   };
+  // }
   return (
     <View style={[styles.container, shadowStyle]}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.headerLeft}
       >
-        <ArrowLeft size={24} color="#292D32" />
+        <ArrowLeft size={24} color="white" />
       </TouchableOpacity>
       <CustomText style={styles.header}>{title}</CustomText>
       <View

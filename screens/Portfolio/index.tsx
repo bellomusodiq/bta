@@ -114,7 +114,7 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
   };
 
   const toDecimalPlace = (currency, amountCrypto) => {
-    if (currency === "USDT" || currency === "TRX") {
+    if (currency === "USDT") {
       return Number.parseFloat(amountCrypto).toFixed(2);
     }
     if (currency === "BTC") {

@@ -8,7 +8,9 @@ import styles from "./styles";
 import SuccessImage from "../../assets/images/success.png";
 import FailedImage from "../../assets/images/failed.png";
 
-const FailedScreen: React.FC<RootStackScreenProps<"Failed">> = () => {
+const FailedScreen: React.FC<RootStackScreenProps<"Failed">> = ({ route }) => {
+  console.log("FailedScreen", route.params.tab);
+
   const navigation = useNavigation();
   return (
     <ScreenLayout title="">
@@ -20,10 +22,10 @@ const FailedScreen: React.FC<RootStackScreenProps<"Failed">> = () => {
           resizeMode="contain"
         />
         <CustomText style={styles.title}>
-        Sorry, there has been an error in processing your request
+          Sorry, there has been an error in processing your request
         </CustomText>
         <CustomText style={styles.text}>
-        You can retry after a while or contact us on whatsapp for support
+          You can retry after a while or contact us on whatsapp for support
         </CustomText>
         <TouchableOpacity
           onPress={() => navigation.replace("Root")}

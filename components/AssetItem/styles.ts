@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F0F0",
   },
   assetTitle: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(20),
     fontFamily: "Inter_600SemiBold",
     marginBottom: 3,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     color: "#979797",
   },
   amount: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(20),
     textAlign: "right",
     fontFamily: "Inter_600SemiBold",

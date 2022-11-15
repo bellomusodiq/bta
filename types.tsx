@@ -76,6 +76,7 @@ export type RootStackParamList = {
   AssetDetail: undefined;
   Notifications: undefined;
   Instruction: any;
+  Cards: any;
 };
 
 export type OverviewStackParamList = {
@@ -86,7 +87,7 @@ export type OverviewStackParamList = {
 };
 
 export type HistoryStackParamList = {
-  HistoryHome: undefined;
+  HistoryHome: any;
   TransactionDetail: any;
 };
 

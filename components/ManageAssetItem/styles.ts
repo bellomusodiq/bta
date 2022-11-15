@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(20),
   },
   confirmations: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     lineHeight: RFValue(24),
     color: "#979797",
   },

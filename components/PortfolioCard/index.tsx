@@ -7,7 +7,7 @@ import { Eye, EyeSlash } from "iconsax-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 const PortfolioCard: React.FC<PortfolioCardProps> = ({ balance }) => {
-  const [showBalance, setShowBalance] = useState<boolean>(false);
+  const [showBalance, setShowBalance] = useState<boolean>(true);
 
   const toggleBalance = () => setShowBalance(!showBalance);
   return (
@@ -20,9 +20,9 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ balance }) => {
       </View>
       <TouchableOpacity style={styles.eyeIcon} onPress={toggleBalance}>
         {!showBalance ? (
-          <Eye size={RFValue(20)} color="white" variant="Bold" />
+          <Eye size={RFValue(14)} color="white" variant="Bold" />
         ) : (
-          <EyeSlash size={RFValue(20)} color="white" variant="Bold" />
+          <EyeSlash size={RFValue(14)} color="white" variant="Bold" />
         )}
       </TouchableOpacity>
     </View>

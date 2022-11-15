@@ -30,7 +30,7 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
 
   const HeaderRightComponent = (
     <TouchableOpacity>
-      <Add size={RFValue(24)} color="#3861FB" />
+      <Add size={RFValue(24)} color="white" />
     </TouchableOpacity>
   );
 

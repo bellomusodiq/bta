@@ -40,7 +40,7 @@ const MenuBtns: React.FC = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Portfolio")}
+          onPress={() => navigation.navigate("Cards")}
           style={[styles.button]}
         >
           <Cards variant="Bold" color="#3861FB" />

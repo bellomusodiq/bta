@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: RFValue(15),
+    marginTop: RFValue(8),
   },
   buttonContainer: {
     alignItems: "center",

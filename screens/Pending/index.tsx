@@ -34,7 +34,7 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
         </CustomText>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("History", { tab: "Sell" })
+            navigation.navigate("History", { tab: route.params.tab })
           }}
           style={styles.button}
         >

@@ -3,7 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   trendFilterItem: {
-    marginRight: RFValue(24),
+    marginRight: RFValue(12),
     paddingVertical: RFValue(4),
     paddingHorizontal: RFValue(10),
     borderRadius: RFValue(48),

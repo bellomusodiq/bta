@@ -30,11 +30,11 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   refreshing,
   onRefresh,
   SafeAreaBackground,
-  noPadding
+  noPadding,
 }) => {
   const inset = useSafeAreaInsets();
   const childComponent = (
-    <>
+    <View style={{ zIndex: 3, flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -51,10 +51,24 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
         {scrollable ? (
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={[styles.container, {paddingHorizontal: noPadding ? width(0) : width(0.05)}]}
+            style={[
+              styles.container,
+              {
+                paddingHorizontal: noPadding ? width(0) : width(0.05),
+                backgroundColor: SafeAreaBackground ? SafeAreaBackground : null,
+              },
+            ]}
             refreshControl={
               canRefresh ? (
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  style={{
+                    backgroundColor: SafeAreaBackground
+                      ? SafeAreaBackground
+                      : null,
+                  }}
+                />
               ) : null
             }
           >
@@ -65,13 +79,28 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
         )}
       </KeyboardAvoidingView>
       {footer}
-    </>
+    </View>
   );
   return !removeSafeArea ? (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: SafeAreaBackground || "white" }}
+      style={{
+        flex: 1,
+        backgroundColor: SafeAreaBackground || "#3861FB",
+        position: "relative",
+        // zIndex: 2,
+      }}
     >
       {childComponent}
+      <View
+        style={{
+          position: "absolute",
+          height: height(0.5),
+          backgroundColor: "white",
+          bottom: 0,
+          width: width(1),
+          left: 0,
+        }}
+      />
     </SafeAreaView>
   ) : (
     <View
@@ -82,6 +111,16 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
       }}
     >
       {childComponent}
+      <View
+        style={{
+          position: "absolute",
+          height: height(0.5),
+          backgroundColor: "white",
+          bottom: 0,
+          width: width(1),
+          left: 0,
+        }}
+      />
     </View>
   );
 };

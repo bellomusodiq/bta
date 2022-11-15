@@ -34,7 +34,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
         })
       }
     >
-      <ReceiptSearch size={RFValue(24)} color="#979797" />
+      <ReceiptSearch size={RFValue(24)} color="white" />
     </TouchableOpacity>
   );
 

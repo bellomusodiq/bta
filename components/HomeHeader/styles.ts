@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingTop: height(0.035),
+    paddingTop: height(0.015),
+    marginBottom: 15,
   },
   welcomeText: {
     fontSize: RFValue(16),

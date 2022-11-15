@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
     fontSize: 20,
     marginRight: 10,
+    color: "white",
   },
   holdings: {
     textAlign: "center",

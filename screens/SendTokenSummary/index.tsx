@@ -71,6 +71,7 @@ const SendTokenSummaryScreen: React.FC<
       });
     }
   };
+
   return (
     <ScreenLayout
       showHeader
@@ -122,9 +123,10 @@ const SendTokenSummaryScreen: React.FC<
                 <DocumentCopy size={24} color="#292D32" />
               </Copy>
               <CustomText style={styles.token}>
-                {`${params.preview.to.slice(0, 15)}${
-                  params.preview.to.length > 15 ? "..." : ""
-                }`}
+                {`${params.preview.to.slice(0, 6)}...${params.preview.to.slice(
+                  params.preview.to.length - 7,
+                  params.preview.to.length - 1
+                )}`}
               </CustomText>
             </View>
           }
@@ -133,7 +135,8 @@ const SendTokenSummaryScreen: React.FC<
           title="Network fee"
           value={
             <CustomText style={styles.fee}>
-              ${params.preview.networkFeeUSD}
+              {Number(params.preview.networkFeeCrypto).toFixed(2)}{" "}
+              {params.preview.cryptoSymbol}
             </CustomText>
           }
         />
@@ -141,7 +144,7 @@ const SendTokenSummaryScreen: React.FC<
           title="Total"
           value={
             <CustomText style={styles.total}>
-              ${params.preview.totalChargeUSD}
+              {params.preview.totalChargeCrypto} {params.preview.cryptoSymbol}
             </CustomText>
           }
           noDivider

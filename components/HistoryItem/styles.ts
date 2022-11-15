@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {},
   title: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
     fontFamily: "Inter_600SemiBold",
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   dateContainer: {},
   tokenAmount: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
     textAlign: "right",
   },

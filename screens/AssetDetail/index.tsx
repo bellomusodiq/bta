@@ -169,6 +169,16 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
     }
   };
 
+  const toDecimalPlace = (price) => {
+    if (currency === "USDT") {
+      return Number.parseFloat(price).toFixed(2);
+    }
+    if (currency === "BTC") {
+      return Number.parseFloat(price).toFixed(8);
+    }
+    return Number.parseFloat(price).toFixed(3);
+  };
+
   return (
     <ScreenLayout removeSafeArea scrollable>
       <AssetDetailHeader title={`${name} (${currency})`} />
@@ -207,7 +217,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
         <View style={styles.balanceContainer}>
           <CustomText style={styles.balanceAmount}>${usdValue}</CustomText>
           <CustomText style={styles.balanceCurrency}>
-            {cryptoValue} {currency}
+            {toDecimalPlace(cryptoValue)} {currency}
           </CustomText>
         </View>
       </View>
@@ -227,16 +237,16 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       <MarketStats marketStats={marketStats} website={coinUrl[currency]} />
       <ReactNativeModal
         isVisible={showModal}
-        backdropOpacity={0.4}
-        customBackdrop={
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <View style={styles.backDrop} />
-          </TouchableWithoutFeedback>
-        }
+        // backdropOpacity={0.4}
+        // customBackdrop={
+        //   <TouchableWithoutFeedback onPress={toggleModal}>
+        //     <View style={styles.backDrop} />
+        //   </TouchableWithoutFeedback>
+        // }
         swipeDirection={["down"]}
         onSwipeComplete={toggleModal}
         style={styles.modal}
-        useNativeDriver
+        // useNativeDriver
       >
         <View style={styles.modalContainer}>
           <View style={styles.indicator} />
@@ -251,7 +261,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
             <View style={styles.balanceContainer}>
               <CustomText style={styles.balanceAmount}>${usdValue}</CustomText>
               <CustomText style={styles.balanceCurrency}>
-                {cryptoValue} {currency}
+                {toDecimalPlace(cryptoValue)} {currency}
               </CustomText>
             </View>
           </View>

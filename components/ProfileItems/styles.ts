@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   itemText: {
     flex: 1,
     marginHorizontal: 20,
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
   },
   divider: {
     height: 1,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#979797",
-    fontSize: RFValue(16),
+    fontSize: RFValue(15),
     lineHeight: RFValue(24),
     marginBottom: RFValue(16),
   },

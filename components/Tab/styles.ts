@@ -4,12 +4,13 @@ import { RFValue } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    marginTop: RFValue(15),
+    backgroundColor: "#FBFBFB",
+    paddingTop: 15,
   },
   divider: {
     height: 2,
     // width: "100%",
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "#EEE",
     // alignSelf: "stretch",
     marginTop: -2,
   },
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     zIndex: 2,
+    paddingHorizontal: 24,
   },
 });
 

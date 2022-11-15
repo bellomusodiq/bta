@@ -40,15 +40,15 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     <ScreenLayout
       scrollable
       canRefresh
-      refreshing={loading}
+      // refreshing={loading}
       onRefresh={getDashboardData}
       SafeAreaBackground="#3861FB"
       noPadding
     >
-      {loading || error ? (
+      {(loading && !firstLoad) || error ? (
         <View style={styles.loadingContainer}>
           {loading ? (
-            !firstLoad && <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" />
           ) : (
             <>
               <CustomText style={styles.errorText}>
@@ -65,7 +65,9 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
             <PortfolioCard balance={dashboardData?.totalPortfolio} />
             <SendReceiveBtns />
           </View>
-          <View style={styles.assetContainer}><Assets /></View>
+          <View style={styles.assetContainer}>
+            <Assets />
+          </View>
         </>
       )}
     </ScreenLayout>

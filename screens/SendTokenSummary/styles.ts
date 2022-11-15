@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderColor: "#F0F0F0",
   },
   marketStatsItemTitle: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     color: "#979797",
     flex: 1,
   },
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   url: {
     color: "#3861FB",
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     lineHeight: RFValue(24),
     marginRight: RFValue(5),
   },
@@ -56,17 +56,17 @@ const styles = StyleSheet.create({
   },
   tokenTitle: {
     color: "#979797",
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
   },
   token: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     marginLeft: 5,
   },
   fee: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
   },
   total: {
-    fontSize: RFValue(20),
+    fontSize: RFValue(16),
     fontFamily: "Inter_600SemiBold",
   },
   sendingText: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   footerButtonText: {
     color: "white",
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
   },
 });
 

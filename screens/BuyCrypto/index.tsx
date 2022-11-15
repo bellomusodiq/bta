@@ -31,7 +31,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
         navigation.navigate("Root", { screen: "History", token: "DOGE" })
       }
     >
-      <ReceiptSearch size={RFValue(24)} color="#979797" />
+      <ReceiptSearch size={RFValue(24)} color="white" />
     </TouchableOpacity>
   );
 

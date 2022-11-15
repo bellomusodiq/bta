@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Scan } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { Keyboard, Pressable, TouchableOpacity, View } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -42,13 +41,13 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const headerRight = (
     <TouchableOpacity onPress={() => setOpenBarcode(true)}>
-      <Scan size={20} color="#000" />
+      <Scan size={20} color="white" />
     </TouchableOpacity>
   );
 
   const getAmount = () => {
     if (route.params?.symbol === "TRX" || route.params?.symbol === "USDT") {
-      return Math.trunc(amount);
+      return Math.trunc(+amount);
     }
     return amount;
   };
@@ -101,6 +100,8 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const disabled = !address || !amount;
 
+  console.log(route.params);
+
   return (
     <ScreenLayout
       showHeader
@@ -120,7 +121,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
         </View>
       }
     >
-      <View style={styles.container}>
+      <Pressable onPress={() => Keyboard.dismiss()} style={styles.container}>
         {openBarcode ? (
           <BarCodeScanner
             onBarCodeScanned={handleBarCodeScanned}
@@ -143,8 +144,9 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
             <View style={styles.inputContainer}>
               <CustomInput
                 value={String(amount || "")}
-                onChangeText={(text) => setAmount(Number(text))}
+                onChangeText={(text) => setAmount(text)}
                 placeholder={`Amount in ${currency}`}
+                keyboardType="numeric"
                 rightComponent={
                   <View style={styles.amountRight}>
                     <TouchableOpacity onPress={setMaxAmount}>
@@ -166,13 +168,13 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
               Available in wallet:{" "}
               {`${
                 currency !== "USD"
-                  ? route.params?.cryptoValue
+                  ? Number(route.params?.cryptoValue).toFixed(2)
                   : route.params?.usdValue
               } ${currency === "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>
           </>
         )}
-      </View>
+      </Pressable>
     </ScreenLayout>
   );
 };

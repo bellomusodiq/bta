@@ -20,7 +20,7 @@ const PayInstructionScreen: React.FC<
 
   const HeaderRightComponent = (
     <TouchableOpacity style={styles.supportButton}>
-      <Call size={RFValue(14)} color="#000" />
+      <Call size={RFValue(14)} color="white" />
       <CustomText style={styles.supportText}>Support</CustomText>
     </TouchableOpacity>
   );

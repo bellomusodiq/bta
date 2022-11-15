@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   textContainer: {},
   title: {
     color: "white",
-    fontSize: RFValue(14),
+    fontSize: 14,
     lineHeight: RFValue(24),
     fontFamily: "Inter_500Medium",
   },
@@ -20,16 +20,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: RFValue(32),
     lineHeight: RFValue(40),
-    fontFamily: "Inter_700Bold",
+    fontFamily: "Inter_600SemiBold",
   },
   eyeIcon: {
     borderWidth: 1,
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    height: 45,
-    width: 45,
+    height: 30,
+    width: 30,
     borderColor: "white",
+    marginTop: 25,
   },
 });
 

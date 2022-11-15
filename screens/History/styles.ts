@@ -3,11 +3,24 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { height, width } from "../../consts/dimenentions";
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    backgroundColor: "#3861FB",
+    width: width(1),
+    marginLeft: -width(0.05),
+    paddingBottom: 10,
+    paddingHorizontal: 24,
+  },
+  tabContainer: {
+    width: width(1),
+    marginLeft: -width(0.05),
+    paddingBottom: 10,
+  },
   header: {
     fontFamily: "Inter_600SemiBold",
     fontSize: RFValue(24),
     lineHeight: RFValue(32),
-    marginTop: RFValue(15),
+    marginTop: RFValue(18),
+    color: "white",
   },
   text: {
     fontSize: RFValue(14),
@@ -32,11 +45,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
   sortButton: {
     flexDirection: "row",

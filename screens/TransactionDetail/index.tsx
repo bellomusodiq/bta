@@ -105,7 +105,10 @@ const TransactionDetailScreen: React.FC<
         <TransactionDetailItem title="Transaction id" value={_id} canCopy />
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("History", { tab: route.params.tab })
+            navigation.navigate("History", {
+              screen: "HistoryHome",
+              params: { tab: route.params.tab },
+            })
           }
           style={styles.explorerButton}
         >

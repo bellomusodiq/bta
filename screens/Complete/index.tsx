@@ -5,42 +5,56 @@ import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
-import SuccessImage from "../../assets/images/success.png";
+import SuccessImage from "../../assets/images/success.json";
 import FailedImage from "../../assets/images/failed.png";
+import CustomButton from "../../components/CustomButton";
 
 const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
   route,
 }) => {
   const navigation = useNavigation();
   return (
-    <ScreenLayout title="">
+    <ScreenLayout SafeAreaBackground="white" title="">
       <View style={styles.container}>
-        <Image
-          source={SuccessImage}
-          style={styles.image}
-          resizeMethod="scale"
-          resizeMode="contain"
-        />
-        <CustomText style={styles.title}>
-          Your transaction has been successfully processed!
-        </CustomText>
-        <CustomText style={styles.text}>
-          Check the status of your withdrawal in your transaction history
-        </CustomText>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("History", { tab: route.params.tab })
-          }
-          style={styles.button}
-        >
-          <CustomText style={styles.buttonText}>View transaction</CustomText>
-        </TouchableOpacity>
-        <TouchableOpacity
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <Image
+            source={SuccessImage}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <CustomText style={styles.title}>
+            Your transaction has been successfully processed!
+          </CustomText>
+          <CustomText style={styles.text}>
+            Check the status of your withdrawal in your transaction history
+          </CustomText>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("History", {
+                screen: "HistoryHome",
+                params: { tab: route.params.tab },
+              })
+            }
+            style={styles.button}
+          >
+            <CustomText style={styles.buttonText}>View transaction</CustomText>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View
+        style={{
+          justifyContent: "flex-end",
+          alignItems: "stretch",
+          width: "100%",
+        }}
+      >
+        <CustomButton
           onPress={() => navigation.replace("Root")}
-          style={[styles.button, { marginTop: 20 }]}
+          style={[styles.button]}
         >
-          <CustomText style={styles.buttonText}>Go to homepage</CustomText>
-        </TouchableOpacity>
+          Go to homepage
+        </CustomButton>
       </View>
     </ScreenLayout>
   );

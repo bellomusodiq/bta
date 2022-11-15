@@ -71,6 +71,8 @@ const HistorySelector: React.FC<HistorySelectorProps> = ({
 const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
   route,
 }) => {
+  const params = route.params;
+  const tab = params?.tab;
   const { user } = useAppSelector((state) => state.auth);
   const [curerntIndex, setCurrentIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -132,8 +134,12 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
   console.log(route);
 
   useEffect(() => {
-    if (route.params?.tab) {
-      switch (route.params?.tab) {
+    fetchTransactions();
+  }, []);
+
+  useEffect(() => {
+    if (tab) {
+      switch (tab) {
         case "Buy":
           setCurrentIndex(0);
           break;
@@ -145,24 +151,21 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
           break;
       }
     }
-    fetchTransactions();
-  }, []);
+  }, [tab]);
 
   const toggleModal = () => setShowModal(!showModal);
   return (
     <ScreenLayout>
       <View style={styles.headerContainer}>
         <CustomText style={styles.header}>History</CustomText>
-        {/* <TouchableOpacity onPress={toggleModal} style={styles.sortButton}>
-          <Sort size="20" color="#3861FB" />
-          <CustomText style={styles.sortButtonText}>Sort by</CustomText>
-        </TouchableOpacity> */}
       </View>
-      <Tab
-        tabs={TAB_DATA}
-        onTabChange={(index) => setCurrentIndex(index)}
-        activeIndex={curerntIndex}
-      />
+      <View style={styles.tabContainer}>
+        <Tab
+          tabs={TAB_DATA}
+          onTabChange={(index) => setCurrentIndex(index)}
+          activeIndex={curerntIndex}
+        />
+      </View>
       {loading || error ? (
         <View style={styles.loadingContainer}>
           {loading ? (

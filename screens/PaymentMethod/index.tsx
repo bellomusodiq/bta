@@ -94,7 +94,7 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
         <TouchableOpacity
           onPress={() => navigation.navigate("AddPaymentMethod")}
         >
-          <Add color="blue" size={RFValue(24)} />
+          <Add color="white" size={RFValue(24)} />
         </TouchableOpacity>
       }
     >

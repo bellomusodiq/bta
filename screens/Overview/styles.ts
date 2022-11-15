@@ -8,12 +8,14 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     paddingHorizontal: width(0.05),
     paddingVertical: height(0.015),
+    backgroundColor: "white",
   },
   loadingContainer: {
     flex: 1,
     height: height(0.9),
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
   errorText: {
     fontSize: 16,
@@ -25,8 +27,9 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   assetContainer: {
-    paddingHorizontal: width(0.05)
-  }
+    paddingHorizontal: width(0.05),
+    backgroundColor: "white",
+  },
 });
 
 export default styles;

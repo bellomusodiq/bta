@@ -85,13 +85,17 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   }, []);
 
   return (
-    <ScreenLayout>
-      <CustomText style={styles.header}>Trade</CustomText>
-      <Tab
-        tabs={TAB_DATA}
-        onTabChange={(index) => setCurrentIndex(index)}
-        activeIndex={currentIndex}
-      />
+    <ScreenLayout noPadding>
+      <View style={styles.headerContainer}>
+        <CustomText style={styles.header}>Trade</CustomText>
+      </View>
+      <View style={styles.tabContainer}>
+        <Tab
+          tabs={TAB_DATA}
+          onTabChange={(index) => setCurrentIndex(index)}
+          activeIndex={currentIndex}
+        />
+      </View>
       <CustomText style={styles.text}>
         {currentIndex === 0
           ? "Purchase crypto directly from your bank account without limit and restrictions"

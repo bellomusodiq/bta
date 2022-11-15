@@ -136,8 +136,8 @@ const ReceiveCryptoSummaryScreen: React.FC<
             <Image
               source={{ uri: tokenDetails.scanString }}
               style={styles.barcode}
-              width={width(0.8)}
-              height={width(0.8)}
+              width={width(0.6)}
+              height={width(0.6)}
             />
             <CustomText style={styles.walletAddressTitle}>
               Wallet Address
