@@ -77,6 +77,8 @@ export type RootStackParamList = {
   Notifications: undefined;
   Instruction: any;
   Cards: any;
+  AccessLogs: undefined;
+  WebView: undefined;
 };
 
 export type OverviewStackParamList = {

@@ -12,6 +12,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   headerRight,
   showShadow,
   flexibleHeader,
+  removeHeaderColor,
 }) => {
   const navigation = useNavigation();
   let shadowStyle = {};
@@ -26,18 +27,33 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   //   };
   // }
   return (
-    <View style={[styles.container, shadowStyle]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: removeHeaderColor ? "white" : "#3861FB" },
+      ]}
+    >
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.headerLeft}
       >
-        <ArrowLeft size={24} color="white" />
+        <ArrowLeft size={24} color={removeHeaderColor ? "black" : "white"} />
       </TouchableOpacity>
-      <CustomText style={styles.header}>{title}</CustomText>
+      <CustomText
+        style={[
+          styles.header,
+          { color: removeHeaderColor ? "black" : "white" },
+        ]}
+      >
+        {title}
+      </CustomText>
       <View
         style={[
           styles.headerRight,
-          { width: flexibleHeader ? "30%" : 38 },
+          {
+            width: flexibleHeader ? "30%" : 38,
+            color: removeHeaderColor ? "black" : "white",
+          },
         ]}
       >
         {headerRight}

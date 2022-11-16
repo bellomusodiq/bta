@@ -174,7 +174,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       return Number.parseFloat(price).toFixed(2);
     }
     if (currency === "BTC") {
-      return Number.parseFloat(price).toFixed(8);
+      return Number.parseFloat(price).toFixed(5);
     }
     return Number.parseFloat(price).toFixed(3);
   };

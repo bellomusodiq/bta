@@ -1,4 +1,9 @@
-import { MoneyRecive, MoneySend } from "iconsax-react-native";
+import {
+  MoneyRecive,
+  MoneySend,
+  ReceiptAdd,
+  ReceiptMinus,
+} from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import CustomText from "../CustomText";
@@ -25,15 +30,22 @@ const HistoryItem: React.FC<HistoryItemProps> = ({
     color = "#FF5C5C";
     backgroundColor = "#FFF3F3";
   }
+
+  const showIcon = () => {
+    switch (type) {
+      case "Buy":
+        return <ReceiptAdd size="20" color="#3861FB" />;
+      case "Sent":
+        return <MoneySend size="20" color="#3861FB" />;
+      case "Received":
+        return <MoneyRecive size="20" color="#3861FB" />;
+      case "Sell":
+        return <ReceiptMinus size="20" color="#3861FB" />;
+    }
+  };
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <View style={[styles.iconContainer, { backgroundColor }]}>
-        {type === "out" ? (
-          <MoneySend size="20" color={color} />
-        ) : (
-          <MoneyRecive size="20" color={color} />
-        )}
-      </View>
+      <View style={styles.iconContainer}>{showIcon()}</View>
       <View style={styles.mainContainer}>
         <View style={styles.textContainer}>
           <CustomText style={styles.title}>{title}</CustomText>

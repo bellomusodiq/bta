@@ -47,7 +47,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const getAmount = () => {
     if (route.params?.symbol === "TRX" || route.params?.symbol === "USDT") {
-      return Math.trunc(+amount);
+      return Number(+amount).toFixed(2);
     }
     return amount;
   };

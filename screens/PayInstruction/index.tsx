@@ -49,6 +49,7 @@ const PayInstructionScreen: React.FC<
       title=""
       headerRight={HeaderRightComponent}
       flexibleHeader
+      SafeAreaBackground="white"
     >
       <View style={styles.loadingContainer}>
         <View style={styles.iconContainer}>

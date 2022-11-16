@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     width: "35%",
     marginBottom: RFValue(10),
     height: 100,
-    marginTop: -RFValue(40),
+    zIndex: 2,
+    // backgroundColor: "red",
   },
   text: {
     color: "#979797",

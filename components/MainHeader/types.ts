@@ -3,4 +3,5 @@ export interface MainHeaderProps {
   headerRight?: JSX.Element;
   showShadow?: boolean;
   flexibleHeader?: boolean;
+  removeHeaderColor?: boolean;
 }

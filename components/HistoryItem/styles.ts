@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     padding: 14,
-    backgroundColor: "#EFFCF6",
+    backgroundColor: "#F1F4FF",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 40,

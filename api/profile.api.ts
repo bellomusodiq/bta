@@ -51,6 +51,17 @@ export const faqApi = async (token: string) => {
   }
 };
 
+export const securityLogsApi = async (token: string) => {
+  try {
+    const result = await axios.post(`${BASE_URL}/account/logs`, {
+      token,
+    });
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const accountLimitsApi = async (token: string) => {
   try {
     const result = await axios.post(`${BASE_URL}/account/2/profile/limits`, {

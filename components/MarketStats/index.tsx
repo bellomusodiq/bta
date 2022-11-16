@@ -56,7 +56,7 @@ const MarketStats: React.FC<{ marketStats: any; website: string }> = ({
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Market stats</CustomText>
-      <View style={styles.websiteContainer}>
+      <View style={styles.marketStatsContainer}>
         <MarketStatsItem
           icon={<MoneySend size={RFValue(24)} color="#3861FB" variant="Bold" />}
           title="Market capitalization"

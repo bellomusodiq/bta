@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootTabScreenProps } from "../../types";
 import styles from "./styles";
@@ -54,6 +54,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
   const [biometrics, setBiometrics] = useState<boolean>(true);
   const [notification, setNotification] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [logout, setLogout] = useState<boolean>(false);
 
   const deactivateAccount = async () => {
     setLoading(true);
@@ -92,7 +93,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
   }, []);
 
   return (
-    <ScreenLayout scrollable>
+    <ScreenLayout scrollable SafeAreaBackground="white">
       <ReactNativeModal
         isVisible={showModal}
         // hasBackdrop
@@ -162,8 +163,10 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
       </ReactNativeModal>
       <View style={styles.headerContainer}>
         <Image source={ProfileImage} style={styles.profileImage} />
-        <CustomText style={styles.profileName}>Emmanuel Nkrumah</CustomText>
-        <CustomText style={styles.username}>Username: Jayyo98</CustomText>
+        <CustomText style={styles.profileName}>{user.firstName}</CustomText>
+        <CustomText style={styles.username}>
+          Username: {user.username}
+        </CustomText>
         <TouchableOpacity style={styles.editButton}>
           <Edit2 size={RFValue(20)} color="#292D32" />
         </TouchableOpacity>
@@ -253,7 +256,10 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           },
           {
             title: "Talk to us via whatsapp",
-            onPress: () => {},
+            onPress: () =>
+              navigation.navigate("WebView", {
+                url: "https://api.whatsapp.com/send?phone=233545535586",
+              }),
             icon: <UserTag size={24} color="#3861FB" variant="Bold" />,
           },
           {
@@ -268,12 +274,18 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Terms of use",
-            onPress: () => {},
+            onPress: () =>
+              navigation.navigate("WebView", {
+                url: "https://bitafrika.com/terms",
+              }),
             icon: <Bill size={24} color="#3861FB" variant="Bold" />,
           },
           {
             title: "Privacy policy",
-            onPress: () => {},
+            onPress: () =>
+              navigation.navigate("WebView", {
+                url: "https://bitafrika.com/privacy",
+              }),
             icon: <Shield size={24} color="#3861FB" variant="Bold" />,
           },
         ]}
@@ -283,7 +295,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Access logs",
-            onPress: () => {},
+            onPress: () => navigation.navigate("AccessLogs"),
             icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
           },
         ]}
@@ -300,10 +312,18 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         title="Deactivate"
       />
       <TouchableOpacity
-        onPress={() => logoutHandler(navigation)}
+        onPress={async () => {
+          setLogout(true);
+          await logoutHandler(navigation);
+          setLogout(false);
+        }}
         style={styles.logoutButton}
       >
-        <CustomText style={styles.logoutButtonText}>SIGN OUT</CustomText>
+        {logout ? (
+          <ActivityIndicator size="small" />
+        ) : (
+          <CustomText style={styles.logoutButtonText}>SIGN OUT</CustomText>
+        )}
       </TouchableOpacity>
       <Image
         style={styles.bitafrika}

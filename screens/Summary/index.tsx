@@ -65,6 +65,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
+  console.log(params);
+
   return (
     <ScreenLayout
       scrollable
@@ -79,7 +81,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             style={styles.footerButton}
           >
             <CustomText style={styles.footerButtonText}>
-              {!params?.sell ? "BUY" : `SELL ${params.total}`}
+              {!params?.sell ? "BUY" : `SELL ${params.amountCrypto}`}
             </CustomText>
           </CustomButton>
         </View>
@@ -145,27 +147,61 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
             />
             <SummaryItem
               title={params.summary[4].name}
-              componentValue={
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("SelectAccount", {
-                      ...params,
-                      fromSummary: true,
-                    });
-                  }}
-                  style={styles.buttonTextContainer}
-                >
-                  <CustomText style={styles.buttonText}>
-                    {params.summary[4].value}
-                  </CustomText>
-                  <ArrowRight2 size={16} />
-                </TouchableOpacity>
+              value={
+                params.summary[4].name !== "Payment Method"
+                  ? params.summary[4].value
+                  : null
               }
-              onClick={() => {}}
+              componentValue={
+                params.summary[4].name === "Payment Method" ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("SelectAccount", {
+                        ...params,
+                        fromSummary: true,
+                      });
+                    }}
+                    style={styles.buttonTextContainer}
+                  >
+                    <CustomText style={styles.buttonText}>
+                      {params.summary[4].value}
+                    </CustomText>
+                    <ArrowRight2 size={16} />
+                  </TouchableOpacity>
+                ) : null
+              }
+              onClick={
+                params.summary[4].name === "Payment Method" ? () => {} : null
+              }
             />
             <SummaryItem
               title={params.summary[5].name}
-              value={params.summary[5].value}
+              value={
+                params.summary[5].name !== "Payment Method"
+                  ? params.summary[5].value
+                  : null
+              }
+              componentValue={
+                params.summary[5].name === "Payment Method" ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("SelectAccount", {
+                        ...params,
+                        fromSummary: true,
+                      });
+                    }}
+                    style={styles.buttonTextContainer}
+                  >
+                    <CustomText style={styles.buttonText}>
+                      {params.summary[5].value}
+                    </CustomText>
+                    <ArrowRight2 size={16} />
+                  </TouchableOpacity>
+                ) : null
+              }
+              onClick={
+                params.summary[5].name === "Payment Method" ? () => {} : null
+              }
             />
           </>
         )}

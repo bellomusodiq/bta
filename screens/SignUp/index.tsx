@@ -77,7 +77,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   };
 
   return (
-    <ScreenLayout showHeader title="" scrollable>
+    <ScreenLayout showHeader title="" scrollable SafeAreaBackground="white">
       <CustomText style={styles.title}>Create an account</CustomText>
       <CustomText style={styles.subTitle}>
         This is the first bold step to your crypto freedom

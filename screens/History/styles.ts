@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: width(1),
     marginLeft: -width(0.05),
     paddingBottom: 10,
-    paddingHorizontal: 24,
+    paddingHorizontal: 22,
   },
   tabContainer: {
     width: width(1),

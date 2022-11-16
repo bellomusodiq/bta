@@ -81,7 +81,7 @@ const WelcomeBackScreen: React.FC<RootStackScreenProps<"WelcomeBack">> = () => {
 
   const splitPin = pin.split("");
   return (
-    <ScreenLayout showHeader title="">
+    <ScreenLayout SafeAreaBackground="white" showHeader title="">
       <View style={styles.titleContainer}>
         <CustomText style={styles.title}>Welcome back!</CustomText>
         <TouchableOpacity onPress={signOut}>

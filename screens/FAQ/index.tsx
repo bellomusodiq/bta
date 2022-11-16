@@ -49,6 +49,7 @@ const FAQsScreen: React.FC<RootStackScreenProps<"FAQs">> = ({ route }) => {
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         data={faqs}
+        style={styles.flatList}
       />
     </ScreenLayout>
   );

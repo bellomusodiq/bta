@@ -25,7 +25,7 @@ const SellHistory: React.FC<{
   };
   const renderItem = ({ item }: { item: any }) => (
     <HistoryItem
-      type={arrowType}
+      type={type}
       title={`${type} ${
         item.cryptoCurrency || item.cryptoSymbol || item.currency
       }`}

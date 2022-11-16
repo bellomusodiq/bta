@@ -43,7 +43,11 @@ const PaymentAccountsScreen: React.FC<
         description={`${item.networkCode} - ${item.number}`}
         icon={
           <View style={styles.iconContainer}>
-            <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
+            {item.type === "Mobile Money" ? (
+              <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
+            ) : (
+              <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
+            )}
           </View>
         }
         // onPress={onContinue}

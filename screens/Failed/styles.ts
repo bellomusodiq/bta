@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: width(0.05),
+    backgroundColor: "white",
   },
   title: {
     fontSize: RFValue(16),
@@ -43,6 +44,8 @@ const styles = StyleSheet.create({
     width: "35%",
     marginBottom: RFValue(10),
     height: 100,
+    zIndex: 2,
+    // backgroundColor: "red",
   },
   text: {
     color: "#979797",

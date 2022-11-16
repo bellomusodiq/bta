@@ -6,7 +6,5 @@ export const logoutHandler = async (navigation) => {
   await logoutApi();
   await AsyncStorage.removeItem("@user");
   await AsyncStorage.removeItem("@firstLogin");
-  navigation.dispatch(StackActions.popToTop(
-
-  ));
+  navigation.dispatch(StackActions.replace("SignIn"));
 };

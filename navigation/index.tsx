@@ -80,6 +80,8 @@ import MobileMoneyOTP from "../screens/MobileMoneyOTP";
 import FailedScreen from "../screens/Failed";
 import InstructionScreen from "../screens/Instruction";
 import CardsScreen from "../screens/Cards";
+import AccessLogsScreen from "../screens/AccessLogs";
+import WebViewScreen from "../screens/WebView";
 
 export default function Navigation({
   colorScheme,
@@ -215,6 +217,8 @@ function RootNavigator() {
       <Stack.Screen name="MobileMoneyOTP" component={MobileMoneyOTP} />
       <Stack.Screen name="Instruction" component={InstructionScreen} />
       <Stack.Screen name="Cards" component={CardsScreen} />
+      <Stack.Screen name="AccessLogs" component={AccessLogsScreen} />
+      <Stack.Screen name="WebView" component={WebViewScreen} />
     </Stack.Navigator>
   );
 }

@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: RFValue(16),
   },
+  flatList: {
+    paddingTop: 15,
+  },
 });
 
 export default styles;

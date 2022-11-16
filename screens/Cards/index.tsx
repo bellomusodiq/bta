@@ -13,7 +13,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 const CardsScreen: React.FC<RootStackScreenProps<"Cards">> = () => {
   const navigation = useNavigation();
   return (
-    <ScreenLayout>
+    <ScreenLayout SafeAreaBackground="white">
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeft size={RFValue(24)} color="black" />

@@ -124,8 +124,8 @@ const SendTokenSummaryScreen: React.FC<
               </Copy>
               <CustomText style={styles.token}>
                 {`${params.preview.to.slice(0, 6)}...${params.preview.to.slice(
-                  params.preview.to.length - 7,
-                  params.preview.to.length - 1
+                  params.preview.to.length - 6,
+                  params.preview.to.length
                 )}`}
               </CustomText>
             </View>
@@ -136,7 +136,9 @@ const SendTokenSummaryScreen: React.FC<
           value={
             <CustomText style={styles.fee}>
               {Number(params.preview.networkFeeCrypto).toFixed(2)}{" "}
-              {params.preview.cryptoSymbol}
+              {params.preview.cryptoSymbol === "USDT"
+                ? "TRX"
+                : params.preview.cryptoSymbol}
             </CustomText>
           }
         />

@@ -24,7 +24,6 @@ const data = Array(4).fill(1);
 const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
   route,
 }) => {
-
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -77,7 +76,11 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
         description={item.text}
         icon={
           <View style={styles.iconContainer}>
-            <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
+            {item.value === "momo" ? (
+              <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
+            ) : (
+              <Bank size={RFValue(20)} color="#3861FB" variant="Bold" />
+            )}
           </View>
         }
         onPress={() => onContinue(item)}
@@ -90,6 +93,7 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
       showHeader
       showShadow
       title="Payment method"
+      SafeAreaBackground="white"
       headerRight={
         <TouchableOpacity
           onPress={() => navigation.navigate("AddPaymentMethod")}

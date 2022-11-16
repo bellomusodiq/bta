@@ -34,7 +34,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
 }) => {
   const inset = useSafeAreaInsets();
   const childComponent = (
-    <View style={{ zIndex: 3, flex: 1 }}>
+    <View style={{ zIndex: 3, flex: 1, backgroundColor: "white" }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -46,6 +46,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
             title={String(title)}
             headerRight={headerRight}
             flexibleHeader={flexibleHeader}
+            removeHeaderColor={SafeAreaBackground === "white"}
           />
         )}
         {scrollable ? (

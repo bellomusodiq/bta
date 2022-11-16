@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
     fontFamily: "Inter_600SemiBold",
     marginBottom: 8,
-    marginTop: 40,
+    marginTop: 10,
   },
   subTitle: {
     fontSize: RFValue(14),

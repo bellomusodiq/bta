@@ -118,7 +118,7 @@ const PortfolioScreen: React.FC<RootStackScreenProps<"Portfolio">> = () => {
       return Number.parseFloat(amountCrypto).toFixed(2);
     }
     if (currency === "BTC") {
-      return Number.parseFloat(amountCrypto).toFixed(8);
+      return Number.parseFloat(amountCrypto).toFixed(5);
     }
     return Number.parseFloat(amountCrypto).toFixed(3);
   };
