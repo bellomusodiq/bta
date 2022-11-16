@@ -100,7 +100,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const disabled = !address || !amount;
 
-  console.log(route.params);
+  console.log("Here...");
 
   return (
     <ScreenLayout
@@ -168,7 +168,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
               Available in wallet:{" "}
               {`${
                 currency !== "USD"
-                  ? Number(route.params?.cryptoValue).toFixed(2)
+                  ? route.params?.cryptoValue
                   : route.params?.usdValue
               } ${currency === "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>

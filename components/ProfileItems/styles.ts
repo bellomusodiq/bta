@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
     marginBottom: RFValue(16),
   },
+  profileItemsContainer: {
+    borderWidth: 1,
+    borderColor: "#F0F0F0",
+    borderRadius: 7,
+  },
 });
 
 export default styles;

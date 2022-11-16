@@ -7,13 +7,14 @@ import styles from "./styles";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import EllipseIcon from "../../components/icons/elipse-icon";
+import { useAppSelector } from "../../store";
 
 const KYCInfoScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
   const navigation = useNavigation();
   return (
     <ScreenLayout
       showHeader
-      title="Verifiy account"
+      title="Verify account"
       scrollable
       showShadow
       footer={

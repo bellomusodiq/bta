@@ -13,6 +13,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   showShadow,
   flexibleHeader,
   removeHeaderColor,
+  onBackClick,
 }) => {
   const navigation = useNavigation();
   let shadowStyle = {};
@@ -22,7 +23,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   //     backgroundColor: "white",
   //     shadowColor: "#000",
   //     shadowOpacity: 0.06,
-  //     shadowRadius: 1.41,
+  //     shadowRadius: 0,
   //     elevation: 2,
   //   };
   // }
@@ -34,7 +35,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       ]}
     >
       <TouchableOpacity
-        onPress={() => navigation.goBack()}
+        onPress={onBackClick ? () => onBackClick() : () => navigation.goBack()}
         style={styles.headerLeft}
       >
         <ArrowLeft size={24} color={removeHeaderColor ? "black" : "white"} />

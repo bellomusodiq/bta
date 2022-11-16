@@ -64,19 +64,21 @@ const ProfileItems: React.FC<ProfileItemsProps> = ({ data, title }) => {
   return (
     <View style={styles.profileItems}>
       <CustomText style={styles.title}>{title}</CustomText>
-      {data.map((item, i) => (
-        <ProfileItem
-          key={`${title}${i}`}
-          title={item.title}
-          active={item.active}
-          icon={item.icon}
-          isToggle={item.isToggle}
-          onPress={item.onPress}
-          onToggle={item.onToggle}
-          lastItem={i === data.length - 1}
-          firstItem={item.firstItem}
-        />
-      ))}
+      <View style={styles.profileItemsContainer}>
+        {data.map((item, i) => (
+          <ProfileItem
+            key={`${title}${i}`}
+            title={item.title}
+            active={item.active}
+            icon={item.icon}
+            isToggle={item.isToggle}
+            onPress={item.onPress}
+            onToggle={item.onToggle}
+            lastItem={i === data.length - 1}
+            firstItem={item.firstItem}
+          />
+        ))}
+      </View>
     </View>
   );
 };

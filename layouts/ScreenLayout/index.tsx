@@ -31,6 +31,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   onRefresh,
   SafeAreaBackground,
   noPadding,
+  onBackClick,
 }) => {
   const inset = useSafeAreaInsets();
   const childComponent = (
@@ -47,6 +48,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
             headerRight={headerRight}
             flexibleHeader={flexibleHeader}
             removeHeaderColor={SafeAreaBackground === "white"}
+            onBackClick={onBackClick}
           />
         )}
         {scrollable ? (

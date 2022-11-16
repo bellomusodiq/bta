@@ -4,4 +4,5 @@ export interface MainHeaderProps {
   showShadow?: boolean;
   flexibleHeader?: boolean;
   removeHeaderColor?: boolean;
+  onBackClick?: () => void;
 }

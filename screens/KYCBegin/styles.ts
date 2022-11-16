@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     lineHeight: RFValue(24),
     marginBottom: RFValue(40),
     textAlign: "center",
+    marginTop: 20,
   },
   container: {
     flex: 1,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   image: {
     width: "80%",
     marginBottom: RFValue(64),
-    height: RFValue(192)
+    height: RFValue(192),
     // backgroundColor: "red",
   },
   info: {

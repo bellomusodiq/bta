@@ -7,13 +7,16 @@ import styles from "./styles";
 import KycImage from "../../assets/images/kyc-begin.png";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useAppSelector } from "../../store";
 
 const KYCBeginScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
   const navigation = useNavigation();
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
-    <ScreenLayout showHeader title="Verifiy account" scrollable>
+    <ScreenLayout showHeader title="Verify account" scrollable>
       <View style={styles.container}>
-        <CustomText style={styles.title}>Dear Emmanual Nkrumah</CustomText>
+        <CustomText style={styles.title}>Dear {user.firstName}</CustomText>
         <Image source={KycImage} style={styles.image} resizeMode="contain" />
         <CustomText style={styles.info}>
           We need a few more information to finish your account setup

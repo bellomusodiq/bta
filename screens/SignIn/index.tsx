@@ -59,7 +59,13 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   };
 
   return (
-    <ScreenLayout scrollable showHeader title="" SafeAreaBackground="white">
+    <ScreenLayout
+      onBackClick={() => navigation.replace("SplashScreen")}
+      scrollable
+      showHeader
+      title=""
+      SafeAreaBackground="white"
+    >
       <CustomText style={styles.title}>Login to BitAfrika</CustomText>
       <CustomText style={styles.subTitle}>
         Welcome back! lets get you back into your account.

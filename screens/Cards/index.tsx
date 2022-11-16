@@ -25,7 +25,7 @@ const CardsScreen: React.FC<RootStackScreenProps<"Cards">> = () => {
       </View>
       <Image source={CardsImage} style={styles.image} resizeMode="contain" />
       <CustomText style={styles.bodyTitle}>
-        One card for online & offline purchases
+        One card for online purchases
       </CustomText>
       <CustomText style={styles.bodyText}>
         Request a virtual card instantly. Use it anywhere debit cards are

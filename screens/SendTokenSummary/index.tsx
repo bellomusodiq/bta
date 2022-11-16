@@ -135,7 +135,7 @@ const SendTokenSummaryScreen: React.FC<
           title="Network fee"
           value={
             <CustomText style={styles.fee}>
-              {Number(params.preview.networkFeeCrypto).toFixed(2)}{" "}
+              {params.preview.networkFeeCrypto}{" "}
               {params.preview.cryptoSymbol === "USDT"
                 ? "TRX"
                 : params.preview.cryptoSymbol}
