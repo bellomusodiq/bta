@@ -15,7 +15,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ balance }) => {
       <View style={styles.textContainer}>
         <CustomText style={styles.title}>Portfolio balance</CustomText>
         <CustomText style={styles.balance}>
-          {showBalance ? `$${balance}` : "****"}
+          {showBalance ? `$ ${balance}` : "****"}
         </CustomText>
       </View>
       <TouchableOpacity style={styles.eyeIcon} onPress={toggleBalance}>

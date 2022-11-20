@@ -423,8 +423,6 @@ export const validateSendCryptoApi = async (
       data
     );
 
-    console.log("validateSendCryptoApi", result.data);
-
     return result.data;
   } catch (e) {
     console.log(e);
@@ -458,7 +456,6 @@ export const sendCryptoApi = async (
 
   try {
     const result = await axios.post(`${BASE_URL}/account/2/sendout`, data);
-    console.log("sendCrypto", result.data);
 
     return result.data;
   } catch (e) {

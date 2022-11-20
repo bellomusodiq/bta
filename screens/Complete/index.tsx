@@ -24,9 +24,10 @@ const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
       </CustomText>
       <TouchableOpacity
         onPress={() =>
+          // @ts-ignore-next-line
           navigation.navigate("History", {
-            screen: "HistoryHome",
-            params: { tab: route.params.tab },
+            screen: "TransactionDetail",
+            params: route.params,
           })
         }
         style={styles.button}

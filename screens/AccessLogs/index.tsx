@@ -24,8 +24,6 @@ const LogItem: React.FC<{
     return newDate;
   };
 
-  console.log(type);
-
   return (
     <>
       <View style={styles.logItemContainer}>

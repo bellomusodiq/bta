@@ -63,7 +63,11 @@ const SendTokenSummaryScreen: React.FC<
       if (result.t?.status === "failed") {
         navigateRoute = "Failed";
       }
-      navigation.navigate(navigateRoute, { tab: "Sent" });
+      navigation.navigate(navigateRoute, {
+        item: result.t,
+        type: "Sent",
+        desc: "out",
+      });
     } else {
       Toast.snow({
         type: "error",

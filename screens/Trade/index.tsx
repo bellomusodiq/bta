@@ -98,7 +98,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
       </View>
       <CustomText style={styles.text}>
         {currentIndex === 0
-          ? "Purchase crypto directly from your bank account without limit and restrictions"
+          ? "Purchase crypto using your saved payment method"
           : "Sell your crypto instantly for cash"}
       </CustomText>
       <CustomInput

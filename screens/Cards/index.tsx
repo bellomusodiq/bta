@@ -25,13 +25,13 @@ const CardsScreen: React.FC<RootStackScreenProps<"Cards">> = () => {
       </View>
       <Image source={CardsImage} style={styles.image} resizeMode="contain" />
       <CustomText style={styles.bodyTitle}>
-        One card for online purchases
+        One card for all your online purchases
       </CustomText>
       <CustomText style={styles.bodyText}>
         Request a virtual card instantly. Use it anywhere debit cards are
         accepted online.
       </CustomText>
-      <CustomButton>Create card</CustomButton>
+      <CustomButton disabled>Coming soon</CustomButton>
     </ScreenLayout>
   );
 };

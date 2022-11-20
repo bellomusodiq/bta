@@ -100,8 +100,6 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   const disabled = !address || !amount;
 
-  console.log("Here...");
-
   return (
     <ScreenLayout
       showHeader

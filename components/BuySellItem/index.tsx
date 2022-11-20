@@ -1,4 +1,4 @@
-import { ArrowRight2, MoneyRecive, MoneySend } from "iconsax-react-native";
+import { ArrowRight2, ReceiptAdd, ReceiptMinus } from "iconsax-react-native";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -9,9 +9,9 @@ import { BuySellItemProps } from "./types";
 const BuySellItem: React.FC<BuySellItemProps> = ({ type, title, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.container}>
     {type === "buy" ? (
-      <MoneyRecive size={RFValue(28)} color="#EBB101" variant="Linear" />
+      <ReceiptAdd size={RFValue(28)} color="#3861FB" variant="Linear" />
     ) : (
-      <MoneySend size={RFValue(28)} color="#EBB101" variant="Linear" />
+      <ReceiptMinus size={RFValue(28)} color="#3861FB" variant="Linear" />
     )}
     <View style={styles.textContainer}>
       <CustomText style={styles.title}>

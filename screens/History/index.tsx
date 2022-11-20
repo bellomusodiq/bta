@@ -131,8 +131,6 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
     setLoading(false);
   };
 
-  console.log(route);
-
   useEffect(() => {
     fetchTransactions();
   }, []);

@@ -15,10 +15,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: RFValue(24),
     fontFamily: "Inter_500Medium",
+    marginBottom: -RFValue(5),
   },
   balance: {
     color: "white",
-    fontSize: RFValue(32),
+    fontSize: RFValue(30),
     lineHeight: RFValue(40),
     fontFamily: "Inter_600SemiBold",
   },

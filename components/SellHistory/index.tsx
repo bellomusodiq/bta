@@ -23,6 +23,7 @@ const SellHistory: React.FC<{
     });
     return newDate;
   };
+
   const renderItem = ({ item }: { item: any }) => (
     <HistoryItem
       type={type}

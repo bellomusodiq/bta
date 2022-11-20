@@ -68,11 +68,11 @@ const AssetItem: React.FC<AssetItemProps> = ({
             <CustomText style={styles.amount}>
               {hideTrend
                 ? `${toDecimalPlace()} ${currency}`
-                : `$ ${Number.parseFloat(amountUSD).toFixed(2)}`}
+                : `$${Number.parseFloat(amountUSD).toFixed(2)}`}
             </CustomText>
             <CustomText style={styles.amountValue}>
               {hideTrend
-                ? `$ ${Number.parseFloat(amountUSD).toFixed(2)}`
+                ? `$${Number.parseFloat(amountUSD).toFixed(2)}`
                 : `${toDecimalPlace()} ${currency}`}
             </CustomText>
           </View>

@@ -22,9 +22,10 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
       </CustomText>
       <TouchableOpacity
         onPress={() =>
+          // @ts-ignore-next-line
           navigation.navigate("History", {
-            screen: "HistoryHome",
-            params: { tab: route.params.tab },
+            screen: "TransactionDetail",
+            params: route.params,
           })
         }
         style={styles.button}

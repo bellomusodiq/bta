@@ -16,6 +16,7 @@ const PayInstructionScreen: React.FC<
   RootStackScreenProps<"PayInstruction">
 > = ({ route }) => {
   const { params } = route;
+
   const navigation = useNavigation();
 
   const HeaderRightComponent = (
@@ -40,7 +41,6 @@ const PayInstructionScreen: React.FC<
   useEffect(() => {
     showInstruction();
   }, []);
-
 
   return (
     <ScreenLayout

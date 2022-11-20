@@ -15,6 +15,7 @@ import { MainHeaderProps } from "../../components/MainHeader/types";
 import { height, width } from "../../consts/dimenentions";
 import styles from "./styles";
 import { ScreenLayoutProps } from "./types";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   scrollable,
@@ -58,21 +59,18 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
               styles.container,
               {
                 paddingHorizontal: noPadding ? width(0) : width(0.05),
-                backgroundColor: SafeAreaBackground ? SafeAreaBackground : null,
+                // backgroundColor: SafeAreaBackground ? SafeAreaBackground : null,
               },
             ]}
+            contentContainerStyle={{ backgroundColor: "white" }}
             refreshControl={
-              canRefresh ? (
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                  style={{
-                    backgroundColor: SafeAreaBackground
-                      ? SafeAreaBackground
-                      : null,
-                  }}
-                />
-              ) : null
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                style={{
+                  backgroundColor: SafeAreaBackground,
+                }}
+              />
             }
           >
             {children}

@@ -46,7 +46,11 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       if (result.t?.status === "failed") {
         navigateRoute = "Failed";
       }
-      navigation.navigate(navigateRoute, { tab: "Sell" });
+      navigation.navigate(navigateRoute, {
+        item: result.t,
+        type: "Sell",
+        desc: "out",
+      });
     } else {
       Toast.show({
         autoHide: true,
@@ -65,7 +69,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
-  console.log(params);
 
   return (
     <ScreenLayout
