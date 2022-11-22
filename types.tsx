@@ -79,6 +79,10 @@ export type RootStackParamList = {
   Cards: any;
   AccessLogs: undefined;
   WebView: undefined;
+  ForgotPassword: undefined;
+  ResetPasswordOTP: undefined;
+  ConfirmResetPassword: undefined;
+  TransactionPin: undefined;
 };
 
 export type OverviewStackParamList = {

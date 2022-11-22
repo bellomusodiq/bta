@@ -102,7 +102,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       >
         LOGIN
       </CustomButton>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
         <CustomText style={styles.forgotPasswordText}>
           Forgot your password
         </CustomText>

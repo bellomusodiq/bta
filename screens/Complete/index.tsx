@@ -6,8 +6,8 @@ import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import SuccessImage from "../../assets/images/success.png";
-import FailedImage from "../../assets/images/failed.png";
 import CustomButton from "../../components/CustomButton";
+import LottieView from "lottie-react-native";
 
 const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
   route,
@@ -15,7 +15,12 @@ const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image source={SuccessImage} style={styles.image} resizeMode="contain" />
+      <LottieView
+        autoPlay
+        source={require("../../assets/images/success.json")}
+        style={styles.image}
+        loop={false}
+      />
       <CustomText style={styles.title}>
         Your transaction has been successfully processed!
       </CustomText>

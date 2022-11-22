@@ -65,10 +65,18 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     if (!params?.sell) {
       navigation.navigate("PayInstruction", params);
     } else {
-      sellConfirm();
+      navigation.navigate("TransactionPin", {
+        ...params,
+        navigateTo: "Summary",
+      });
     }
   };
 
+  useEffect(() => {
+    if (params?.pinSuccess) {
+      sellConfirm();
+    }
+  }, [params?.pinSuccess]);
 
   return (
     <ScreenLayout

@@ -82,6 +82,10 @@ import InstructionScreen from "../screens/Instruction";
 import CardsScreen from "../screens/Cards";
 import AccessLogsScreen from "../screens/AccessLogs";
 import WebViewScreen from "../screens/WebView";
+import ForgotPasswordScreen from "../screens/ForgotPassword";
+import ResetPasswordOTPScreen from "../screens/ResetPasswordOTP";
+import ConfrimResetPasswordScreen from "../screens/CofirmResetPassword";
+import TransactionPinScreen from "../screens/TransactionPin";
 
 export default function Navigation({
   colorScheme,
@@ -219,6 +223,16 @@ function RootNavigator() {
       <Stack.Screen name="Cards" component={CardsScreen} />
       <Stack.Screen name="AccessLogs" component={AccessLogsScreen} />
       <Stack.Screen name="WebView" component={WebViewScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen
+        name="ResetPasswordOTP"
+        component={ResetPasswordOTPScreen}
+      />
+      <Stack.Screen
+        name="ConfirmResetPassword"
+        component={ConfrimResetPasswordScreen}
+      />
+      <Stack.Screen name="TransactionPin" component={TransactionPinScreen} />
     </Stack.Navigator>
   );
 }

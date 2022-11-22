@@ -6,6 +6,7 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import FailedImage from "../../assets/images/failed.png";
 import CustomButton from "../../components/CustomButton";
+import AnimatedLottieView from "lottie-react-native";
 
 const FailedScreen: React.FC<RootStackScreenProps<"Failed">> = ({
   route,
@@ -13,7 +14,12 @@ const FailedScreen: React.FC<RootStackScreenProps<"Failed">> = ({
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image source={FailedImage} style={styles.image} resizeMode="contain" />
+      <AnimatedLottieView
+        autoPlay
+        source={require("../../assets/images/error.json")}
+        style={styles.image}
+        loop={false}
+      />
       <CustomText style={styles.title}>
         Sorry, there has been an error in processing your request
       </CustomText>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -76,6 +76,12 @@ const SendTokenSummaryScreen: React.FC<
     }
   };
 
+  useEffect(() => {
+    if (params.pinSuccess) {
+      onContinue();
+    }
+  }, [params.pinSuccess]);
+
   return (
     <ScreenLayout
       showHeader
@@ -86,7 +92,12 @@ const SendTokenSummaryScreen: React.FC<
         <View style={styles.footer}>
           <CustomButton
             loading={loading}
-            onPress={onContinue}
+            onPress={() =>
+              navigation.navigate("TransactionPin", {
+                ...params,
+                navigateTo: "SendTokenSummary",
+              })
+            }
             disabled={loading}
             style={[
               styles.footerButton,

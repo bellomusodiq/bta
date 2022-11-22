@@ -6,6 +6,7 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import PendingImage from "../../assets/images/pending.png";
 import CustomButton from "../../components/CustomButton";
+import AnimatedLottieView from "lottie-react-native";
 
 const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
   route,
@@ -13,7 +14,12 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image source={PendingImage} style={styles.image} resizeMode="contain" />
+      <AnimatedLottieView
+        autoPlay
+        source={require("../../assets/images/pending.json")}
+        style={styles.image}
+        loop={false}
+      />
       <CustomText style={styles.title}>
         Your transaction is being processed
       </CustomText>
