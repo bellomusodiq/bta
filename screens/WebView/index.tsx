@@ -6,7 +6,7 @@ import styles from "../Overview/styles";
 
 const WebViewScreen = ({ route }) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <MainHeader title="" removeHeaderColor />
       <WebView source={{ uri: route.params.url }} />
     </SafeAreaView>

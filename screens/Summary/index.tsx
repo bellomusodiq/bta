@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { ArrowRight2, Flag2 } from "iconsax-react-native";
-import React, { useEffect, useState } from "react";
-import { Alert, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import * as LocalAuthentication from "expo-local-authentication";
+import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { sellConfirmationApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
@@ -23,34 +24,37 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const sellConfirm = async () => {
-    setLoading(true);
-    const result = await sellConfirmationApi(
-      user.token,
-      params?.requestData?.symbol,
-      params?.requestData?.name,
-      params?.requestData?.currency === params?.requestData?.symbol
-        ? "CRYPTO"
-        : "USD",
-      params?.requestData?.platform,
-      params?.requestData?.contract,
-      params?.requestData?.amount,
-      params?.requestData?.value,
-      params?.requestData?.id.toString()
-    );
-    setLoading(false);
-    if (result.success) {
-      let navigateRoute = "Pending";
-      if (result.t?.status === "success") {
-        navigateRoute = "Complete";
+    let scan = await LocalAuthentication.authenticateAsync("Scan your finger.");
+    if (scan.success) {
+      setLoading(true);
+      const result = await sellConfirmationApi(
+        user.token,
+        params?.requestData?.symbol,
+        params?.requestData?.name,
+        params?.requestData?.currency === params?.requestData?.symbol
+          ? "CRYPTO"
+          : "USD",
+        params?.requestData?.platform,
+        params?.requestData?.contract,
+        params?.requestData?.amount,
+        params?.requestData?.value,
+        params?.requestData?.id.toString()
+      );
+      setLoading(false);
+      if (result.success) {
+        let navigateRoute = "Pending";
+        if (result.t?.status === "success") {
+          navigateRoute = "Complete";
+        }
+        if (result.t?.status === "failed") {
+          navigateRoute = "Failed";
+        }
+        navigation.replace(navigateRoute, {
+          item: result.t,
+          type: "Sell",
+          desc: "Sell",
+        });
       }
-      if (result.t?.status === "failed") {
-        navigateRoute = "Failed";
-      }
-      navigation.navigate(navigateRoute, {
-        item: result.t,
-        type: "Sell",
-        desc: "out",
-      });
     } else {
       Toast.show({
         autoHide: true,
@@ -65,18 +69,9 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     if (!params?.sell) {
       navigation.navigate("PayInstruction", params);
     } else {
-      navigation.navigate("TransactionPin", {
-        ...params,
-        navigateTo: "Summary",
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (params?.pinSuccess) {
       sellConfirm();
     }
-  }, [params?.pinSuccess]);
+  };
 
   return (
     <ScreenLayout
@@ -86,6 +81,18 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       title="Summary"
       footer={
         <View style={styles.footer}>
+          {params.sell && (
+            <CustomText
+              style={{
+                textAlign: "center",
+                marginTop: 5,
+                marginBottom: -5,
+                color: "gray",
+              }}
+            >
+              You will verify with Biometrics
+            </CustomText>
+          )}
           <CustomButton
             loading={loading}
             onPress={navigateToPayInstruction}

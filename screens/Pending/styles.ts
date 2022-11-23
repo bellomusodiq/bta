@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: width(0.05),
+    backgroundColor: "white",
   },
   title: {
     fontSize: RFValue(16),

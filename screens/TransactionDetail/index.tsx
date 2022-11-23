@@ -52,7 +52,13 @@ const TransactionDetailScreen: React.FC<
   const _id = params?.item.txid || params?.item.uniq;
 
   return (
-    <ScreenLayout scrollable showHeader showShadow title="Transaction details">
+    <ScreenLayout
+      scrollable
+      showHeader
+      onBackClick={() => navigation.replace("HistoryHome")}
+      showShadow
+      title="Transaction details"
+    >
       <View style={styles.container}>
         <Image
           source={coinImage[cryptoCurrency]}

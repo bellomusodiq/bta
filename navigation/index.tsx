@@ -140,11 +140,12 @@ function RootNavigator() {
     if (!firstLogin) {
       return "SplashScreen";
     } else {
-      if (isPinSet) {
-        return "WelcomeBack";
-      } else {
-        return "SignIn";
-      }
+      // if (isPinSet) {
+      //   return "WelcomeBack";
+      // } else {
+      //   return "SignIn";
+      // }
+      return "SignIn";
     }
   };
 

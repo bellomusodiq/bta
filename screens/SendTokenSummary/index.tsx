@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import * as LocalAuthentication from "expo-local-authentication";
 import { Image, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -37,50 +38,50 @@ const SendTokenSummaryScreen: React.FC<
   const { params } = route;
 
   const navigation = useNavigation();
+
+  const scanFingerprint = async () => {};
+
   const onContinue = async () => {
-    // @ts-ignore-next-line
-    setLoading(true);
-    const result = await sendCryptoApi(
-      user.token,
-      params.preview.cryptoSymbol,
-      params.preview.to,
-      params.transmissionMode,
-      params.transmissionMode === "USD"
-        ? params.preview.usdAmount
-        : params.preview.cryptoAmount,
-      params.preview.coinName,
-      params.preview.selectedNetworkFee,
-      params.contract,
-      params.platform,
-      params.preview.eTag
-    );
-    setLoading(false);
-    if (result.success) {
-      let navigateRoute = "Pending";
-      if (result.t?.status === "success") {
-        navigateRoute = "Complete";
+    let scan = await LocalAuthentication.authenticateAsync("Scan your finger.");
+    if (scan.success) {
+      // @ts-ignore-next-line
+      setLoading(true);
+      const result = await sendCryptoApi(
+        user.token,
+        params.preview.cryptoSymbol,
+        params.preview.to,
+        params.transmissionMode,
+        params.transmissionMode === "USD"
+          ? params.preview.usdAmount
+          : params.preview.cryptoAmount,
+        params.preview.coinName,
+        params.preview.selectedNetworkFee,
+        params.contract,
+        params.platform,
+        params.preview.eTag
+      );
+      setLoading(false);
+      if (result.success) {
+        let navigateRoute = "Pending";
+        if (result.t?.status === "success") {
+          navigateRoute = "Complete";
+        }
+        if (result.t?.status === "failed") {
+          navigateRoute = "Failed";
+        }
+        navigation.replace(navigateRoute, {
+          item: result.t,
+          type: "Sent",
+          desc: "Sent",
+        });
+      } else {
+        Toast.snow({
+          type: "error",
+          text1: result.message,
+        });
       }
-      if (result.t?.status === "failed") {
-        navigateRoute = "Failed";
-      }
-      navigation.navigate(navigateRoute, {
-        item: result.t,
-        type: "Sent",
-        desc: "out",
-      });
-    } else {
-      Toast.snow({
-        type: "error",
-        text1: result.message,
-      });
     }
   };
-
-  useEffect(() => {
-    if (params.pinSuccess) {
-      onContinue();
-    }
-  }, [params.pinSuccess]);
 
   return (
     <ScreenLayout
@@ -90,14 +91,19 @@ const SendTokenSummaryScreen: React.FC<
       title={`Send ${params.preview.coinName}`}
       footer={
         <View style={styles.footer}>
+          <CustomText
+            style={{
+              textAlign: "center",
+              marginTop: 5,
+              marginBottom: -5,
+              color: "gray",
+            }}
+          >
+            You will verify with Biometrics
+          </CustomText>
           <CustomButton
             loading={loading}
-            onPress={() =>
-              navigation.navigate("TransactionPin", {
-                ...params,
-                navigateTo: "SendTokenSummary",
-              })
-            }
+            onPress={() => onContinue()}
             disabled={loading}
             style={[
               styles.footerButton,

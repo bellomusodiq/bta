@@ -50,12 +50,12 @@ const SplashScreen: React.FC<RootStackScreenProps<"SplashScreen">> = () => {
   };
 
   const navigateToSignin = async () => {
-    const user = await AsyncStorage.getItem("@user");
-    if (user) {
-      navigation.navigate("WelcomeBack");
-    } else {
-      navigation.navigate("SignIn");
-    }
+    // const user = await AsyncStorage.getItem("@user");
+    // if (user) {
+    //   navigation.navigate("WelcomeBack");
+    // } else {
+    navigation.navigate("SignIn");
+    // }
   };
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.container}>
