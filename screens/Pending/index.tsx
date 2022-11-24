@@ -26,18 +26,20 @@ const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
       <CustomText style={styles.text}>
         We’re working on your request, please check back in a minute
       </CustomText>
-      <TouchableOpacity
-        onPress={() =>
-          // @ts-ignore-next-line
-          navigation.navigate("History", {
-            screen: "TransactionDetail",
-            params: route.params,
-          })
-        }
-        style={styles.button}
-      >
-        <CustomText style={styles.buttonText}>View transaction</CustomText>
-      </TouchableOpacity>
+      {route.params?.tab && (
+        <TouchableOpacity
+          onPress={() =>
+            // @ts-ignore-next-line
+            navigation.navigate("History", {
+              screen: "TransactionDetail",
+              params: route.params,
+            })
+          }
+          style={styles.button}
+        >
+          <CustomText style={styles.buttonText}>View transaction</CustomText>
+        </TouchableOpacity>
+      )}
 
       <View
         style={{

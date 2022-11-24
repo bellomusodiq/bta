@@ -167,7 +167,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
               {`${
                 currency !== "USD"
                   ? route.params?.cryptoValue
-                  : route.params?.usdValue
+                  : Number(route.params?.usdValue).toFixed(2)
               } ${currency === "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>
           </>

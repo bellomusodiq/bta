@@ -73,6 +73,13 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
+  const parseNetworkFee = (name: string, fee: string) => {
+    if (name === "Network Fee") {
+      return fee.split("(")[0];
+    }
+    return fee;
+  };
+
   return (
     <ScreenLayout
       scrollable
@@ -81,18 +88,6 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       title="Summary"
       footer={
         <View style={styles.footer}>
-          {params.sell && (
-            <CustomText
-              style={{
-                textAlign: "center",
-                marginTop: 5,
-                marginBottom: -5,
-                color: "gray",
-              }}
-            >
-              You will verify with Biometrics
-            </CustomText>
-          )}
           <CustomButton
             loading={loading}
             onPress={navigateToPayInstruction}
@@ -153,7 +148,10 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
           <>
             <SummaryItem
               title={params.summary[1].name}
-              value={params.summary[1].value}
+              value={parseNetworkFee(
+                params.summary[1].name,
+                params.summary[1].value
+              )}
             />
             <SummaryItem
               title={params.summary[2].name}
@@ -225,6 +223,18 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         )}
         <SummaryItem title="TOTAL" value={params.total} valueBold noDivider />
       </View>
+      {params.sell && (
+        <CustomText
+          style={{
+            textAlign: "center",
+            marginTop: 10,
+            marginBottom: 5,
+            color: "gray",
+          }}
+        >
+          You will verify with Biometrics
+        </CustomText>
+      )}
       {!params.sell && (
         <View style={styles.note}>
           <Flag2 size={RFValue(24)} color="#3861FB" />

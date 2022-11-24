@@ -173,12 +173,6 @@ const SendTokenSummaryScreen: React.FC<
           noDivider
         />
       </View>
-      <View style={styles.timerContainer}>
-        <Timer1 color="#3861FB" size={RFValue(20)} />
-        <CustomText style={styles.timerText}>
-          Average processing time: 3 minutes
-        </CustomText>
-      </View>
       <View style={styles.note}>
         <Flag2 size={RFValue(24)} color="#3861FB" />
         <CustomText style={styles.noteText}>

@@ -75,7 +75,7 @@ const InstructionScreen: React.FC<RootStackScreenProps<"Instruction">> = ({
           </View>
         </Copy>
         <CustomButton
-          onPress={() => navigation.navigate("Summary", params)}
+          onPress={topUpSummary}
           style={styles.doneButton}
           buttonText={styles.doneButtonText}
         >

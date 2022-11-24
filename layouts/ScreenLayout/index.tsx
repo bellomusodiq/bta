@@ -59,7 +59,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
               styles.container,
               {
                 paddingHorizontal: noPadding ? width(0) : width(0.05),
-                // backgroundColor: SafeAreaBackground ? SafeAreaBackground : null,
+                backgroundColor: SafeAreaBackground ? SafeAreaBackground : null,
               },
             ]}
             contentContainerStyle={{ backgroundColor: "white" }}

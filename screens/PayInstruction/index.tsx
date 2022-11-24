@@ -89,7 +89,16 @@ const PayInstructionScreen: React.FC<
         </CustomText>
       </StepItem>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Pending", { tab: "Buy" })}
+        onPress={() =>
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: "Pending",
+              },
+            ],
+          })
+        }
         style={styles.button}
       >
         <CustomText style={styles.buttonText}>DONE</CustomText>

@@ -61,6 +61,9 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
     if (params.symbol === "BTC") {
       return Number(amount).toFixed(5);
     }
+    if (params.symbol === "USDT") {
+      return Number(amount).toFixed(2);
+    }
     return Number(amount).toFixed(3);
   };
 
@@ -144,7 +147,8 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           <View style={styles.balance}>
             <CustomText style={styles.balanceText}>
               <CustomText style={styles.balanceTitle}>Bal:</CustomText>{" "}
-              {parseAmount(params.cryptoValue)} {params.symbol} (${params.usdValue})
+              {parseAmount(params.cryptoValue)} {params.symbol} ($
+              {Number(params.usdValue).toFixed(2)})
             </CustomText>
           </View>
           <View style={styles.divider} />

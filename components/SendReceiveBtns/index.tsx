@@ -44,7 +44,7 @@ const MenuBtns: React.FC = () => {
           style={[styles.button]}
         >
           <Cards variant="Bold" color="#3861FB" />
-          <CustomText style={styles.title}>Cards</CustomText>
+          <CustomText style={styles.title}>Card</CustomText>
         </TouchableOpacity>
       </View>
     </View>

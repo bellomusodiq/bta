@@ -109,19 +109,21 @@ const TransactionDetailScreen: React.FC<
           />
         )}
         <TransactionDetailItem title="Transaction id" value={_id} canCopy />
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("History", {
-              screen: "HistoryHome",
-              params: { tab: route.params.tab },
-            })
-          }
-          style={styles.explorerButton}
-        >
-          <CustomText style={styles.explorerText}>
-            View Transaction on explorer
-          </CustomText>
-        </TouchableOpacity>
+        {(params.desc === "Sent" || params.desc === "Received") && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("History", {
+                screen: "HistoryHome",
+                params: { tab: route.params.tab },
+              })
+            }
+            style={styles.explorerButton}
+          >
+            <CustomText style={styles.explorerText}>
+              View Transaction on explorer
+            </CustomText>
+          </TouchableOpacity>
+        )}
       </View>
     </ScreenLayout>
   );
