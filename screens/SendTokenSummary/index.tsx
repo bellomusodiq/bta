@@ -47,6 +47,7 @@ const SendTokenSummaryScreen: React.FC<
       // @ts-ignore-next-line
       setLoading(true);
       const result = await sendCryptoApi(
+        navigation,
         user.token,
         params.preview.cryptoSymbol,
         params.preview.to,

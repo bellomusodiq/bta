@@ -21,7 +21,6 @@ const data = Array(10).fill(1);
 const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   route,
 }) => {
-
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
@@ -72,7 +71,7 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   const fetchPaymentDetails = async () => {
     setLoading(true);
     setError(false);
-    const result = await sellAccountApi(user.token);
+    const result = await sellAccountApi(navigation, user.token);
     setLoading(false);
     if (result.success) {
       setPaymentAccounts(result.paymentAccounts);

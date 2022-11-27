@@ -1,11 +1,16 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { BASE_URL } from "../CONFIG";
+import { logoutHandler } from "../utils/logout";
 
-export const getNotificationStatusApi = async (token: string) => {
+export const getNotificationStatusApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/getPushTokenState`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/getPushTokenState`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -13,82 +18,144 @@ export const getNotificationStatusApi = async (token: string) => {
 };
 
 export const enableNotificationApi = async (
-  token: string,
-  pushToken: string
+  navigation: any,
+  token: any,
+  pushtoken: string
 ) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/getPushTokenState`, {
-      token,
-      pushToken,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/getPushTokenState`, {
+      ...token,
+      pushtoken,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const disableNotificationApi = async (token: string) => {
+export const disableNotificationApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/getPushTokenState`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/getPushTokenState`, {
+      ...token,
       pushToken: "",
       status: "disabled",
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const faqApi = async (token: string) => {
+export const faqApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/misc/2/faq`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/misc/faq`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const securityLogsApi = async (token: string) => {
+export const securityLogsApi = async (navigation: any, token: any) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/account/logs`, {
-      token,
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const accountLimitsApi = async (token: string) => {
+export const accountLimitsApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/profile/limits`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/profile/limits`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const paymentAccountApi = async (token: string) => {
+export const paymentAccountApi = async (navigation: any, token: any) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/payments/list`, {
-      token,
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const paymentAccountPlatformsApi = async (token: string) => {
+export const checkKycStatusApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/payments/methods`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/kyc/checkKYCStatus`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const initializeKycApi = async (navigation: any, token: any) => {
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/kyc/initializeKYC`, {
+      ...token,
+    });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const paymentAccountPlatformsApi = async (
+  navigation: any,
+  token: any
+) => {
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/payments/methods`, {
+      ...token,
+    });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -96,7 +163,8 @@ export const paymentAccountPlatformsApi = async (token: string) => {
 };
 
 export const verifyMobileMoneyNumberApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   momoName: string,
   momoUserPhone: string,
   accountPassword: string,
@@ -104,14 +172,19 @@ export const verifyMobileMoneyNumberApi = async (
   method: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const data = {
-      token,
+      ...token,
       momoName,
       momoUserPhone,
       selectedUserNetwork,
       accountPassword,
       method,
     };
+    const result = await axios.post(`${BASE_URL}/payments/add`, data);
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -119,21 +192,26 @@ export const verifyMobileMoneyNumberApi = async (
 };
 
 export const verifyMobileMoneyNumberOTPApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   momoName: string,
   momoUserPhone: string,
   accountPassword: string,
   otpCode: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/payments/verifyPayAccount`, {
-      token,
+      ...token,
       momoName,
       momoUserPhone,
       selectedUserNetwork: "MTN",
       accountPassword,
       otpCode,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -141,18 +219,23 @@ export const verifyMobileMoneyNumberOTPApi = async (
 };
 
 export const changeEmail = async (
-  token: string,
+  navigation: any,
+  token: any,
   accountPassword: string,
   currentEmail: string,
   newEmail: string
 ) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/updateEmail`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/updateEmail`, {
+      ...token,
       accountPassword,
       currentEmail,
       newEmail,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -160,18 +243,23 @@ export const changeEmail = async (
 };
 
 export const verifyChangeEmail = async (
-  token: string,
+  navigation: any,
+  token: any,
   oldEmailCode: string,
   userCode: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const data = {
-      token,
+      ...token,
       userCode,
       oldEmailCode,
     };
 
-    const result = await axios.post(`${BASE_URL}/account/2/emailCode`, data);
+    const result = await axios.post(`${BASE_URL}/account/emailCode`, data);
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -179,28 +267,41 @@ export const verifyChangeEmail = async (
 };
 
 export const changePassword = async (
-  token: string,
+  navigation: any,
+  token: any,
   currentPassword: string,
   newPassword: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/password/request`, {
-      token,
+      ...token,
       currentPassword,
       newPassword,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const verifyChangePassword = async (token: string, userCode: string) => {
+export const verifyChangePassword = async (
+  navigation: any,
+  token: any,
+  userCode: string
+) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/password/passwordCode`, {
-      token,
+      ...token,
       userCode,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -208,7 +309,8 @@ export const verifyChangePassword = async (token: string, userCode: string) => {
 };
 
 export const verifyMobileMoneyApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   method: string,
   momoName: string,
   momoUserPhone: string,
@@ -217,7 +319,7 @@ export const verifyMobileMoneyApi = async (
   otpCode: string
 ) => {
   const data = {
-    token,
+    ...token,
     method,
     momoName,
     momoUserPhone,
@@ -226,10 +328,14 @@ export const verifyMobileMoneyApi = async (
     otpCode,
   };
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(
       `${BASE_URL}/payments/verifyPayAccount`,
       data
     );
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -237,55 +343,69 @@ export const verifyMobileMoneyApi = async (
 };
 
 export const addBankAccountApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   bankCode: string,
   accountPassword: string,
   userBankAccountName: string,
   userBankAccountNumber: string
 ) => {
   const data = {
-    token,
+    ...token,
     method: "bank",
     bankCode,
-    userBankSwiftBic: "3043",
+    userBankSwiftBic: "",
     accountPassword,
-    userBankRouting: "3343",
+    userBankRouting: "",
     userBankAccountName,
     userBankAccountNumber,
   };
 
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log(`${BASE_URL}/payments/add`);
+
+    console.log("body", data);
     const result = await axios.post(`${BASE_URL}/payments/add`, data);
+    console.log("response", result.data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const buyAccountApi = async (token: string) => {
+export const buyAccountApi = async (navigation: any, token: any) => {
   const data = {
-    token,
+    ...token,
   };
   try {
-    const result = await axios.post(`${BASE_URL}/payments/2/buyAccounts`, data);
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/payments/buyAccounts`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const sellAccountApi = async (token: string) => {
+export const sellAccountApi = async (navigation: any, token: any) => {
   const data = {
-    token,
+    ...token,
   };
   try {
-    const result = await axios.post(
-      `${BASE_URL}/payments/2/sellAccounts`,
-      data
-    );
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/payments/sellAccounts`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -293,7 +413,8 @@ export const sellAccountApi = async (token: string) => {
 };
 
 export const reviewBuyOrderApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   coinName: string,
   paymentType: string,
@@ -304,7 +425,7 @@ export const reviewBuyOrderApi = async (
   methodType: string
 ) => {
   const data = {
-    token,
+    ...token,
     cryptoSymbol,
     coinName,
     paymentType,
@@ -316,11 +437,15 @@ export const reviewBuyOrderApi = async (
   };
 
   try {
-    const result = await axios.post(
-      `${BASE_URL}/payments/2/topupSummary`,
-      data
-    );
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const countryCode = await AsyncStorage.getItem("@userCountry");
+    console.log(countryCode);
 
+    const result = await axios.post(`${BASE_URL}/payments/manual/topup`, data);
+
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -328,7 +453,8 @@ export const reviewBuyOrderApi = async (
 };
 
 export const validateWithdrawalRequestApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   coinName: string,
   transmissionMode: string,
@@ -339,7 +465,7 @@ export const validateWithdrawalRequestApi = async (
   methodType: string
 ) => {
   const data = {
-    token,
+    ...token,
     cryptoSymbol,
     coinName,
     transmissionMode,
@@ -351,11 +477,15 @@ export const validateWithdrawalRequestApi = async (
   };
 
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(
-      `${BASE_URL}/account/2/validateWithdrawalRequest`,
+      `${BASE_URL}/account/validateWithdrawalRequest`,
       data
     );
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -363,7 +493,8 @@ export const validateWithdrawalRequestApi = async (
 };
 
 export const sellConfirmationApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   coinName: string,
   transmissionMode: string,
@@ -374,7 +505,7 @@ export const sellConfirmationApi = async (
   methodType: string
 ) => {
   const data = {
-    token,
+    ...token,
     cryptoSymbol,
     coinName,
     transmissionMode,
@@ -386,8 +517,12 @@ export const sellConfirmationApi = async (
   };
 
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/withdrawCash`, data);
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/withdrawCash`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -395,7 +530,8 @@ export const sellConfirmationApi = async (
 };
 
 export const validateSendCryptoApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   walletAddress: string,
   transmissionMode: string,
@@ -406,7 +542,7 @@ export const validateSendCryptoApi = async (
   platform: string
 ) => {
   const data = {
-    token,
+    ...token,
     cryptoSymbol,
     walletAddress,
     transmissionMode,
@@ -418,11 +554,42 @@ export const validateSendCryptoApi = async (
   };
 
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(
-      `${BASE_URL}/account/2/validateRequest`,
+      `${BASE_URL}/account/validateRequest`,
       data
     );
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const maxCryptoApi = async (
+  navigation: any,
+  token: any,
+  cryptoSymbol: string,
+  walletAddress: string,
+  platform: string
+) => {
+  const data = {
+    ...token,
+    cryptoSymbol,
+    walletAddress,
+    platform,
+  };
+
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/getSendingMax`, data);
+
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -430,7 +597,8 @@ export const validateSendCryptoApi = async (
 };
 
 export const sendCryptoApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   walletAddress: string,
   transmissionMode: string,
@@ -442,7 +610,7 @@ export const sendCryptoApi = async (
   eTag: string
 ) => {
   const data = {
-    token,
+    ...token,
     cryptoSymbol,
     walletAddress,
     transmissionMode,
@@ -455,22 +623,30 @@ export const sendCryptoApi = async (
   };
 
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/sendout`, data);
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/sendout`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const manageCryptoAssetApi = async (token: string) => {
+export const manageCryptoAssetApi = async (navigation: any, token: any) => {
   const data = {
-    token,
+    ...token,
   };
 
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/coins`, data);
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/coins`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -478,17 +654,22 @@ export const manageCryptoAssetApi = async (token: string) => {
 };
 
 export const enableCryptoAssetApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   cryptoSymbol: string,
   platform: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/account/enableCurrency`, {
-      token,
+      ...token,
       cryptoSymbol,
       platform,
     });
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -496,15 +677,20 @@ export const enableCryptoAssetApi = async (
 };
 
 export const deactivateAccountApi = async (
-  token: string,
+  navigation: any,
+  token: any,
   accountPassword: string
 ) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/deactivate`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/deactivate`, {
+      ...token,
       accountPassword,
     });
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);

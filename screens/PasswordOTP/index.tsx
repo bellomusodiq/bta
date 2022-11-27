@@ -33,7 +33,7 @@ const PasswordOTPScreen: React.FC<RootStackScreenProps<"PasswordOTP">> = ({
 
   const verifyPassword = async () => {
     setLoading(true);
-    const result = await verifyChangePassword(user.token, pin);
+    const result = await verifyChangePassword(navigation, user.token, pin);
     setLoading(false);
 
     if (result.success) {

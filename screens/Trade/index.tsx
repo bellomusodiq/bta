@@ -71,7 +71,7 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const getDashboardData = async () => {
     setLoading(true);
     setError(null);
-    const result = await loadDashboard(user?.token);
+    const result = await loadDashboard(navigation, user?.token);
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));

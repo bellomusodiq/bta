@@ -20,6 +20,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
   noPercentage,
   tokenPrice,
 }) => {
+
   const toDecimalPlace = () => {
     if (currency === "USDT") {
       return Number.parseFloat(amountCrypto).toFixed(2);

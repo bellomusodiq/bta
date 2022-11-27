@@ -8,9 +8,12 @@ import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import EllipseIcon from "../../components/icons/elipse-icon";
 import { useAppSelector } from "../../store";
+import { initializeKycApi } from "../../api/profile.api";
 
 const KYCInfoScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
   const navigation = useNavigation();
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <ScreenLayout
       showHeader
@@ -19,10 +22,7 @@ const KYCInfoScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
       showShadow
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("KYCStep1")}
-            style={styles.footerButton}
-          >
+          <TouchableOpacity style={styles.footerButton}>
             <CustomText style={styles.footerButtonText}>
               BEGIN VERIFICATION
             </CustomText>

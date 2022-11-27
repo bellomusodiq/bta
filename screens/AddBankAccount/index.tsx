@@ -43,6 +43,7 @@ const AddBankAccountScreen: React.FC<
   const addBankAccount = async () => {
     setLoading(true);
     const result = await addBankAccountApi(
+      navigation,
       user.token,
       bank.value,
       password,

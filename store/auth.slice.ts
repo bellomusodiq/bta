@@ -7,6 +7,8 @@ interface AuthState {
   loading: boolean;
   error: any;
   dashboardData: any;
+  userCountry: string;
+  baseUrl: string;
 }
 
 const initialState: AuthState = {
@@ -14,6 +16,8 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   dashboardData: {},
+  userCountry: "",
+  baseUrl: "",
 };
 
 export const authSlice = createSlice({
@@ -32,11 +36,23 @@ export const authSlice = createSlice({
     setDashboardData: (state, action: PayloadAction<any>) => {
       state.dashboardData = action.payload;
     },
+    setUserCountry: (state, action: PayloadAction<any>) => {
+      state.userCountry = action.payload;
+    },
+    setBaseUrl: (state, action: PayloadAction<any>) => {
+      state.baseUrl = action.payload;
+    },
   },
 });
 
-export const { setLoading, setError, setUser, setDashboardData } =
-  authSlice.actions;
+export const {
+  setLoading,
+  setError,
+  setUser,
+  setDashboardData,
+  setUserCountry,
+  setBaseUrl,
+} = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth;
 

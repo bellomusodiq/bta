@@ -99,7 +99,7 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
     historyType: string,
     transactionType?: string
   ) => {
-    const result = await historyApi(user.token, historyType, transactionType);
+    const result = await historyApi(navigation, user.token, historyType, transactionType);
     if (result.success) {
       switch (historyType) {
         case "transactions":

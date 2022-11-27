@@ -32,7 +32,12 @@ const ChangePasswordScreen: React.FC<
 
   const onChangePassword = async () => {
     setLoading(true);
-    const result = await changePassword(user.token, password, newPassword);
+    const result = await changePassword(
+      navigation,
+      user.token,
+      password,
+      newPassword
+    );
     setLoading(false);
 
     if (result.success) {

@@ -10,7 +10,10 @@ import { useAppSelector } from "../../store";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 
-const FAQsScreen: React.FC<RootStackScreenProps<"FAQs">> = ({ route }) => {
+const FAQsScreen: React.FC<RootStackScreenProps<"FAQs">> = ({
+  navigation,
+  route,
+}) => {
   const onContinue = () => {};
   const { user } = useAppSelector((state) => state.auth);
   const [faqs, setFaqs] = useState<FAQItemProps[]>([]);
@@ -20,7 +23,7 @@ const FAQsScreen: React.FC<RootStackScreenProps<"FAQs">> = ({ route }) => {
   );
 
   const getFaqs = async () => {
-    const result = await faqApi(user.token);
+    const result = await faqApi(navigation, user.token);
     if (result.success) {
       setFaqs(result.faq);
     }

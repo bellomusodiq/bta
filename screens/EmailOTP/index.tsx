@@ -38,7 +38,12 @@ const EmailOTPScreen: React.FC<RootStackScreenProps<"EmailOTP">> = ({
 
   const verifyEmail = async () => {
     setLoading(true);
-    const result = await verifyChangeEmail(user.token, newPin, oldPin);
+    const result = await verifyChangeEmail(
+      navigation,
+      user.token,
+      newPin,
+      oldPin
+    );
     setLoading(false);
     if (result.success) {
       navigation.goBack();

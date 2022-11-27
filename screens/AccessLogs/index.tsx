@@ -56,16 +56,16 @@ const LogItem: React.FC<{
   );
 };
 
-const AccessLogsScreen: React.FC<
-  RootStackScreenProps<"AccountLimits">
-> = () => {
+const AccessLogsScreen: React.FC<RootStackScreenProps<"AccountLimits">> = ({
+  navigation,
+}) => {
   const { user } = useAppSelector((state) => state.auth);
   const [logs, setLogs] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
 
   const getSecurityLogs = async () => {
     setLoading(true);
-    const result = await securityLogsApi(user.token);
+    const result = await securityLogsApi(navigation, user.token);
     setLoading(false);
     if (result.success) {
       setLogs(result.logs);

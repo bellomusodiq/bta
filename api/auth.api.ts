@@ -1,14 +1,35 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { BASE_URL } from "../CONFIG";
+import { logoutHandler } from "../utils/logout";
 
-export const loginApi = async (username: string, password: string) => {
+export const getCountriesApi = async (navigation: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/signIn`, {
+    const result = await axios.get("https://app.bitafrika.com/countries");
+
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const loginApi = async (
+  navigation: any,
+  username: string,
+  password: string
+) => {
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/auth/signIn`, {
       username,
       password,
     });
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -16,6 +37,7 @@ export const loginApi = async (username: string, password: string) => {
 };
 
 export const signupApi = async (
+  navigation: any,
   email: string,
   country: string,
   countryCode: string,
@@ -25,6 +47,7 @@ export const signupApi = async (
   password: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const data = {
       email,
       country,
@@ -34,8 +57,11 @@ export const signupApi = async (
       username,
       password,
     };
-    const result = await axios.post(`${BASE_URL}/misc/2/verify_email`, data);
+    const result = await axios.post(`${BASE_URL}/auth/verify_email`, data);
 
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -44,9 +70,10 @@ export const signupApi = async (
 
 export const logoutApi = async () => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const user = await AsyncStorage.getItem("@user");
     const { token } = JSON.parse(user);
-    const result = await axios.post(`${BASE_URL}/account/logout`, { token });
+    const result = await axios.post(`${BASE_URL}/account/logout`, { ...token });
     return result;
   } catch (e) {
     console.log(e);
@@ -54,6 +81,7 @@ export const logoutApi = async () => {
 };
 
 export const verifyEmailApi = async (
+  navigation: any,
   token: string,
   email: string,
   country: string,
@@ -65,6 +93,7 @@ export const verifyEmailApi = async (
   code: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const data = {
       token,
       email,
@@ -76,7 +105,10 @@ export const verifyEmailApi = async (
       password,
       code,
     };
-    const result = await axios.post(`${BASE_URL}/misc/2/verify_code`, data);
+    const result = await axios.post(`${BASE_URL}/auth/verify_code`, data);
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);

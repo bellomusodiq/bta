@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { Eye, EyeSlash, TickCircle } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { RFValue } from "react-native-responsive-fontsize";
-import { signupApi } from "../../api/auth.api";
+import { getCountriesApi, signupApi } from "../../api/auth.api";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
@@ -12,9 +12,13 @@ import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setBaseUrl, setUserCountry } from "../../store/auth.slice";
+import { useDispatch } from "react-redux";
 
 const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -26,10 +30,36 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [countries, setCountries] = useState<any>([]);
 
   const nextNavigation = () => {
     navigation.navigate("VerifyEmail");
   };
+
+  const onSetCountry = async (country: any) => {
+    dispatch(setUserCountry(country.code));
+    dispatch(setBaseUrl(country.baseUrl));
+    await AsyncStorage.setItem("@userCountry", country.code);
+    await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
+  };
+
+  const fetchCountries = async () => {
+    const result = await getCountriesApi();
+    dispatch(setUserCountry(result.userCountry));
+    await AsyncStorage.setItem("@userCountry", result.userCountry);
+
+    const country = result.countries?.find(
+      (country: any) => country.code == result.userCountry
+    );
+    await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
+
+    setCountries(result.countries);
+    dispatch(setBaseUrl(country.baseUrl[0]));
+  };
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
   const disabled =
     !email ||
@@ -43,6 +73,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     setLoading(true);
     setError(null);
     const result = await signupApi(
+      navigation,
       email,
       country.label,
       country.value,
@@ -75,6 +106,9 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       setError(result.message);
     }
   };
+
+  const countriesList = countries;
+  console.log(countriesList);
 
   return (
     <ScreenLayout showHeader title="" scrollable SafeAreaBackground="white">

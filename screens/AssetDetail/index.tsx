@@ -92,7 +92,7 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
     }
     setLoading(true);
     setError(false);
-    chartsApi(user.token, trend, currency.toLowerCase()).then((result) => {
+    chartsApi(navigation, user.token, trend, currency.toLowerCase()).then((result) => {
       setLoading(false);
       if (result.success) {
         let dataPoints = [];

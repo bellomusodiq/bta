@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { ArrowRight, ArrowRight2, Eye, EyeSlash } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   TouchableOpacity,
@@ -9,13 +9,19 @@ import {
   View,
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { loginApi } from "../../api/auth.api";
+import { getCountriesApi, loginApi } from "../../api/auth.api";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setError, setLoading, setUser } from "../../store/auth.slice";
+import {
+  setBaseUrl,
+  setError,
+  setLoading,
+  setUser,
+  setUserCountry,
+} from "../../store/auth.slice";
 import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import Ghana from "../../assets/images/ghana.png";
@@ -24,9 +30,8 @@ import Cameroon from "../../assets/images/cameron.png";
 import ReactNativeModal from "react-native-modal";
 import TickIcon from "../../components/icons/tick-icon";
 
-const countries = [
-  {
-    title: "Ghana",
+const countryImages = {
+  GH: {
     image: <Image style={styles.image} source={Ghana} resizeMode="contain" />,
     imageLarge: (
       <Image
@@ -36,19 +41,7 @@ const countries = [
       />
     ),
   },
-  {
-    title: "Nigeria",
-    image: <Image style={styles.image} source={Nigeria} resizeMode="contain" />,
-    imageLarge: (
-      <Image
-        style={[styles.image, { width: 32, height: 24 }]}
-        source={Nigeria}
-        resizeMode="contain"
-      />
-    ),
-  },
-  {
-    title: "Cameroon",
+  CM: {
     image: (
       <Image style={styles.image} source={Cameroon} resizeMode="contain" />
     ),
@@ -60,26 +53,37 @@ const countries = [
       />
     ),
   },
-];
+  NG: {
+    image: <Image style={styles.image} source={Nigeria} resizeMode="contain" />,
+    imageLarge: (
+      <Image
+        style={[styles.image, { width: 32, height: 24 }]}
+        source={Nigeria}
+        resizeMode="contain"
+      />
+    ),
+  },
+};
 
 const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.auth);
+  const { error, loading, userCountry } = useAppSelector((state) => state.auth);
 
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [country, setCountry] = useState<number>(0);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [countries, setCountries] = useState<any>([]);
 
   const nextNavigation = async () => {
     const pin = await AsyncStorage.getItem("@pin");
-    if (pin) {
-      navigation.navigate("Root");
-    } else {
-      navigation.navigate("SetPin");
-    }
+    // if (pin) {
+    navigation.navigate("Root");
+    // } else {
+    //   navigation.navigate("SetPin");
+    // }
   };
 
   const disabled = !email || !password || loading;
@@ -87,7 +91,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
   const onLogin = async () => {
     dispatch(setLoading(true));
     dispatch(setError(null));
-    const result = await loginApi(email, password);
+    const result = await loginApi(navigation, email, password);
     dispatch(setLoading(false));
     if (result.success) {
       dispatch(setUser(result.account));
@@ -99,10 +103,31 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     }
   };
 
-  const onSetCountry = (index: number) => {
-    setCountry(index);
+  const onSetCountry = async (country: any) => {
+    dispatch(setUserCountry(country.code));
+    dispatch(setBaseUrl(country.baseUrl));
+    await AsyncStorage.setItem("@userCountry", country.code);
+    await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
     setShowModal(false);
   };
+
+  const fetchCountries = async () => {
+    const result = await getCountriesApi(navigation);
+    dispatch(setUserCountry(result.userCountry));
+    await AsyncStorage.setItem("@userCountry", result.userCountry);
+
+    const country = result.countries?.find(
+      (country: any) => country.code == result.userCountry
+    );
+    await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
+
+    setCountries(result.countries);
+    dispatch(setBaseUrl(country.baseUrl[0]));
+  };
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
   return (
     <ScreenLayout
@@ -123,17 +148,17 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
           <View style={styles.indicator} />
           <CustomText style={styles.modalTitle}>Select country</CustomText>
           {countries.map((countryItem, i) => (
-            <React.Fragment key={countryItem.title}>
+            <React.Fragment key={countryItem.code}>
               <View style={styles.modalDivider} />
               <TouchableOpacity
-                onPress={() => onSetCountry(i)}
+                onPress={() => onSetCountry(countryItem)}
                 style={styles.countryItem}
               >
-                {countryItem.imageLarge}
+                {countryImages[countryItem.code].imageLarge}
                 <CustomText style={styles.countryItemText}>
-                  {countryItem.title}
+                  {countryItem.name}
                 </CustomText>
-                {i === country && <TickIcon />}
+                {countryItem.code === userCountry && <TickIcon />}
               </TouchableOpacity>
             </React.Fragment>
           ))}
@@ -191,9 +216,12 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
           onPress={() => setShowModal(true)}
           style={styles.countryContainer}
         >
-          {countries[country].image}
+          {userCountry ? countryImages[userCountry].image : null}
           <CustomText style={styles.countryText}>
-            {countries[country].title}
+            {
+              countries?.find((country: any) => country.code == userCountry)
+                ?.name
+            }
           </CustomText>
           <ArrowRight2 color="#3861FB" size={18} variant="Linear" />
         </TouchableOpacity>

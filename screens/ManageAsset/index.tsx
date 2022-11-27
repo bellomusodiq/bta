@@ -14,9 +14,9 @@ import CustomButton from "../../components/CustomButton";
 import { coinImage } from "../../consts/images";
 import Toast from "react-native-toast-message";
 
-const ManageAssetScreen: React.FC<
-  OverviewStackScreenProps<"ManageAsset">
-> = () => {
+const ManageAssetScreen: React.FC<OverviewStackScreenProps<"ManageAsset">> = ({
+  navigation,
+}) => {
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const ManageAssetScreen: React.FC<
   const fetchCryptoAssets = async () => {
     setLoading(true);
     setError(false);
-    const result = await manageCryptoAssetApi(user.token);
+    const result = await manageCryptoAssetApi(navigation, user.token);
     setLoading(false);
     if (result.success) {
       setAssets(result.currencies);
@@ -40,6 +40,7 @@ const ManageAssetScreen: React.FC<
   const toggleAsset = async (item) => {
     if (item.enabled) return false;
     const result = await enableCryptoAssetApi(
+      navigation,
       user.token,
       item.symbol,
       item.platform

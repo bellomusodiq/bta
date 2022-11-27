@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import SendIcon from "../../components/icons/send-icon";
 import { logoutHandler } from "../../utils/logout";
 import {
+  checkKycStatusApi,
   deactivateAccountApi,
   disableNotificationApi,
   enableNotificationApi,
@@ -49,16 +50,18 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, dashboardData } = useAppSelector((state) => state.auth);
+
   const navigation = useNavigation();
   const [biometrics, setBiometrics] = useState<boolean>(true);
   const [notification, setNotification] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [logout, setLogout] = useState<boolean>(false);
+  const [kycActivated, setKycActivated] = useState<boolean>(true);
 
   const deactivateAccount = async () => {
     setLoading(true);
-    const result = await deactivateAccountApi(user.token, password);
+    const result = await deactivateAccountApi(navigation, user.token, password);
     setLoading(false);
     if (result.success) {
       logoutHandler(navigation);
@@ -72,17 +75,24 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
     }
   };
 
+  const verifyKycStatus = async () => {
+    const result = await checkKycStatusApi(navigation, user.token);
+    console.log(result);
+
+    setKycActivated(result.data.kycVerified);
+  };
+
   const toggleNotification = async () => {
     setNotification(!notification);
     if (notification) {
-      await disableNotificationApi(user.token);
+      await disableNotificationApi(navigation, user.token);
     } else {
-      await enableNotificationApi(user.token, "some-token");
+      await enableNotificationApi(navigation, user.token, "some-token");
     }
   };
 
   const getNotificationStatus = async () => {
-    const result = await getNotificationStatusApi(user.token);
+    const result = await getNotificationStatusApi(navigation, user.token);
     if (result.success) {
       setNotification(result.tokenEnabled);
     }
@@ -90,6 +100,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
 
   useEffect(() => {
     getNotificationStatus();
+    verifyKycStatus();
   }, []);
 
   return (
@@ -172,22 +183,24 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.divider} />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("KYCBegin")}
-        style={styles.note}
-      >
-        <MedalStar size={RFValue(24)} color="#3861FB" variant="Linear" />
-        <View style={styles.noteTextContainer}>
-          <CustomText style={styles.noteTextTitle}>Complete KYC</CustomText>
-          <CustomText style={styles.noteText}>
-            Verify your account to be able to able to buy, sell, send and
-            receive crypto without limits.
-          </CustomText>
-        </View>
-        <View style={styles.noteIconContainer}>
-          <SendIcon />
-        </View>
-      </TouchableOpacity>
+      {!kycActivated && (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("KYCBegin")}
+          style={styles.note}
+        >
+          <MedalStar size={RFValue(24)} color="#3861FB" variant="Linear" />
+          <View style={styles.noteTextContainer}>
+            <CustomText style={styles.noteTextTitle}>Complete KYC</CustomText>
+            <CustomText style={styles.noteText}>
+              Verify your account to be able to able to buy, sell, send and
+              receive crypto without limits.
+            </CustomText>
+          </View>
+          <View style={styles.noteIconContainer}>
+            <SendIcon />
+          </View>
+        </TouchableOpacity>
+      )}
       <ProfileItems
         data={[
           {
@@ -258,7 +271,9 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
             title: "Talk to us via whatsapp",
             onPress: () =>
               navigation.navigate("WebView", {
-                url: "https://api.whatsapp.com/send?phone=233545535586",
+                url: `https://api.whatsapp.com/send?phone=${
+                  dashboardData?.support.whatsapp.value.split("+")[1]
+                }`,
               }),
             icon: <UserTag size={24} color="#3861FB" variant="Bold" />,
           },

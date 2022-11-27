@@ -30,14 +30,14 @@ const Limit: React.FC<{
   </View>
 );
 
-const AccountLimitsScreen: React.FC<
-  RootStackScreenProps<"AccountLimits">
-> = () => {
+const AccountLimitsScreen: React.FC<RootStackScreenProps<"AccountLimits">> = ({
+  navigation,
+}) => {
   const { user } = useAppSelector((state) => state.auth);
   const [accountLimits, setAccountLimits] = useState<any>({});
 
   const getAccountLimits = async () => {
-    const result = await accountLimitsApi(user.token);
+    const result = await accountLimitsApi(navigation, user.token);
     if (result.success) {
       setAccountLimits(result.info);
     }

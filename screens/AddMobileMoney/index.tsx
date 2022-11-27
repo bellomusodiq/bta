@@ -11,6 +11,7 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import MomoImage from "../../assets/images/momo.png";
 import GhanaImage from "../../assets/images/ghana.png";
+import CameroonImage from "../../assets/images/cameron.png";
 import { verifyMobileMoneyNumberApi } from "../../api/profile.api";
 import { useAppSelector } from "../../store";
 import Toast from "react-native-toast-message";
@@ -21,6 +22,11 @@ const countryData = [
     label: "",
     value: "233",
     image: <Image source={GhanaImage} style={styles.image} />,
+  },
+  {
+    label: "",
+    value: "237",
+    image: <Image source={CameroonImage} style={styles.image} />,
   },
 ];
 
@@ -61,6 +67,7 @@ const AddMobileMoneyScreen: React.FC<
     setLoading(true);
     setError(null);
     const result = await verifyMobileMoneyNumberApi(
+      navigation,
       user.token,
       accountName,
       phoneNumber,

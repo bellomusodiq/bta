@@ -70,6 +70,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
   const validateWithdrawalRequest = async () => {
     setLoading(true);
     const result = await validateWithdrawalRequestApi(
+      navigation,
       user.token,
       params.symbol,
       params.name,

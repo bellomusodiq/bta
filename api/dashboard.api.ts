@@ -1,22 +1,60 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { BASE_URL } from "../CONFIG";
+import { logoutHandler } from "../utils/logout";
 
-export const loadDashboard = async (token: string) => {
+export const loadDashboard = async (
+  navigation: any,
+  token: {
+    accessToken: string;
+    refreshToken: string;
+  }
+) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/dashboard`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/dashboard`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const buyAccountApi = async (token: string) => {
+export const getPriceChanges = async (
+  navigation: any,
+  token: {
+    accessToken: string;
+    refreshToken: string;
+  },
+  currencies: string
+) => {
   try {
-    const result = await axios.post(`${BASE_URL}/payments/2/buyAccounts`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/getPriceChanges`, {
+      ...token,
+      currencies,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const buyAccountApi = async (navigation: any, token: any) => {
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/payments/buyAccounts`, {
+      ...token,
+    });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -24,27 +62,39 @@ export const buyAccountApi = async (token: string) => {
 };
 
 export const getCryptoAddressApi = async (
-  token: string,
+  navigation: any,
+  token: {
+    accessToken: string;
+    refreshToken: string;
+  },
   cryptoSymbol: string,
   platform: string
 ) => {
   try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const result = await axios.post(`${BASE_URL}/account/getAddress`, {
-      token,
+      ...token,
       cryptoSymbol,
       platform,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getNotificationsApi = async (token: string) => {
+export const getNotificationsApi = async (navigation: any, token: any) => {
   try {
-    const result = await axios.post(`${BASE_URL}/account/2/emergencies`, {
-      token,
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const result = await axios.post(`${BASE_URL}/account/emergencies`, {
+      ...token,
     });
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
     return result.data;
   } catch (e) {
     console.log(e);

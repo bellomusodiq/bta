@@ -55,7 +55,7 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
 
   const getPaymentList = async () => {
     setLoading(true);
-    const result = await buyAccountApi(user.token);
+    const result = await buyAccountApi(navigation, user.token);
     if (result.success) {
       setLoading(false);
       setPaymentAccounts(result.paymentAccounts);

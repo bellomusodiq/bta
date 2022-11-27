@@ -38,6 +38,7 @@ const VerifyEmailScreen: React.FC<RootStackScreenProps<"VerifyEmail">> = ({
     setLoading(true);
     setError(null);
     const result = await verifyEmailApi(
+      navigation,
       params.token,
       params.email,
       params.country,

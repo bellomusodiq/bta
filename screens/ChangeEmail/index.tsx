@@ -27,7 +27,7 @@ const ChangeEmailScreen: React.FC<RootStackScreenProps<"ChangeEmail">> = () => {
 
   const onChangeEmail = async () => {
     setLoading(true);
-    const result = await changeEmail(user.token, password, oldEmail, newEmail);
+    const result = await changeEmail(navigation, user.token, password, oldEmail, newEmail);
     setLoading(false);
 
     if (result.success) {

@@ -41,6 +41,7 @@ const MobileMoneyOTP: React.FC<RootStackScreenProps<"MobileMoneyOTP">> = ({
   const verifyMobileMoney = async () => {
     setLoading(true);
     const result = await verifyMobileMoneyApi(
+      navigation,
       user.token,
       method,
       momoName,

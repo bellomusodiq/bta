@@ -28,6 +28,9 @@ const PaymentAccountsScreen: React.FC<
   const [paymentAccounts, setPaymentAccounts] = useState<any>([]);
   const [paymentPlatforms, setPaymentPlatforms] = useState<any>([]);
 
+  console.log(paymentPlatforms);
+
+
   const onContinue = () => {
     navigation.navigate("SellCrypto", {
       accountName: "Kwabena",
@@ -56,7 +59,7 @@ const PaymentAccountsScreen: React.FC<
   );
 
   const getPaymentList = async () => {
-    const result = await paymentAccountApi(user.token);
+    const result = await paymentAccountApi(navigation, user.token);
     if (result.success) {
       setLoading(false);
       setPaymentAccounts(result.info);
@@ -66,7 +69,7 @@ const PaymentAccountsScreen: React.FC<
   };
 
   const getPaymentPlatforms = async () => {
-    const result = await paymentAccountPlatformsApi(user.token);
+    const result = await paymentAccountPlatformsApi(navigation, user.token);
     if (result.success) {
       setLoading(false);
       setPaymentPlatforms(result.info);

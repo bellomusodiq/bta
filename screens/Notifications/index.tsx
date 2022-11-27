@@ -15,6 +15,7 @@ import { getNotificationsApi } from "../../api/dashboard.api";
 import { useAppSelector } from "../../store";
 import CustomButton from "../../components/CustomButton";
 import CustomText from "../../components/CustomText";
+import { useNavigation } from "@react-navigation/native";
 
 const data: NotificationItemProps[] = [
   {
@@ -43,6 +44,7 @@ const data: NotificationItemProps[] = [
 const NotificationsScreen: React.FC<
   RootStackScreenProps<"Notifications">
 > = () => {
+  const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -51,7 +53,7 @@ const NotificationsScreen: React.FC<
   const getNotifications = async () => {
     setLoading(true);
     setError(false);
-    const result = await getNotificationsApi(user?.token);
+    const result = await getNotificationsApi(navigation, user?.token);
     setLoading(false);
     if (result.success) {
       setNotifications(result.emergenciesNotifications);

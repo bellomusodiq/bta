@@ -38,6 +38,7 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
   const topUpSummary = async () => {
     setLoading(true);
     const result = await reviewBuyOrderApi(
+      navigation,
       user.token,
       params.symbol,
       params.name,

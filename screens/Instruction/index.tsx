@@ -19,6 +19,7 @@ const InstructionScreen: React.FC<RootStackScreenProps<"Instruction">> = ({
   const topUpSummary = async () => {
     setLoading(true);
     const result = await reviewBuyOrderApi(
+      navigation,
       user.token,
       params.symbol,
       params.name,

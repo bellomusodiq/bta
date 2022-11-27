@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { Scan } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
-import { Keyboard, Pressable, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Keyboard,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -9,7 +15,7 @@ import { RootStackScreenProps } from "../../types";
 import * as Clipboard from "expo-clipboard";
 import styles from "./styles";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { validateSendCryptoApi } from "../../api/profile.api";
+import { maxCryptoApi, validateSendCryptoApi } from "../../api/profile.api";
 import { useAppSelector } from "../../store";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/CustomButton";
@@ -26,6 +32,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [maxLoading, setMaxLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -55,6 +62,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   const onContinue = async () => {
     setLoading(true);
     const result = await validateSendCryptoApi(
+      navigation,
       user.token,
       route.params?.symbol,
       address,
@@ -87,10 +95,30 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
     setCurrency(currency !== "USD" ? "USD" : route.params?.symbol);
   };
 
-  const setMaxAmount = () => {
-    setAmount(
-      currency === "USD" ? +route.params?.usdValue : +route.params?.cryptoValue
+  const setMaxAmount = async () => {
+    setMaxLoading(true);
+    const result = await maxCryptoApi(
+      navigation,
+      user.token,
+      route.params?.symbol,
+      address,
+      route.params?.platform
     );
+    setMaxLoading(false);
+    if (result.success) {
+      setAmount(
+        currency === "USD"
+          ? result.data.maxUSDBalance
+          : result.data.maxCryptoBalance
+      );
+    } else {
+      Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
+        type: "error",
+        text1: result.message,
+      });
+    }
   };
 
   const fetchCopiedText = async () => {
@@ -147,9 +175,13 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
                 keyboardType="numeric"
                 rightComponent={
                   <View style={styles.amountRight}>
-                    <TouchableOpacity onPress={setMaxAmount}>
-                      <CustomText style={styles.maxText}>max</CustomText>
-                    </TouchableOpacity>
+                    {maxLoading ? (
+                      <ActivityIndicator size="small" />
+                    ) : (
+                      <TouchableOpacity onPress={setMaxAmount}>
+                        <CustomText style={styles.maxText}>max</CustomText>
+                      </TouchableOpacity>
+                    )}
                     <TouchableOpacity
                       onPress={toggleCurrency}
                       style={styles.tablet}

@@ -28,6 +28,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     if (scan.success) {
       setLoading(true);
       const result = await sellConfirmationApi(
+        navigation,
         user.token,
         params?.requestData?.symbol,
         params?.requestData?.name,
@@ -67,6 +68,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
 
   const navigateToPayInstruction = () => {
     if (!params?.sell) {
+      // TODO:
       navigation.navigate("PayInstruction", params);
     } else {
       sellConfirm();

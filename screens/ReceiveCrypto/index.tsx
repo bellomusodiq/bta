@@ -59,6 +59,7 @@ const ReceiveCryptoScreen: React.FC<
               })
             }
             hideTrend
+            noPercentage
           />
         )}
       />

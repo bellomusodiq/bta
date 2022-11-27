@@ -19,6 +19,7 @@ import { coinImage } from "../../consts/images";
 import { useAppSelector } from "../../store";
 import { getCryptoAddressApi } from "../../api/dashboard.api";
 import { width } from "../../consts/dimenentions";
+import CustomButton from "../../components/CustomButton";
 
 const ReceiveCryptoSummaryScreen: React.FC<
   RootStackScreenProps<"ReceiveCryptoSummary">
@@ -53,6 +54,7 @@ const ReceiveCryptoSummaryScreen: React.FC<
     setLoading(true);
     setError(false);
     const result = await getCryptoAddressApi(
+      navigation,
       user?.token,
       token.value,
       token.platform
@@ -134,7 +136,7 @@ const ReceiveCryptoSummaryScreen: React.FC<
               />
             </View>
             <Image
-              source={{ uri: tokenDetails.scanString }}
+              source={{ uri: tokenDetails?.scanString }}
               style={styles.barcode}
               width={width(0.6)}
               height={width(0.6)}

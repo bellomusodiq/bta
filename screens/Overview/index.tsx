@@ -1,6 +1,7 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { loadDashboard } from "../../api/dashboard.api";
+import { getPriceChanges, loadDashboard } from "../../api/dashboard.api";
 import Assets from "../../components/Assets";
 import CustomButton from "../../components/CustomButton";
 import CustomText from "../../components/CustomText";
@@ -14,16 +15,19 @@ import { OverviewStackScreenProps } from "../../types";
 import styles from "./styles";
 
 const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
   const [firstLoad, setFirstLoad] = useState<boolean>(false);
   const { dashboardData, user } = useAppSelector((state) => state.auth);
-  const [error, setError] = useState<string>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [fetchPriceChanges, setFetchPriceChanges] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   const getDashboardData = async () => {
     setLoading(true);
     setError(null);
-    const result = await loadDashboard(user?.token);
+    const result = await loadDashboard(user.token);
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
@@ -33,9 +37,38 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     }
   };
 
+  const getPriceChangesData = async () => {
+    const currencies = dashboardData.currencies
+      .map((currency) => currency.symbol.toLowerCase())
+      .join(",");
+    const result = await getPriceChanges(navigation, user.token, currencies);
+    console.log(result);
+
+    if (result.success) {
+      const _dashboardData = { ...dashboardData };
+      _dashboardData.currencies = _dashboardData.currencies.map((currency) => ({
+        ...currency,
+        priceChanges:
+          result.extras[currency.symbol.toLowerCase()].dailyChange
+            .priceChangePercentage,
+      }));
+      dispatch(setDashboardData(_dashboardData));
+
+      setFetchPriceChanges(true);
+    }
+  };
+
   useEffect(() => {
     getDashboardData();
   }, []);
+
+  useEffect(() => {
+    if (dashboardData?.currencies?.length > 0 && !fetchPriceChanges) {
+      console.log("Here...");
+
+      getPriceChangesData();
+    }
+  }, [dashboardData.currencies, fetchPriceChanges]);
   return (
     <ScreenLayout
       scrollable

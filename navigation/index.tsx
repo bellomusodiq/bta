@@ -73,7 +73,7 @@ import PendingScreen from "../screens/Pending";
 import NotificationsScreen from "../screens/Notifications";
 import { useAppDispatch, useAppSelector } from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setUser } from "../store/auth.slice";
+import { setUser, setUserCountry } from "../store/auth.slice";
 import EmailOTPScreen from "../screens/EmailOTP";
 import PasswordOTPScreen from "../screens/PasswordOTP";
 import MobileMoneyOTP from "../screens/MobileMoneyOTP";
@@ -121,6 +121,7 @@ function RootNavigator() {
     const result = await AsyncStorage.getItem("@user");
     const isLogedIn = await AsyncStorage.getItem("@firstLogin");
     const pin = await AsyncStorage.getItem("@pin");
+    const userCountry = await AsyncStorage.getItem("@userCountry");
 
     setFirstLogin(Boolean(isLogedIn));
     setIsPinSet(Boolean(pin));
@@ -129,6 +130,10 @@ function RootNavigator() {
     if (result) {
       const user = JSON.parse(result);
       dispatch(setUser(user));
+    }
+
+    if (userCountry) {
+      dispatch(setUserCountry(userCountry));
     }
   };
 
