@@ -51,6 +51,12 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     const country = result.countries?.find(
       (country: any) => country.code == result.userCountry
     );
+    setCountry({
+      label: country.name,
+      value: country.countryCode,
+      code: country.countryCallingCode,
+      currency: country.countryCurrency,
+    });
     await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
 
     setCountries(result.countries);
@@ -107,8 +113,20 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     }
   };
 
-  const countriesList = countries;
-  console.log(countriesList);
+  const countriesList = countries.map((country) => ({
+    label: country.name,
+    value: country.countryCode,
+    code: country.countryCallingCode,
+    currency: country.countryCurrency,
+  }));
+
+  const onChangeCountry = async (value) => {
+    setCountry(value);
+    const country = countries?.find(
+      (country: any) => country.code == value.value
+    );
+    onSetCountry(country);
+  };
 
   return (
     <ScreenLayout showHeader title="" scrollable SafeAreaBackground="white">
@@ -165,9 +183,9 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       />
       <Dropdown
         value={country}
-        onChange={(val) => setCountry(val)}
+        onChange={onChangeCountry}
         style={styles.dropdown}
-        data={[{ label: "Ghana", value: "GH", code: "233", currency: "GHS" }]}
+        data={countriesList}
         placeholder={"Select country"}
         labelField="label"
         valueField="value"

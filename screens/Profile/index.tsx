@@ -178,9 +178,9 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         <CustomText style={styles.username}>
           Username: {user.username}
         </CustomText>
-        <TouchableOpacity style={styles.editButton}>
+        {/* <TouchableOpacity style={styles.editButton}>
           <Edit2 size={RFValue(20)} color="#292D32" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.divider} />
       {!kycActivated && (
@@ -203,13 +203,13 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
       )}
       <ProfileItems
         data={[
-          {
-            title: "Biometrics",
-            icon: <FingerScan size={24} color="#3861FB" variant="Bulk" />,
-            isToggle: true,
-            active: biometrics,
-            onToggle: () => setBiometrics(!biometrics),
-          },
+          // {
+          //   title: "Biometrics",
+          //   icon: <FingerScan size={24} color="#3861FB" variant="Bulk" />,
+          //   isToggle: true,
+          //   active: biometrics,
+          //   onToggle: () => setBiometrics(!biometrics),
+          // },
           {
             title: "Notifications",
             icon: <Notification size={24} color="#3861FB" variant="Bold" />,
@@ -252,11 +252,11 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
             onPress: () => navigation.navigate("ChangePassword"),
             icon: <PasswordCheck size={24} color="#3861FB" variant="Bold" />,
           },
-          {
-            title: "Change PIN",
-            onPress: () => navigation.navigate("SetPin"),
-            icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
-          },
+          // {
+          //   title: "Change PIN",
+          //   onPress: () => navigation.navigate("SetPin"),
+          //   icon: <ShieldSecurity size={24} color="#3861FB" variant="Bold" />,
+          // },
         ]}
         title="Security"
       />

@@ -28,7 +28,11 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
   const [paymentAccounts, setPaymentAccounts] = useState<any>([]);
 
   const HeaderRightComponent = (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("PaymentAccounts", { from: "SelectAccount" })
+      }
+    >
       <Add size={RFValue(24)} color="white" />
     </TouchableOpacity>
   );

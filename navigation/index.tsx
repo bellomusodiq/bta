@@ -176,9 +176,21 @@ function RootNavigator() {
       <Stack.Screen name="BuyCrypto" component={BuyCryptoScreen} />
       <Stack.Screen name="SellCrypto" component={SellCryptoScreen} />
       <Stack.Screen name="SelectAccount" component={SelectAccountScreen} />
-      <Stack.Screen name="Complete" component={CompleteScreen} />
-      <Stack.Screen name="Pending" component={PendingScreen} />
-      <Stack.Screen name="Failed" component={FailedScreen} />
+      <Stack.Screen
+        name="Complete"
+        component={CompleteScreen}
+        options={{ gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="Pending"
+        component={PendingScreen}
+        options={{ gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="Failed"
+        component={FailedScreen}
+        options={{ gestureEnabled: false }}
+      />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
       <Stack.Screen name="SendCrypto" component={SendCryptoScreen} />

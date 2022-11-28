@@ -14,8 +14,10 @@ export const loadDashboard = async (
     const result = await axios.post(`${BASE_URL}/account/dashboard`, {
       ...token,
     });
+
     if (result.data.invalid) {
       await logoutHandler(navigation);
+      return;
     }
     return result.data;
   } catch (e) {

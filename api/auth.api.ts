@@ -48,6 +48,7 @@ export const signupApi = async (
 ) => {
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+
     const data = {
       email,
       country,

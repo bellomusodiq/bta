@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as LocalAuthentication from "expo-local-authentication";
 import { TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { sellConfirmationApi } from "../../api/profile.api";
+import { depositApprovalApi, sellConfirmationApi } from "../../api/profile.api";
 import CustomText from "../../components/CustomText";
 import SummaryItem from "../../components/SummaryItem";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -13,6 +13,7 @@ import { RootStackScreenProps } from "../../types";
 import styles from "./styles";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/CustomButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
   route,
@@ -66,10 +67,39 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
     }
   };
 
-  const navigateToPayInstruction = () => {
+  const navigateToPayInstruction = async () => {
     if (!params?.sell) {
-      // TODO:
-      navigation.navigate("PayInstruction", params);
+      const countryCode = await AsyncStorage.getItem("@userCountry");
+      if (countryCode !== "CM") {
+        navigation.navigate("PayInstruction", params);
+      } else {
+        // TODO: if cameroon, call STEP: 4 endpoint before navigating
+        console.log("cameroon", params);
+        setLoading(true);
+        const result = await depositApprovalApi(
+          navigation,
+          user.token,
+          params.symbol,
+          params.name,
+          params.paymentType,
+          params.platform,
+          params.contract,
+          params.amount,
+          params.value,
+          params.id.toString()
+        );
+        setLoading(false);
+        if (result.success) {
+          navigation.navigate("PayInstruction", params);
+        } else {
+          Toast.show({
+            autoHide: true,
+            visibilityTime: 7000,
+            type: "error",
+            text1: result.message,
+          });
+        }
+      }
     } else {
       sellConfirm();
     }

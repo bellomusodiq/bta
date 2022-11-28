@@ -9,6 +9,7 @@ interface AuthState {
   dashboardData: any;
   userCountry: string;
   baseUrl: string;
+  priceChanges?: any;
 }
 
 const initialState: AuthState = {
@@ -18,6 +19,7 @@ const initialState: AuthState = {
   dashboardData: {},
   userCountry: "",
   baseUrl: "",
+  priceChanges: null,
 };
 
 export const authSlice = createSlice({
@@ -42,6 +44,9 @@ export const authSlice = createSlice({
     setBaseUrl: (state, action: PayloadAction<any>) => {
       state.baseUrl = action.payload;
     },
+    setPriceChanges: (state, action: PayloadAction<any>) => {
+      state.priceChanges = action.payload;
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   setDashboardData,
   setUserCountry,
   setBaseUrl,
+  setPriceChanges,
 } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth;

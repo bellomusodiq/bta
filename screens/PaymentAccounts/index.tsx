@@ -28,9 +28,6 @@ const PaymentAccountsScreen: React.FC<
   const [paymentAccounts, setPaymentAccounts] = useState<any>([]);
   const [paymentPlatforms, setPaymentPlatforms] = useState<any>([]);
 
-  console.log(paymentPlatforms);
-
-
   const onContinue = () => {
     navigation.navigate("SellCrypto", {
       accountName: "Kwabena",
@@ -119,7 +116,9 @@ const PaymentAccountsScreen: React.FC<
                   <Mobile size={RFValue(20)} color="#3861FB" variant="Bold" />
                 </View>
               }
-              onPress={() => navigation.navigate("AddMobileMoney")}
+              onPress={() =>
+                navigation.navigate("AddMobileMoney", { ...route.params })
+              }
             />
           </View>
           <PaymentItem
@@ -130,7 +129,9 @@ const PaymentAccountsScreen: React.FC<
                 <Bank size={RFValue(20)} color="#3861FB" variant="Bulk" />
               </View>
             }
-            onPress={() => navigation.navigate("AddBankAccount")}
+            onPress={() =>
+              navigation.navigate("AddBankAccount", { ...route.params })
+            }
           />
           <View style={styles.dividerFull} />
           <CustomText style={styles.paymentTitle2}>

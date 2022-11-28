@@ -17,7 +17,8 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
   route,
 }) => {
   const navigation = useNavigation();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, dashboardData } = useAppSelector((state) => state.auth);
+
   const { params } = route;
 
   const [paymentScreen, setPaymentScreen] = useState<number>(1);
@@ -52,6 +53,8 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
     setLoading(false);
     if (result.success) {
       navigation.navigate("Summary", {
+        ...params,
+        amount,
         ...result,
         sell: false,
       });
@@ -97,7 +100,9 @@ const BuyCryptoScreen: React.FC<RootStackScreenProps<"BuyCrypto">> = ({
             placeholderTextColor="gray"
             onChangeText={(value) => setAmount(value)}
           />
-          <CustomText style={styles.currency}>GHS</CustomText>
+          <CustomText style={styles.currency}>
+            {dashboardData.rates.currency}
+          </CustomText>
         </View>
       </View>
       <CustomText style={styles.paymentTitle2}>Pay with</CustomText>

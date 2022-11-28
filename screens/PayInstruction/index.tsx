@@ -90,6 +90,7 @@ const PayInstructionScreen: React.FC<
       </StepItem>
       <TouchableOpacity
         onPress={() =>
+          // TODO: call STEP: 4 for cameroon before navigation
           navigation.reset({
             index: 0,
             routes: [

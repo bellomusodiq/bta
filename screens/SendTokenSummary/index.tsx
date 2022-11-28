@@ -76,7 +76,7 @@ const SendTokenSummaryScreen: React.FC<
           desc: "Sent",
         });
       } else {
-        Toast.snow({
+        Toast.show({
           type: "error",
           text1: result.message,
         });

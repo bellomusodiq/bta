@@ -15,11 +15,6 @@ export const chartsApi = async (
       dataType,
       currency,
     });
-    console.log(`${BASE_URL}/account/charts`);
-
-    console.log({ token, dataType, currency });
-    console.log(result.data);
-
     if (result.data.invalid) {
       await logoutHandler(navigation);
     }

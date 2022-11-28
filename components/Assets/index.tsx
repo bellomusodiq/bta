@@ -11,7 +11,6 @@ import UtilityImage from "../../assets/images/utility.png";
 
 const Assets: React.FC = () => {
   const { dashboardData } = useAppSelector((state) => state.auth);
-  console.log(dashboardData);
 
   const navigation = useNavigation();
   const [currentTab, setCurrentTab] = useState<string>("assets");
@@ -117,35 +116,31 @@ const Assets: React.FC = () => {
         </TouchableOpacity>
       </View>
       {currentTab === "assets" &&
-        dashboardData?.currencies
-          ?.filter((currency: any) => currency.enabled)
-          .map((currency: any) => {
-            console.log(currency);
-
-            return (
-              <AssetItem
-                key={currency.symbol}
-                image={coinImage[currency.symbol]}
-                amountUSD={currency.usdValue}
-                amountCrypto={currency.cryptoValue}
-                currency={currency.symbol}
-                title={currency.name}
-                onPress={() =>
-                  navigateToDetail(
-                    currency.symbol,
-                    currency.name,
-                    currency.cryptoValue,
-                    currency.usdValue,
-                    currency.marketIdentifier,
-                    currency.price
-                  )
-                }
-                hideTrend
-                tokenPrice={currency.price}
-                percentageChange={currency.priceChanges}
-              />
-            );
-          })}
+        dashboardData?.currencies?.map((currency: any) => {
+          return (
+            <AssetItem
+              key={currency.symbol}
+              image={coinImage[currency.symbol]}
+              amountUSD={currency.usdValue}
+              amountCrypto={currency.cryptoValue}
+              currency={currency.symbol}
+              title={currency.name}
+              onPress={() =>
+                navigateToDetail(
+                  currency.symbol,
+                  currency.name,
+                  currency.cryptoValue,
+                  currency.usdValue,
+                  currency.marketIdentifier,
+                  currency.price
+                )
+              }
+              hideTrend
+              tokenPrice={currency.price}
+              percentageChange={currency.priceChanges}
+            />
+          );
+        })}
       {currentTab === "utility" && (
         <View style={styles.utilityContainer}>
           <Image

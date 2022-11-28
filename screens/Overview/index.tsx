@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { getPriceChanges, loadDashboard } from "../../api/dashboard.api";
@@ -10,52 +10,60 @@ import PortfolioCard from "../../components/PortfolioCard";
 import SendReceiveBtns from "../../components/SendReceiveBtns";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setDashboardData } from "../../store/auth.slice";
+import { setDashboardData, setPriceChanges } from "../../store/auth.slice";
 import { OverviewStackScreenProps } from "../../types";
 import styles from "./styles";
 
 const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [firstLoad, setFirstLoad] = useState<boolean>(false);
-  const { dashboardData, user } = useAppSelector((state) => state.auth);
+  const { dashboardData, user, priceChanges } = useAppSelector(
+    (state) => state.auth
+  );
   const [error, setError] = useState<boolean>(false);
-  const [fetchPriceChanges, setFetchPriceChanges] = useState<boolean>(false);
+  const [fetchPriceChanges, setFetchPriceChanges] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
   const getDashboardData = async () => {
     setLoading(true);
     setError(null);
-    const result = await loadDashboard(user.token);
+    const result = await loadDashboard(navigation, user.token);
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
       setFirstLoad(true);
+      setFetchPriceChanges(false);
     } else {
       setError("Something went wrong, Try again!");
     }
   };
 
   const getPriceChangesData = async () => {
-    const currencies = dashboardData.currencies
-      .map((currency) => currency.symbol.toLowerCase())
-      .join(",");
-    const result = await getPriceChanges(navigation, user.token, currencies);
-    console.log(result);
-
-    if (result.success) {
-      const _dashboardData = { ...dashboardData };
-      _dashboardData.currencies = _dashboardData.currencies.map((currency) => ({
-        ...currency,
-        priceChanges:
-          result.extras[currency.symbol.toLowerCase()].dailyChange
-            .priceChangePercentage,
-      }));
-      dispatch(setDashboardData(_dashboardData));
-
-      setFetchPriceChanges(true);
+    let updatedPriceChanges: any;
+    if (priceChanges) {
+      updatedPriceChanges = priceChanges;
+    } else {
+      const currencies = dashboardData.currencies
+        .map((currency) => currency.symbol.toLowerCase())
+        .join(",");
+      const result = await getPriceChanges(navigation, user.token, currencies);
+      if (result.success) {
+        updatedPriceChanges = result.extras;
+        dispatch(setPriceChanges(result.extras));
+      }
     }
+    const _dashboardData = { ...dashboardData };
+    _dashboardData.currencies = _dashboardData.currencies.map((currency) => ({
+      ...currency,
+      priceChanges:
+        Number(updatedPriceChanges[currency.symbol.toLowerCase()].dailyChange
+          .priceChangePercentage).toFixed(2),
+    }));
+    dispatch(setDashboardData(_dashboardData));
   };
 
   useEffect(() => {
@@ -63,12 +71,10 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   }, []);
 
   useEffect(() => {
-    if (dashboardData?.currencies?.length > 0 && !fetchPriceChanges) {
-      console.log("Here...");
-
+    if (dashboardData?.currencies?.length > 0 && isFocused && firstLoad) {
       getPriceChangesData();
     }
-  }, [dashboardData.currencies, fetchPriceChanges]);
+  }, [isFocused, firstLoad]);
   return (
     <ScreenLayout
       scrollable

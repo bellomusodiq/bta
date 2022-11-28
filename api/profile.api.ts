@@ -363,11 +363,8 @@ export const addBankAccountApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
-    console.log(`${BASE_URL}/payments/add`);
 
-    console.log("body", data);
     const result = await axios.post(`${BASE_URL}/payments/add`, data);
-    console.log("response", result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -401,7 +398,12 @@ export const sellAccountApi = async (navigation: any, token: any) => {
   };
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log("List sell accounts");
+    console.log("endpoint", `${BASE_URL}/payments/sellAccounts`);
+    console.log(data);
+
     const result = await axios.post(`${BASE_URL}/payments/sellAccounts`, data);
+    console.log(result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -439,9 +441,51 @@ export const reviewBuyOrderApi = async (
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const countryCode = await AsyncStorage.getItem("@userCountry");
-    console.log(countryCode);
+    let url = `${BASE_URL}/payments/manual/topup`;
+    if (countryCode === "CM") {
+      url = `${BASE_URL}/payments/manual/review`
+    }
 
-    const result = await axios.post(`${BASE_URL}/payments/manual/topup`, data);
+    const result = await axios.post(url, data);
+
+    if (result.data.invalid) {
+      await logoutHandler(navigation);
+    }
+    return result.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const depositApprovalApi = async (
+  navigation: any,
+  token: any,
+  cryptoSymbol: string,
+  coinName: string,
+  paymentType: string,
+  platform: string,
+  contract: string,
+  amount: string,
+  seletedMethod: string,
+  methodType: string
+) => {
+  const data = {
+    ...token,
+    cryptoSymbol,
+    coinName,
+    paymentType,
+    platform,
+    contract,
+    amount,
+    seletedMethod,
+    methodType,
+  };
+
+  try {
+    const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    const url = `${BASE_URL}/payments/manual/topup`;
+
+    const result = await axios.post(url, data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -478,10 +522,15 @@ export const validateWithdrawalRequestApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log("endpoint", `${BASE_URL}/account/validateWithdrawalRequest`);
+    console.log(data);
+
     const result = await axios.post(
       `${BASE_URL}/account/validateWithdrawalRequest`,
       data
     );
+
+    console.log(result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -518,7 +567,10 @@ export const sellConfirmationApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log("endpoint", `${BASE_URL}/account/withdrawCash`);
+    console.log("request", data);
     const result = await axios.post(`${BASE_URL}/account/withdrawCash`, data);
+    console.log("response", result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -555,10 +607,14 @@ export const validateSendCryptoApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log(`endpoint: ${BASE_URL}/account/validateRequest`);
+    console.log("request", data);
+
     const result = await axios.post(
       `${BASE_URL}/account/validateRequest`,
       data
     );
+    console.log("response", result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
@@ -585,6 +641,7 @@ export const maxCryptoApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log("request", data);
     const result = await axios.post(`${BASE_URL}/account/getSendingMax`, data);
 
     if (result.data.invalid) {
@@ -624,7 +681,10 @@ export const sendCryptoApi = async (
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
+    console.log(data);
+
     const result = await axios.post(`${BASE_URL}/account/sendout`, data);
+    console.log(result.data);
 
     if (result.data.invalid) {
       await logoutHandler(navigation);
