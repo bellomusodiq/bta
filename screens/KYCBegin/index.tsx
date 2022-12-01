@@ -17,14 +17,13 @@ const KYCBeginScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
 
   const initializeKYC = async () => {
     const result = await initializeKycApi(navigation, user.token);
-    console.log(result);
-    // if (result.success) {
-    //   MetaMapRNSdk.showFlow(
-    //     result.data.clientId,
-    //     result.data.flowId,
-    //     result.data.metadata
-    //   );
-    // }
+    if (result.success) {
+      MetaMapRNSdk.showFlow(
+        result.data.clientId,
+        result.data.flowId,
+        result.data.metadata
+      );
+    }
   };
 
   useEffect(() => {

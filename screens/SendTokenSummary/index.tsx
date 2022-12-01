@@ -74,6 +74,7 @@ const SendTokenSummaryScreen: React.FC<
           item: result.t,
           type: "Sent",
           desc: "Sent",
+          tab: "Sent",
         });
       } else {
         Toast.show({

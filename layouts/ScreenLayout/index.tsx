@@ -34,6 +34,7 @@ const ScreenLayout: React.FC<Partial<ScreenLayoutProps & MainHeaderProps>> = ({
   noPadding,
   onBackClick,
 }) => {
+
   const inset = useSafeAreaInsets();
   const childComponent = (
     <View style={{ zIndex: 3, flex: 1, backgroundColor: "white" }}>

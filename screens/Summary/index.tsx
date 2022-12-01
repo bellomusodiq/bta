@@ -55,6 +55,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
           item: result.t,
           type: "Sell",
           desc: "Sell",
+          tab: "Sell"
         });
       }
     } else {

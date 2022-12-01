@@ -24,25 +24,31 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     (state) => state.auth
   );
   const [error, setError] = useState<boolean>(false);
-  const [fetchPriceChanges, setFetchPriceChanges] = useState<boolean>(true);
+  const [fetchPriceChanges, setFetchPriceChanges] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
   const getDashboardData = async () => {
+    console.log("getDashboarddata()");
+
     setLoading(true);
     setError(null);
     const result = await loadDashboard(navigation, user.token);
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
+      // if (firstLoad) {
+      //   await getPriceChangesData();
+      // }
       setFirstLoad(true);
-      setFetchPriceChanges(false);
+      // setFetchPriceChanges(false);
     } else {
       setError("Something went wrong, Try again!");
     }
   };
 
   const getPriceChangesData = async () => {
+    setFetchPriceChanges(false);
     let updatedPriceChanges: any;
     if (priceChanges) {
       updatedPriceChanges = priceChanges;
@@ -59,11 +65,13 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     const _dashboardData = { ...dashboardData };
     _dashboardData.currencies = _dashboardData.currencies.map((currency) => ({
       ...currency,
-      priceChanges:
-        Number(updatedPriceChanges[currency.symbol.toLowerCase()].dailyChange
-          .priceChangePercentage).toFixed(2),
+      priceChanges: Number(
+        updatedPriceChanges[currency.symbol.toLowerCase()].dailyChange
+          .priceChangePercentage
+      ).toFixed(2),
     }));
     dispatch(setDashboardData(_dashboardData));
+    setFetchPriceChanges(true);
   };
 
   useEffect(() => {
@@ -71,15 +79,15 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   }, []);
 
   useEffect(() => {
-    if (dashboardData?.currencies?.length > 0 && isFocused && firstLoad) {
+    if (!loading && !fetchPriceChanges) {
       getPriceChangesData();
     }
-  }, [isFocused, firstLoad]);
+  }, [loading, fetchPriceChanges]);
   return (
     <ScreenLayout
       scrollable
       canRefresh
-      // refreshing={loading}
+      refreshing={loading}
       onRefresh={getDashboardData}
       SafeAreaBackground="#3861FB"
       noPadding

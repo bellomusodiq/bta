@@ -12,6 +12,8 @@ import LottieView from "lottie-react-native";
 const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
   route,
 }) => {
+  console.log("tab", route.params.tab);
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>

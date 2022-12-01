@@ -16,11 +16,10 @@ const AssetItem: React.FC<AssetItemProps> = ({
   onPress,
   hideTrend,
   showArrow,
-  percentageChange = 0,
+  percentageChange,
   noPercentage,
   tokenPrice,
 }) => {
-
   const toDecimalPlace = () => {
     if (currency === "USDT") {
       return Number.parseFloat(amountCrypto).toFixed(2);
@@ -30,6 +29,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
     }
     return Number.parseFloat(amountCrypto).toFixed(3);
   };
+
   return (
     <>
       <TouchableOpacity onPress={onPress} style={styles.assetItemContainer}>
@@ -44,7 +44,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
           <CustomText style={styles.assetAbbr}>
             {tokenPrice ? Number.parseFloat(tokenPrice).toFixed(2) : currency}
             {"   "}
-            {!noPercentage && (
+            {(!noPercentage && percentageChange !== undefined) && (
               <CustomText
                 style={{
                   color: percentageChange >= 0 ? "#25D366" : "#FF5C5C",

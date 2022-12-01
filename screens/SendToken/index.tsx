@@ -33,6 +33,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   const [scanned, setScanned] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [maxLoading, setMaxLoading] = useState<boolean>(false);
+  const [max, setMax] = useState<any>({});
 
   useEffect(() => {
     (async () => {
@@ -95,29 +96,17 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
     setCurrency(currency !== "USD" ? "USD" : route.params?.symbol);
   };
 
-  const setMaxAmount = async () => {
-    setMaxLoading(true);
+  const fetchMaxAmount = async () => {
+    setLoading(true);
     const result = await maxCryptoApi(
       navigation,
       user.token,
       route.params?.symbol,
-      address,
       route.params?.platform
     );
-    setMaxLoading(false);
+    setLoading(false);
     if (result.success) {
-      setAmount(
-        currency === "USD"
-          ? result.data.maxUSDBalance
-          : result.data.maxCryptoBalance
-      );
-    } else {
-      Toast.show({
-        autoHide: true,
-        visibilityTime: 7000,
-        type: "error",
-        text1: result.message,
-      });
+      setMax(result.data);
     }
   };
 
@@ -125,6 +114,14 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
     const text = await Clipboard.getStringAsync();
     setAddress(text);
   };
+
+  const onSetMaxAmount = () => {
+    setAmount(currency === "USD" ? max.maxUSDBalance : max.maxCryptoBalance);
+  };
+
+  useEffect(() => {
+    fetchMaxAmount();
+  }, [])
 
   const disabled = !address || !amount;
 
@@ -178,7 +175,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
                     {maxLoading ? (
                       <ActivityIndicator size="small" />
                     ) : (
-                      <TouchableOpacity onPress={setMaxAmount}>
+                      <TouchableOpacity onPress={onSetMaxAmount}>
                         <CustomText style={styles.maxText}>max</CustomText>
                       </TouchableOpacity>
                     )}

@@ -629,13 +629,11 @@ export const maxCryptoApi = async (
   navigation: any,
   token: any,
   cryptoSymbol: string,
-  walletAddress: string,
   platform: string
 ) => {
   const data = {
     ...token,
     cryptoSymbol,
-    walletAddress,
     platform,
   };
 

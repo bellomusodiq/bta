@@ -42,6 +42,7 @@ const SellHistory: React.FC<{
           item,
           type: arrowType,
           desc: type,
+          tab: type,
         })
       }
       status={item.status}

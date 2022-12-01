@@ -147,6 +147,9 @@ const HistoryScreen: React.FC<HistoryStackScreenProps<"HistoryHome">> = ({
         case "Sent":
           setCurrentIndex(2);
           break;
+        case "Received":
+          setCurrentIndex(3);
+          break;
       }
     }
   }, [tab]);

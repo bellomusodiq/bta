@@ -55,7 +55,11 @@ const TransactionDetailScreen: React.FC<
     <ScreenLayout
       scrollable
       showHeader
-      onBackClick={() => navigation.replace("HistoryHome")}
+      onBackClick={() =>
+        navigation.replace("HistoryHome", {
+          tab: params.tab,
+        })
+      }
       showShadow
       title="Transaction details"
     >
