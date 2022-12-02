@@ -29,19 +29,16 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   const dispatch = useAppDispatch();
 
   const getDashboardData = async () => {
-    console.log("getDashboarddata()");
-
     setLoading(true);
     setError(null);
     const result = await loadDashboard(navigation, user.token);
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
-      // if (firstLoad) {
-      //   await getPriceChangesData();
-      // }
+      if (firstLoad) {
+        await getPriceChangesData();
+      }
       setFirstLoad(true);
-      // setFetchPriceChanges(false);
     } else {
       setError("Something went wrong, Try again!");
     }

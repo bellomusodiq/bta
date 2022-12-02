@@ -1,14 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { logoutHandler } from "../utils/logout";
 
 export const getCountriesApi = async (navigation: any) => {
   try {
     const result = await axios.get("https://app.bitafrika.com/countries");
-
-    if (result.data.invalid) {
-      await logoutHandler(navigation);
-    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -26,10 +21,6 @@ export const loginApi = async (
       username,
       password,
     });
-
-    if (result.data.invalid) {
-      await logoutHandler(navigation);
-    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -59,10 +50,6 @@ export const signupApi = async (
       password,
     };
     const result = await axios.post(`${BASE_URL}/auth/verify_email`, data);
-
-    if (result.data.invalid) {
-      await logoutHandler(navigation);
-    }
     return result.data;
   } catch (e) {
     console.log(e);
@@ -82,8 +69,7 @@ export const logoutApi = async () => {
 };
 
 export const verifyEmailApi = async (
-  navigation: any,
-  token: string,
+  token: any,
   email: string,
   country: string,
   countryCode: string,
@@ -96,7 +82,7 @@ export const verifyEmailApi = async (
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
     const data = {
-      token,
+      ...token,
       email,
       country,
       countryCode,
@@ -107,9 +93,7 @@ export const verifyEmailApi = async (
       code,
     };
     const result = await axios.post(`${BASE_URL}/auth/verify_code`, data);
-    if (result.data.invalid) {
-      await logoutHandler(navigation);
-    }
+
     return result.data;
   } catch (e) {
     console.log(e);

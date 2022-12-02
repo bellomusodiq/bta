@@ -9,7 +9,6 @@ export const loadDashboard = async (
     refreshToken: string;
   }
 ) => {
-  console.log("loadDashboard()");
 
   try {
     const BASE_URL = await AsyncStorage.getItem("@baseUrl");
