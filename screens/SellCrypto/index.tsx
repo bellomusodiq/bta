@@ -21,7 +21,7 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
 
   const navigation = useNavigation();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const [currency, setCurrency] = useState<string>(params.symbol);
+  const [currency, setCurrency] = useState<string>("USD");
   const [loading, setLoading] = useState<boolean>(false);
   const [amount, setAmount] = useState<string>("");
   // navigate to Histor > sell tab, sorting by only token
@@ -214,6 +214,12 @@ const SellCryptoScreen: React.FC<RootStackScreenProps<"SellCrypto">> = ({
           }
           onPress={() => navigation.navigate("SelectAccount", params)}
         />
+      )}
+      {params.symbol === "USDT" && (
+        <CustomText style={styles.note}>
+          INFO: Transaction fee for USDT ( TRC20 ) is paid in TRX, You will need
+          to have a minimum of 30 TRX before you can send your USDT.
+        </CustomText>
       )}
     </ScreenLayout>
   );

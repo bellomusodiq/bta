@@ -22,7 +22,10 @@ const KYCInfoScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
       showShadow
       footer={
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.footerButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("KYCStep1")}
+            style={styles.footerButton}
+          >
             <CustomText style={styles.footerButtonText}>
               BEGIN VERIFICATION
             </CustomText>

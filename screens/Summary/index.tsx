@@ -55,7 +55,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
           item: result.t,
           type: "Sell",
           desc: "Sell",
-          tab: "Sell"
+          tab: "Sell",
         });
       }
     } else {
@@ -121,6 +121,18 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
       title="Summary"
       footer={
         <View style={styles.footer}>
+          {params.sell && (
+            <CustomText
+              style={{
+                textAlign: "center",
+                marginTop: 2,
+                marginBottom: 0,
+                color: "gray",
+              }}
+            >
+              You will verify with Biometrics
+            </CustomText>
+          )}
           <CustomButton
             loading={loading}
             onPress={navigateToPayInstruction}
@@ -256,18 +268,7 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         )}
         <SummaryItem title="TOTAL" value={params.total} valueBold noDivider />
       </View>
-      {params.sell && (
-        <CustomText
-          style={{
-            textAlign: "center",
-            marginTop: 10,
-            marginBottom: 5,
-            color: "gray",
-          }}
-        >
-          You will verify with Biometrics
-        </CustomText>
-      )}
+
       {!params.sell && (
         <View style={styles.note}>
           <Flag2 size={RFValue(24)} color="#3861FB" />

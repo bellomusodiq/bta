@@ -35,7 +35,7 @@ const countryImages = {
     image: <Image style={styles.image} source={Ghana} resizeMode="contain" />,
     imageLarge: (
       <Image
-        style={[styles.image, { width: 32, height: 24 }]}
+        style={[styles.image, { width: 28, height: 20 }]}
         source={Ghana}
         resizeMode="contain"
       />
@@ -47,7 +47,7 @@ const countryImages = {
     ),
     imageLarge: (
       <Image
-        style={[styles.image, { width: 32, height: 24 }]}
+        style={[styles.image, { width: 28, height: 20 }]}
         source={Cameroon}
         resizeMode="contain"
       />
@@ -129,6 +129,10 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     fetchCountries();
   }, []);
 
+  const countryName = countries?.find(
+    (country: any) => country.code == userCountry
+  )?.name;
+
   return (
     <ScreenLayout
       onBackClick={() => navigation.replace("SplashScreen")}
@@ -156,7 +160,9 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
               >
                 {countryImages[countryItem.code].imageLarge}
                 <CustomText style={styles.countryItemText}>
-                  {countryItem.name}
+                  {`${countryItem.name.charAt(0)}${countryItem.name
+                    .slice(1)
+                    .toLowerCase()}`}
                 </CustomText>
                 {countryItem.code === userCountry && <TickIcon />}
               </TouchableOpacity>
@@ -218,10 +224,11 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
         >
           {userCountry ? countryImages[userCountry].image : null}
           <CustomText style={styles.countryText}>
-            {
-              countries?.find((country: any) => country.code == userCountry)
-                ?.name
-            }
+            {countryName
+              ? `${countryName?.charAt(0)}${countryName
+                  ?.slice(1)
+                  .toLowerCase()}`
+              : ""}
           </CustomText>
           <ArrowRight2 color="#3861FB" size={18} variant="Linear" />
         </TouchableOpacity>

@@ -24,13 +24,13 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     lineHeight: RFValue(24),
     textAlign: "center",
-    marginBottom: RFValue(16),
+    marginBottom: RFValue(8),
   },
   complete: {
     fontSize: RFValue(14),
     lineHeight: RFValue(24),
     textAlign: "center",
-    marginBottom: RFValue(32),
+    marginBottom: RFValue(12),
     color: "#979797",
   },
 });

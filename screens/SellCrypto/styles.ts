@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+  note: {
+    fontSize: RFValue(12),
+    color: "black",
+    marginTop: RFValue(25),
+    lineHeight: 0,
+  },
   currency: {
     color: "#3861FB",
     fontSize: RFValue(14),

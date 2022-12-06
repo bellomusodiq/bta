@@ -26,7 +26,6 @@ export const loadDashboard = async (
 };
 
 export const getPriceChanges = async (
-  navigation: any,
   token: {
     accessToken: string;
     refreshToken: string;
@@ -39,9 +38,6 @@ export const getPriceChanges = async (
       ...token,
       currencies,
     });
-    if (result.data.invalid) {
-      await logoutHandler(navigation);
-    }
     return result.data;
   } catch (e) {
     console.log(e);

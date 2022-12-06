@@ -18,17 +18,16 @@ const styles = StyleSheet.create({
     height: RFValue(80),
     borderRadius: 40,
     overflow: "hidden",
-    marginBottom: RFValue(32),
+    marginBottom: RFValue(16),
   },
   profileName: {
     fontSize: RFValue(20),
     lineHeight: RFValue(24),
-    marginBottom: RFValue(8),
   },
   username: {
     fontSize: RFValue(14),
     lineHeight: RFValue(24),
-    marginBottom: RFValue(28),
+    marginBottom: RFValue(12),
     color: "#979797",
   },
   divider: {
@@ -206,6 +205,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 5,
     marginTop: 15,
+  },
+  profilePlaceHolder: {
+    width: RFValue(80),
+    height: RFValue(80),
+    borderRadius: RFValue(40),
+    marginBottom: RFValue(16),
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F1F4FF",
+  },
+  profileImageText: {
+    fontSize: RFValue(40),
+    fontFamily: "Inter_700Bold",
   },
 });
 

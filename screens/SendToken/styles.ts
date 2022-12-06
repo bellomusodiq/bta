@@ -41,8 +41,14 @@ const styles = StyleSheet.create({
   },
   availableText: {
     fontSize: RFValue(14),
-    color: "#979797",
+    color: "#3861FB",
     marginTop: RFValue(15),
+  },
+  note: {
+    fontSize: RFValue(12),
+    color: "black",
+    marginTop: RFValue(25),
+    lineHeight: 0,
   },
   footer: {
     backgroundColor: "white",

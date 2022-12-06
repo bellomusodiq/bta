@@ -73,7 +73,7 @@ import PendingScreen from "../screens/Pending";
 import NotificationsScreen from "../screens/Notifications";
 import { useAppDispatch, useAppSelector } from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setUser, setUserCountry } from "../store/auth.slice";
+import { setPriceChanges, setUser, setUserCountry } from "../store/auth.slice";
 import EmailOTPScreen from "../screens/EmailOTP";
 import PasswordOTPScreen from "../screens/PasswordOTP";
 import MobileMoneyOTP from "../screens/MobileMoneyOTP";
@@ -86,6 +86,7 @@ import ForgotPasswordScreen from "../screens/ForgotPassword";
 import ResetPasswordOTPScreen from "../screens/ResetPasswordOTP";
 import ConfrimResetPasswordScreen from "../screens/CofirmResetPassword";
 import TransactionPinScreen from "../screens/TransactionPin";
+import { getPriceChanges } from "../api/dashboard.api";
 
 export default function Navigation({
   colorScheme,

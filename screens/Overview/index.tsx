@@ -35,9 +35,6 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
     setLoading(false);
     if (result.success) {
       dispatch(setDashboardData(result));
-      if (firstLoad) {
-        await getPriceChangesData();
-      }
       setFirstLoad(true);
     } else {
       setError("Something went wrong, Try again!");
@@ -45,41 +42,18 @@ const OverviewScreen: React.FC<OverviewStackScreenProps<"Overview">> = () => {
   };
 
   const getPriceChangesData = async () => {
-    setFetchPriceChanges(false);
-    let updatedPriceChanges: any;
-    if (priceChanges) {
-      updatedPriceChanges = priceChanges;
-    } else {
-      const currencies = dashboardData.currencies
-        .map((currency) => currency.symbol.toLowerCase())
-        .join(",");
-      const result = await getPriceChanges(navigation, user.token, currencies);
-      if (result.success) {
-        updatedPriceChanges = result.extras;
-        dispatch(setPriceChanges(result.extras));
-      }
+    const currencies = "btc,ltc,usdt,bch,trx,doge";
+    const result = await getPriceChanges(user.token, currencies);
+    if (result.success) {
+      dispatch(setPriceChanges(result.extras));
     }
-    const _dashboardData = { ...dashboardData };
-    _dashboardData.currencies = _dashboardData.currencies.map((currency) => ({
-      ...currency,
-      priceChanges: Number(
-        updatedPriceChanges[currency.symbol.toLowerCase()].dailyChange
-          .priceChangePercentage
-      ).toFixed(2),
-    }));
-    dispatch(setDashboardData(_dashboardData));
-    setFetchPriceChanges(true);
   };
 
   useEffect(() => {
+    getPriceChangesData();
     getDashboardData();
   }, []);
 
-  useEffect(() => {
-    if (!loading && !fetchPriceChanges) {
-      getPriceChangesData();
-    }
-  }, [loading, fetchPriceChanges]);
   return (
     <ScreenLayout
       scrollable

@@ -31,6 +31,15 @@ const TransactionDetailItem: React.FC<TransactonDetailItemProps> = ({
   </View>
 );
 
+const EXPLORER_BASE_URL = {
+  DOGE: "https://dogechain.info/block/",
+  TRX: "https://tronscan.org/#/transaction/",
+  USDT: "https://tronscan.org/#/transaction/",
+  BCH: "https://www.blockchain.com/bch/tx/",
+  LTC: "https://blockchain.coinmarketcap.com/tx/litecoin/",
+  BTC: "https://blockchain.coinmarketcap.com/tx/bitcoin/",
+};
+
 const TransactionDetailScreen: React.FC<
   HistoryStackScreenProps<"TransactionDetail">
 > = ({ route, navigation }) => {
@@ -50,6 +59,11 @@ const TransactionDetailScreen: React.FC<
   const usdAmount = params?.item.usdAmount || params?.item.usd;
 
   const _id = params?.item.txid || params?.item.uniq;
+
+  const openExplorer = () => {
+    const url = EXPLORER_BASE_URL[cryptoCurrency] + _id;
+    navigation.navigate("WebView", { url });
+  };
 
   return (
     <ScreenLayout
@@ -115,12 +129,7 @@ const TransactionDetailScreen: React.FC<
         <TransactionDetailItem title="Transaction id" value={_id} canCopy />
         {(params.desc === "Sent" || params.desc === "Received") && (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("History", {
-                screen: "HistoryHome",
-                params: { tab: route.params.tab },
-              })
-            }
+            onPress={openExplorer}
             style={styles.explorerButton}
           >
             <CustomText style={styles.explorerText}>

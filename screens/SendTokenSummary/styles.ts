@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
-    width: width(0.9),
-    alignSelf: "flex-end",
+    width: width(0.80),
+    alignSelf: "center",
   },
   tokenContainer: {
     flexDirection: "row",

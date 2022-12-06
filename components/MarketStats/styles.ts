@@ -5,7 +5,7 @@ import { width } from "../../consts/dimenentions";
 const styles = StyleSheet.create({
   container: {
     marginTop: RFValue(32),
-    marginBottom: RFValue(40),
+    marginBottom: RFValue(20),
   },
   title: {
     fontSize: RFValue(20),
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#F0F0F0",
-    width: "93%",
-    alignSelf: "flex-end",
+    width: "85%",
+    alignSelf: "center",
   },
 });
 

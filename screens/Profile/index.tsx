@@ -173,7 +173,12 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         </View>
       </ReactNativeModal>
       <View style={styles.headerContainer}>
-        <Image source={ProfileImage} style={styles.profileImage} />
+        {/* <Image source={ProfileImage} style={styles.profileImage} /> */}
+        <View style={styles.profilePlaceHolder}>
+          <CustomText style={styles.profileImageText}>
+            {user.firstName.charAt(0)}
+          </CustomText>
+        </View>
         <CustomText style={styles.profileName}>{user.firstName}</CustomText>
         <CustomText style={styles.username}>
           Username: {user.username}

@@ -10,7 +10,7 @@ import { Candle, MoneyArchive, ReceiptText } from "iconsax-react-native";
 import UtilityImage from "../../assets/images/utility.png";
 
 const Assets: React.FC = () => {
-  const { dashboardData } = useAppSelector((state) => state.auth);
+  const { dashboardData, priceChanges } = useAppSelector((state) => state.auth);
 
   const navigation = useNavigation();
   const [currentTab, setCurrentTab] = useState<string>("assets");
@@ -137,7 +137,9 @@ const Assets: React.FC = () => {
               }
               hideTrend
               tokenPrice={currency.price}
-              percentageChange={currency.priceChanges}
+              percentageChange={priceChanges[
+                currency.symbol.toLowerCase()
+              ]?.dailyChange.priceChangePercentage?.toFixed(2)}
             />
           );
         })}

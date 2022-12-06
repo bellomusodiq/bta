@@ -33,12 +33,12 @@ const coinDescription = {
 };
 
 const coinUrl = {
-  BTC: "bitcoin.com",
-  BCH: "bch.info",
+  BTC: "bitcoin.org/en/",
+  BCH: "bitcoincash.org",
   DOGE: "dogecoin.com",
   LTC: "litecoin.com",
   TRX: "tron.network",
-  USDT: "tether.to",
+  USDT: "tether.to/en",
 };
 
 const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
@@ -92,34 +92,36 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
     }
     setLoading(true);
     setError(false);
-    chartsApi(navigation, user.token, trend, currency.toLowerCase()).then((result) => {
-      setLoading(false);
-      if (result.success) {
-        let dataPoints = [];
-        if (result.dataPoints) dataPoints = result.dataPoints;
-        const mappedData = dataPoints.map((point: number, i: number) => ({
-          timestamp: i,
-          value: point,
-        }));
-        setchartData(mappedData);
-        switch (trend) {
-          case "daily":
-            setDailyChart(mappedData);
-            break;
-          case "weekly":
-            setMWeeklyChart(mappedData);
-            break;
-          case "monthly":
-            setMontlyChart(mappedData);
-            break;
-          // case "yearly":
-          //   setYearlyChart(mappedData);
-          //   break;
+    chartsApi(navigation, user.token, trend, currency.toLowerCase()).then(
+      (result) => {
+        setLoading(false);
+        if (result.success) {
+          let dataPoints = [];
+          if (result.dataPoints) dataPoints = result.dataPoints;
+          const mappedData = dataPoints.map((point: number, i: number) => ({
+            timestamp: i,
+            value: point,
+          }));
+          setchartData(mappedData);
+          switch (trend) {
+            case "daily":
+              setDailyChart(mappedData);
+              break;
+            case "weekly":
+              setMWeeklyChart(mappedData);
+              break;
+            case "monthly":
+              setMontlyChart(mappedData);
+              break;
+            // case "yearly":
+            //   setYearlyChart(mappedData);
+            //   break;
+          }
+        } else {
+          setError(true);
         }
-      } else {
-        setError(true);
       }
-    });
+    );
   };
 
   const getMarketStats = async () => {
@@ -179,6 +181,10 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
     return Number.parseFloat(price).toFixed(3);
   };
 
+  const openWebsite = () => {
+    navigation.navigate("WebView", { url: `https://${coinUrl[currency]}` });
+  };
+
   return (
     <ScreenLayout removeSafeArea scrollable>
       <AssetDetailHeader title={`${name} (${currency})`} />
@@ -226,15 +232,16 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
           Buy or Sell {name}
         </CustomText>
       </TouchableOpacity>
+      <MarketStats marketStats={marketStats} website={coinUrl[currency]} />
+
       <CustomText style={styles.aboutTitle}>About</CustomText>
       <CustomText style={styles.aboutDescription}>
         {coinDescription[currency]}
       </CustomText>
-      <TouchableOpacity style={styles.websiteButton}>
+      <TouchableOpacity onPress={openWebsite} style={styles.websiteButton}>
         <CustomText style={styles.websiteButtonText}>Visit website</CustomText>
         <ArrowRight size={RFValue(20)} color="#3861FB" variant="Outline" />
       </TouchableOpacity>
-      <MarketStats marketStats={marketStats} website={coinUrl[currency]} />
       <ReactNativeModal
         isVisible={showModal}
         // backdropOpacity={0.4}

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   footerButton: {
     backgroundColor: "#3861FB",
-    marginVertical: RFValue(10),
+    marginVertical: RFValue(5),
     marginHorizontal: width(0.05),
     width: width(0.9),
     padding: RFValue(14),

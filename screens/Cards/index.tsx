@@ -20,7 +20,7 @@ const CardsScreen: React.FC<RootStackScreenProps<"Cards">> = () => {
         </TouchableOpacity>
         <View style={styles.titleContainer}>
           <Cards size={RFValue(24)} color="black" variant="Bold" />
-          <CustomText style={styles.title}>Cards</CustomText>
+          <CustomText style={styles.title}>Virtual Cards</CustomText>
         </View>
       </View>
       <Image source={CardsImage} style={styles.image} resizeMode="contain" />

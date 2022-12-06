@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Image, View, NativeModules, NativeEventEmitter, Alert } from "react-native";
+import React, { useState } from "react";
+import { Image, View, Linking } from "react-native";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootStackScreenProps } from "../../types";
@@ -8,35 +8,41 @@ import KycImage from "../../assets/images/kyc-begin.png";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "../../store";
-import { initializeKycApi } from "../../api/profile.api";
-import { MetaMapRNSdk } from "react-native-expo-metamap-sdk";
+import {
+  initializeKycApi,
+  initializeVerificationApi,
+} from "../../api/profile.api";
 
 const KYCBeginScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
+  const [kycData, setKycData] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const initializeKYC = async () => {
-    const result = await initializeKycApi(navigation, user.token);
-    if (result.success) {
-      MetaMapRNSdk.showFlow(
-        result.data.clientId,
-        result.data.flowId,
-        result.data.metadata
+    try {
+      setLoading(true);
+      const initializeKYC = await initializeKycApi(navigation, user.token);
+      if (initializeKYC.success) {
+        setKycData(initializeKYC.data);
+      } else {
+        setLoading(false);
+        return;
+      }
+      const firstResponse = await initializeVerificationApi(
+        initializeKYC.data.firstRequest
       );
+      if (firstResponse) {
+        let url = initializeKYC.data.metaMapVerificationUrl;
+        url = url.replace("<ID>", firstResponse.id);
+        url = url.replace("<IDENTITY>", firstResponse.identity);
+        await Linking.openURL(url);
+      }
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const MetaMapVerifyResult = new NativeEventEmitter(
-      NativeModules.MetaMapRNSdk
-    );
-    MetaMapVerifyResult.addListener("verificationSuccess", (data) =>
-      Alert.alert(JSON.stringify(data))
-    );
-    MetaMapVerifyResult.addListener("verificationCanceled", (data) =>
-      Alert.alert(JSON.stringify(data))
-    );
-  });
 
   return (
     <ScreenLayout showHeader title="Verify account" scrollable>
@@ -48,9 +54,16 @@ const KYCBeginScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
         </CustomText>
         <CustomText style={styles.complete}>
           Complete your verification in three simple steps to be able to get the
-          most of your account.
+          most of your account. {"\n"}You will be redirected to your mobile
+          browser to continue. Return when done the app to check the status.
         </CustomText>
-        <CustomButton onPress={initializeKYC}>CONTINUE</CustomButton>
+        <CustomButton
+          loading={loading}
+          disabled={loading}
+          onPress={initializeKYC}
+        >
+          CONTINUE
+        </CustomButton>
       </View>
     </ScreenLayout>
   );

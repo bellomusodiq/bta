@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(20),
     lineHeight: RFValue(24),
     fontFamily: "Inter_600SemiBold",
-    marginTop: RFValue(32),
+    marginTop: RFValue(0),
     marginBottom: RFValue(16),
   },
   aboutDescription: {
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "flex-start",
     borderRadius: RFValue(48),
+    marginBottom: RFValue(30),
   },
   websiteButtonText: {
     fontSize: RFValue(16),

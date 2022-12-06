@@ -140,7 +140,21 @@ export const initializeKycApi = async (navigation: any, token: any) => {
     }
     return result.data;
   } catch (e) {
-    console.log(e);
+    throw new Error(e.message);
+  }
+};
+
+export const initializeVerificationApi = async (data: any) => {
+  const { bearerToken, body, url } = data;
+  try {
+    const result = await axios.post(url, body, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+    return result.data;
+  } catch (e) {
+    throw new Error(e.message);
   }
 };
 
@@ -443,7 +457,7 @@ export const reviewBuyOrderApi = async (
     const countryCode = await AsyncStorage.getItem("@userCountry");
     let url = `${BASE_URL}/payments/manual/topup`;
     if (countryCode === "CM") {
-      url = `${BASE_URL}/payments/manual/review`
+      url = `${BASE_URL}/payments/manual/review`;
     }
 
     const result = await axios.post(url, data);

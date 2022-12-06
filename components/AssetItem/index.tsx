@@ -45,7 +45,7 @@ const AssetItem: React.FC<AssetItemProps> = ({
           <CustomText style={styles.assetAbbr}>
             {tokenPrice ? Number.parseFloat(tokenPrice).toFixed(2) : currency}
             {"   "}
-            {(!noPercentage && percentageChange !== undefined) && (
+            {!noPercentage && percentageChange !== undefined && (
               <CustomText
                 style={{
                   color: percentageChange >= 0 ? "#25D366" : "#FF5C5C",

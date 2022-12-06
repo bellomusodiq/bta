@@ -26,6 +26,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
   const { user } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const [currency, setCurrency] = useState<string>(route.params?.symbol);
+
   const [amount, setAmount] = useState<number | null>();
   const [address, setAddress] = useState<string>("");
   const [openBarcode, setOpenBarcode] = useState<boolean>(false);
@@ -121,7 +122,7 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
 
   useEffect(() => {
     fetchMaxAmount();
-  }, [])
+  }, []);
 
   const disabled = !address || !amount;
 
@@ -199,6 +200,13 @@ const SendTokenScreen: React.FC<RootStackScreenProps<"SendToken">> = ({
                   : Number(route.params?.usdValue).toFixed(2)
               } ${currency === "USD" ? "USD" : route.params?.symbol}`}
             </CustomText>
+            {currency === "USDT" && (
+              <CustomText style={styles.note}>
+                INFO: Transaction fee for USDT ( TRC20 ) is paid in TRX, You
+                will need to have a minimum of 30 TRX before you can send your
+                USDT.
+              </CustomText>
+            )}
           </>
         )}
       </Pressable>
