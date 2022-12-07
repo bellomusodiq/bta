@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import TradeItem from "../../components/TradeItem";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setDashboardData } from "../../store/auth.slice";
 import { loadDashboard } from "../../api/dashboard.api";
@@ -34,6 +34,7 @@ const TAB_DATA: TabItemProps[] = [
 const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   route: { params },
 }) => {
+  const isFocused = useIsFocused();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const { dashboardData, user } = useAppSelector((state) => state.auth);
   const [filterData, setFilterData] = useState<any>(

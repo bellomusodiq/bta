@@ -86,6 +86,29 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
     fetchPaymentDetails();
   }, []);
 
+  let flatList = null;
+  if (paymentAccounts.length === 0) {
+    flatList = (
+      <View style={styles.container}>
+        <CustomText style={styles.emptyText}>
+          You have no saved payment method
+        </CustomText>
+        <CustomText style={styles.emptyText}>
+          click on the + icon to add a payment method
+        </CustomText>
+      </View>
+    );
+  } else {
+    flatList = (
+      <>
+        <CustomText style={styles.paymentTitle2}>
+          Select withdrawal account
+        </CustomText>
+        <FlatList renderItem={renderItem} data={paymentAccounts} />
+      </>
+    );
+  }
+
   return (
     <ScreenLayout
       showHeader
@@ -109,12 +132,7 @@ const SelectAccountScreen: React.FC<RootStackScreenProps<"SelectAccount">> = ({
           )}
         </View>
       ) : (
-        <>
-          <CustomText style={styles.paymentTitle2}>
-            Select withdrawal account
-          </CustomText>
-          <FlatList renderItem={renderItem} data={paymentAccounts} />
-        </>
+        flatList
       )}
     </ScreenLayout>
   );

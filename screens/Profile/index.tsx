@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Linking,
+  Platform,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import ScreenLayout from "../../layouts/ScreenLayout";
 import { RootTabScreenProps } from "../../types";
 import styles from "./styles";
@@ -45,6 +52,7 @@ import CloseIcon from "../../components/icons/close-icon";
 import CustomInput from "../../components/CustomInput";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/CustomButton";
+import * as StoreReview from "expo-store-review";
 
 const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -102,6 +110,24 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
     getNotificationStatus();
     verifyKycStatus();
   }, []);
+
+  const requestReview = async () => {
+    if (await StoreReview.hasAction()) {
+      if (await StoreReview.isAvailableAsync()) {
+        StoreReview.requestReview();
+      } else {
+        if (Platform.OS.toLowerCase() === "ios") {
+          Linking.openURL(
+            `https://apps.apple.com/app/apple-store/id1577083741?action=write-review`
+          );
+        } else {
+          Linking.openURL(
+            `https://play.google.com/store/apps/details?id=app.bitafrika.com&showAllReviews=true`
+          );
+        }
+      }
+    }
+  };
 
   return (
     <ScreenLayout scrollable SafeAreaBackground="white">
@@ -269,7 +295,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         data={[
           {
             title: "Rate us",
-            onPress: () => {},
+            onPress: () => requestReview(),
             icon: <Ranking size={24} color="#3861FB" variant="Bulk" />,
           },
           {

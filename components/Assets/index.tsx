@@ -137,7 +137,7 @@ const Assets: React.FC = () => {
               }
               hideTrend
               tokenPrice={currency.price}
-              percentageChange={priceChanges[
+              percentageChange={priceChanges?.[
                 currency.symbol.toLowerCase()
               ]?.dailyChange.priceChangePercentage?.toFixed(2)}
             />

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import { RootStackScreenProps } from "../../types";
@@ -7,11 +7,27 @@ import styles from "./styles";
 import PendingImage from "../../assets/images/pending.png";
 import CustomButton from "../../components/CustomButton";
 import AnimatedLottieView from "lottie-react-native";
+import { useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
+import { loadDashboard } from "../../api/dashboard.api";
+import { setDashboardData } from "../../store/auth.slice";
 
 const PendingScreen: React.FC<RootStackScreenProps<"Pending">> = ({
   route,
 }) => {
   const navigation = useNavigation();
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const getDashboardData = async () => {
+    const result = await loadDashboard(navigation, user?.token);
+    if (result.success) {
+      dispatch(setDashboardData(result));
+    }
+  };
+
+  useEffect(() => {
+    getDashboardData();
+  }, []);
   return (
     <View style={styles.container}>
       <AnimatedLottieView

@@ -88,12 +88,35 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
     </View>
   );
 
+  let flatList = null;
+  if (paymentAccounts.length === 0) {
+    flatList = (
+      <View style={styles.container}>
+        <CustomText style={styles.emptyText}>
+          You have no saved payment method
+        </CustomText>
+        <CustomText style={styles.emptyText}>
+          click on the + icon to add a payment method
+        </CustomText>
+      </View>
+    );
+  } else {
+    flatList = (
+      <>
+        <CustomText style={styles.paymentTitle2}>
+          Your saved payment methods
+        </CustomText>
+        <FlatList renderItem={renderItem} data={paymentAccounts} />
+      </>
+    );
+  }
+
   return (
     <ScreenLayout
       showHeader
       showShadow
       title="Payment method"
-      SafeAreaBackground="white"
+      SafeAreaBackground="#3861FB"
       headerRight={
         <TouchableOpacity
           onPress={() => navigation.navigate("AddPaymentMethod")}
@@ -116,12 +139,7 @@ const PaymentMethodScreen: React.FC<RootStackScreenProps<"PaymentMethod">> = ({
           )}
         </View>
       ) : (
-        <>
-          <CustomText style={styles.paymentTitle2}>
-            Your saved payment methods
-          </CustomText>
-          <FlatList renderItem={renderItem} data={paymentAccounts} />
-        </>
+        flatList
       )}
     </ScreenLayout>
   );

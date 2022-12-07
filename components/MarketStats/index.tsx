@@ -40,7 +40,6 @@ const MarketStats: React.FC<{ marketStats: any; website: string }> = ({
   marketStats,
   website,
 }) => {
-
   const getAmount = (input: number) => {
     let value = input;
     if (input < 0) {
@@ -78,13 +77,14 @@ const MarketStats: React.FC<{ marketStats: any; website: string }> = ({
           icon={<StatusUp size={RFValue(24)} color="#3861FB" variant="Bold" />}
           title="All time high"
           amount={getAmount(marketStats?.[0]?.ath)}
+          noDivider
         />
-        <MarketStatsItem
+        {/* <MarketStatsItem
           icon={<MoneySend size={RFValue(24)} color="#3861FB" />}
           title="Explorer"
           url={website}
           noDivider
-        />
+        /> */}
       </View>
     </View>
   );

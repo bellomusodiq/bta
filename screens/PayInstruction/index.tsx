@@ -11,17 +11,28 @@ import styles from "./styles";
 import * as Clipboard from "expo-clipboard";
 import { useNavigation } from "@react-navigation/native";
 import Copy from "../../components/Copy";
+import { useAppSelector } from "../../store";
 
 const PayInstructionScreen: React.FC<
   RootStackScreenProps<"PayInstruction">
 > = ({ route }) => {
+  const { dashboardData } = useAppSelector((state) => state.auth);
   const { params } = route;
 
   const navigation = useNavigation();
 
   const HeaderRightComponent = (
-    <TouchableOpacity style={styles.supportButton}>
-      <Call size={RFValue(14)} color="white" />
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("WebView", {
+          url: `https://api.whatsapp.com/send?phone=${
+            dashboardData?.support.whatsapp.value.split("+")[1]
+          }`,
+        })
+      }
+      style={styles.supportButton}
+    >
+      <Call size={RFValue(14)} color="black" />
       <CustomText style={styles.supportText}>Support</CustomText>
     </TouchableOpacity>
   );

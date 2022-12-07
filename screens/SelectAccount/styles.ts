@@ -150,6 +150,14 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 16,
   },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: 16,
+  },
 });
 
 export default styles;

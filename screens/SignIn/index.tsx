@@ -177,7 +177,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       <View style={styles.divider} />
       <CustomInput
         style={styles.input}
-        placeholder="Enter your username or email"
+        placeholder="Enter your username"
         value={email}
         onChangeText={(value) => setEmail(value)}
       />

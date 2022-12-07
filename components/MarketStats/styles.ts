@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
   },
   marketStatsItemTitle: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     color: "#979797",
     flex: 1,
   },
   amount: {
     textAlign: "right",
     fontFamily: "Inter_600SemiBold",
-    fontSize: RFValue(18),
+    fontSize: RFValue(14),
   },
   urlContainer: {
     flexDirection: "row",

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../../components/CustomText";
 import ScreenLayout from "../../layouts/ScreenLayout";
@@ -8,11 +8,26 @@ import styles from "./styles";
 import SuccessImage from "../../assets/images/success.png";
 import CustomButton from "../../components/CustomButton";
 import LottieView from "lottie-react-native";
+import { loadDashboard } from "../../api/dashboard.api";
+import { useDispatch } from "react-redux";
+import { setDashboardData } from "../../store/auth.slice";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 const CompleteScreen: React.FC<RootStackScreenProps<"Complete">> = ({
   route,
 }) => {
-  console.log("tab", route.params.tab);
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const getDashboardData = async () => {
+    const result = await loadDashboard(navigation, user?.token);
+    if (result.success) {
+      dispatch(setDashboardData(result));
+    }
+  };
+
+  useEffect(() => {
+    getDashboardData();
+  }, []);
 
   const navigation = useNavigation();
   return (
