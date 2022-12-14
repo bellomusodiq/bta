@@ -17,29 +17,29 @@ import { useAppSelector } from "../../store";
 import Toast from "react-native-toast-message";
 import CustomButton from "../../components/CustomButton";
 
-const countryData = [
-  {
+const countryData = {
+  GH: {
     label: "",
     value: "233",
-    image: <Image source={GhanaImage} style={styles.image} />,
+    image: <Image source={GhanaImage} style={styles.countryImage} />,
   },
-  {
+  CM: {
     label: "",
     value: "237",
-    image: <Image source={CameroonImage} style={styles.image} />,
+    image: <Image source={CameroonImage} style={styles.countryImage} />,
   },
-];
+};
 
 const AddMobileMoneyScreen: React.FC<
   RootStackScreenProps<"AddMobileMoney">
 > = ({ route }) => {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, userCountry } = useAppSelector((state) => state.auth);
   const navigation = useNavigation();
   const { params } = route;
 
   const [accountName, setAccountName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [country, setCountry] = useState<any>(countryData[0]);
+  const [country, setCountry] = useState<any>(countryData[userCountry]);
   const [provider, setProvider] = useState<any>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -164,12 +164,8 @@ const AddMobileMoneyScreen: React.FC<
             value={country}
             onChange={(val) => setCountry(val)}
             style={styles.countryDropdown}
-            data={countryData}
-            renderLeftIcon={() =>
-              country ? (
-                <Image source={GhanaImage} style={styles.countryImage} />
-              ) : null
-            }
+            data={[countryData[userCountry]]}
+            renderLeftIcon={() => (country ? country.image : null)}
             renderItem={(item, selected) => (
               <View style={styles.dropdownItem}>
                 {item.image}

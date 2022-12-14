@@ -5,7 +5,7 @@
  */
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ArrowSwapHorizontal,
@@ -14,7 +14,7 @@ import {
   ProfileCircle,
 } from "iconsax-react-native";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Image, Pressable, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import Colors from "../constants/Colors";
@@ -36,6 +36,7 @@ import TradeScreen from "../screens/Trade";
 import BuyCryptoScreen from "../screens/BuyCrypto";
 import SummaryScreen from "../screens/Summary";
 import PayInstructionScreen from "../screens/PayInstruction";
+import PayInstructionCMScreen from "../screens/PayInstructionCM";
 import SellCryptoScreen from "../screens/SellCrypto";
 import SelectAccountScreen from "../screens/SelectAccount";
 import CompleteScreen from "../screens/Complete";
@@ -73,7 +74,12 @@ import PendingScreen from "../screens/Pending";
 import NotificationsScreen from "../screens/Notifications";
 import { useAppDispatch, useAppSelector } from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setPriceChanges, setUser, setUserCountry } from "../store/auth.slice";
+import {
+  setBaseUrl,
+  setPriceChanges,
+  setUser,
+  setUserCountry,
+} from "../store/auth.slice";
 import EmailOTPScreen from "../screens/EmailOTP";
 import PasswordOTPScreen from "../screens/PasswordOTP";
 import MobileMoneyOTP from "../screens/MobileMoneyOTP";
@@ -87,6 +93,10 @@ import ResetPasswordOTPScreen from "../screens/ResetPasswordOTP";
 import ConfrimResetPasswordScreen from "../screens/CofirmResetPassword";
 import TransactionPinScreen from "../screens/TransactionPin";
 import { getPriceChanges } from "../api/dashboard.api";
+import { getCountriesApi } from "../api/auth.api";
+import styles from "./styles";
+import KYCWaitingScreen from "../screens/KYCWaiting";
+import CustomText from "../components/CustomText";
 
 export default function Navigation({
   colorScheme,
@@ -111,11 +121,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const [firstLogin, setFirstLogin] = React.useState<boolean>(false);
-  const [isPinSet, setIsPinSet] = React.useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
   const [checkingFirstLogin, setCheckingFirstLogin] =
     React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   const getUser = async () => {
     setCheckingFirstLogin(true);
@@ -125,7 +137,7 @@ function RootNavigator() {
     const userCountry = await AsyncStorage.getItem("@userCountry");
 
     setFirstLogin(Boolean(isLogedIn));
-    setIsPinSet(Boolean(pin));
+    setIsAuthenticated(Boolean(result));
     setCheckingFirstLogin(false);
 
     if (result) {
@@ -138,24 +150,56 @@ function RootNavigator() {
     }
   };
 
+  const fetchCountries = async () => {
+    const result = await getCountriesApi(navigation);
+    dispatch(setUserCountry(result.userCountry));
+    await AsyncStorage.setItem("@userCountry", result.userCountry);
+
+    const country = result.countries?.find(
+      (country: any) => country.code == result.userCountry
+    );
+    await AsyncStorage.setItem("@baseUrl", country.baseUrl[0]);
+
+    dispatch(setBaseUrl(country.baseUrl[0]));
+  };
+
+  const initApp = async () => {
+    setLoading(true);
+    await fetchCountries();
+    await getUser();
+    setLoading(false);
+  };
+
   React.useEffect(() => {
-    getUser();
+    initApp();
   }, []);
+
+  const NewScreen = () => {
+    return (
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <CustomText>new screen</CustomText>
+      </View>
+    )
+  }
 
   const getIntialRouteName = () => {
     if (!firstLogin) {
       return "SplashScreen";
     } else {
-      // if (isPinSet) {
-      //   return "WelcomeBack";
-      // } else {
-      //   return "SignIn";
-      // }
+      if (isAuthenticated) {
+        return "OverviewStack";
+      }
       return "SignIn";
     }
   };
 
-  if (checkingFirstLogin) return null;
+  if (loading || checkingFirstLogin)
+    return (
+      <Image
+        style={styles.background}
+        source={require("../assets/images/splash.png")}
+      />
+    );
 
   return (
     <Stack.Navigator
@@ -194,6 +238,7 @@ function RootNavigator() {
       />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="PayInstruction" component={PayInstructionScreen} />
+      <Stack.Screen name="PayInstructionCM" component={PayInstructionCMScreen} />
       <Stack.Screen name="SendCrypto" component={SendCryptoScreen} />
       <Stack.Screen name="SendToken" component={SendTokenScreen} />
       <Stack.Screen
@@ -243,6 +288,7 @@ function RootNavigator() {
       <Stack.Screen name="AccessLogs" component={AccessLogsScreen} />
       <Stack.Screen name="WebView" component={WebViewScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen name="KYCWaiting" component={KYCWaitingScreen} />
       <Stack.Screen
         name="ResetPasswordOTP"
         component={ResetPasswordOTPScreen}

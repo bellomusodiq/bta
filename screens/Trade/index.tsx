@@ -21,6 +21,7 @@ import { setDashboardData } from "../../store/auth.slice";
 import { loadDashboard } from "../../api/dashboard.api";
 import CustomButton from "../../components/CustomButton";
 import { coinImage } from "../../consts/images";
+import Toast from "react-native-toast-message";
 
 const TAB_DATA: TabItemProps[] = [
   {
@@ -48,6 +49,18 @@ const TradeScreen: React.FC<TradeStackScreenProps<"Trade">> = ({
   const navigation = useNavigation();
 
   const navigateToBuyOrSell = (item) => {
+    if (!item.enabled) {
+      Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
+        type: "error",
+        text1:
+          "This token has not been enabled, navigate to manage asset to enable token",
+      });
+      return;
+    }
+    console.log(JSON.stringify(item, null, 2));
+
     if (currentIndex === 0) {
       navigation.navigate("BuyCrypto", item);
     } else {

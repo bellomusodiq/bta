@@ -202,7 +202,7 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
         {/* <Image source={ProfileImage} style={styles.profileImage} /> */}
         <View style={styles.profilePlaceHolder}>
           <CustomText style={styles.profileImageText}>
-            {user.firstName.charAt(0)}
+            {user.firstName?.charAt(0) || user.username?.charAt(0)}
           </CustomText>
         </View>
         <CustomText style={styles.profileName}>{user.firstName}</CustomText>
@@ -301,11 +301,11 @@ const ProfileScreen: React.FC<RootTabScreenProps<"Profile">> = () => {
           {
             title: "Talk to us via whatsapp",
             onPress: () =>
-              navigation.navigate("WebView", {
-                url: `https://api.whatsapp.com/send?phone=${
+              Linking.openURL(
+                `https://wa.me/${
                   dashboardData?.support.whatsapp.value.split("+")[1]
-                }`,
-              }),
+                }`
+              ),
             icon: <UserTag size={24} color="#3861FB" variant="Bold" />,
           },
           {

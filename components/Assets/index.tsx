@@ -21,7 +21,10 @@ const Assets: React.FC = () => {
     cryptoValue: string,
     usdValue: string,
     marketIdentifier: string,
-    marketPrice: string
+    marketPrice: string,
+    priceChange: number,
+    platform: string,
+    contract: string
   ) => {
     // @ts-ignore-next-line
     navigation.navigate("AssetDetail", {
@@ -31,6 +34,9 @@ const Assets: React.FC = () => {
       usdValue,
       marketIdentifier,
       marketPrice,
+      priceChange,
+      platform,
+      contract,
     });
   };
 
@@ -132,7 +138,12 @@ const Assets: React.FC = () => {
                   currency.cryptoValue,
                   currency.usdValue,
                   currency.marketIdentifier,
-                  currency.price
+                  currency.price,
+                  priceChanges?.[
+                    currency.symbol.toLowerCase()
+                  ]?.dailyChange.priceChangePercentage?.toFixed(2),
+                  currency.platform,
+                  currency.contract
                 )
               }
               hideTrend

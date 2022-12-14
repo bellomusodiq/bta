@@ -27,7 +27,7 @@ const KYCBeginScreen: React.FC<RootStackScreenProps<"KYCBegin">> = () => {
         setKycData(initializeKYC.data);
       } else {
         setLoading(false);
-        return;
+        navigation.navigate("KYCWaiting", { message: initializeKYC.message });
       }
       const firstResponse = await initializeVerificationApi(
         initializeKYC.data.firstRequest

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import * as LocalAuthentication from "expo-local-authentication";
 import { ArrowRight, ArrowRight2, Eye, EyeSlash } from "iconsax-react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -94,10 +95,15 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
     const result = await loginApi(navigation, email, password);
     dispatch(setLoading(false));
     if (result.success) {
-      dispatch(setUser(result.account));
-      await AsyncStorage.setItem("@user", JSON.stringify(result.account));
-      await AsyncStorage.setItem("@firstLogin", "true");
-      nextNavigation();
+      let scan = await LocalAuthentication.authenticateAsync(
+        "Scan your finger."
+      );
+      if (scan.success) {
+        dispatch(setUser(result.account));
+        await AsyncStorage.setItem("@user", JSON.stringify(result.account));
+        await AsyncStorage.setItem("@firstLogin", "true");
+        nextNavigation();
+      }
     } else {
       dispatch(setError(result.message));
     }

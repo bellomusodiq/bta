@@ -1,5 +1,5 @@
 import { Call, Mobile, Timer1 } from "iconsax-react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Linking, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import CustomText from "../../components/CustomText";
@@ -12,12 +12,16 @@ import * as Clipboard from "expo-clipboard";
 import { useNavigation } from "@react-navigation/native";
 import Copy from "../../components/Copy";
 import { useAppSelector } from "../../store";
+import CustomButton from "../../components/CustomButton";
 
 const PayInstructionScreen: React.FC<
   RootStackScreenProps<"PayInstruction">
 > = ({ route }) => {
   const { dashboardData } = useAppSelector((state) => state.auth);
   const { params } = route;
+  const [disableDone, setDisableDone] = useState<boolean>(true);
+
+  console.log("params", params);
 
   const navigation = useNavigation();
 
@@ -35,21 +39,9 @@ const PayInstructionScreen: React.FC<
     </TouchableOpacity>
   );
 
-  const showInstruction = () => {
-    Alert.alert(
-      "REFERENCE WARNING",
-      "Always make sure to copy the\n REFERENCE using the blue 'Copy Reference' button.\n\nFaliure to enter the REFERENCE stated in the payment instructions will cause your buy order to fail. \n\n All failed refunds to your Mobile Money account will attract a 0.5% fee \n\n Thank you",
-      [
-        {
-          text: "I understand",
-        },
-      ]
-    );
+  const onPayNow = () => {
+    Linking.openURL(`tel:${decodeURI(params.ussd)}`);
   };
-
-  useEffect(() => {
-    showInstruction();
-  }, []);
 
   return (
     <ScreenLayout
@@ -75,29 +67,14 @@ const PayInstructionScreen: React.FC<
         MOBILE MONEY PAYMENT INSTRUCTIONS
       </CustomText>
       <View style={styles.divider} />
-      <StepItem title="Step 1:">
-        <CustomText style={styles.itemTitle}>
-          Copy the reference number below and proceed to step 2
-        </CustomText>
-        <View style={styles.copyBoxContainer}>
-          <View style={styles.copyBox}>
-            <CustomText style={styles.copyBoxText}>
-              {params.reference}
-            </CustomText>
-          </View>
-          <Copy text={params.reference}>
-            <View style={styles.copyButton}>
-              <CustomText style={styles.copyText}>COPY</CustomText>
-            </View>
-          </Copy>
-        </View>
-      </StepItem>
-      <StepItem title="Step 2:">
-        <CustomText style={styles.itemTitle}>
-          {params.paymentInstruction}
-        </CustomText>
-      </StepItem>
-      <TouchableOpacity
+      <CustomText style={styles.itemTitle}>
+        {params.paymentInstruction}
+      </CustomText>
+      {/* <CustomButton onPress={onPayNow}>
+        <CustomText style={styles.buttonText}>Pay Now</CustomText>
+      </CustomButton> */}
+      <CustomButton
+        disabled={disableDone}
         onPress={() =>
           // TODO: call STEP: 4 for cameroon before navigation
           navigation.reset({
@@ -109,10 +86,9 @@ const PayInstructionScreen: React.FC<
             ],
           })
         }
-        style={styles.button}
       >
         <CustomText style={styles.buttonText}>DONE</CustomText>
-      </TouchableOpacity>
+      </CustomButton>
       <View style={styles.note}>
         <Timer1 size={RFValue(20)} color="#3861FB" />
         <CustomText style={styles.noteText}>

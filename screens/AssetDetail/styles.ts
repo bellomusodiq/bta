@@ -11,7 +11,9 @@ const styles = StyleSheet.create({
   graphContainer: {
     width: width(1),
     marginLeft: -width(0.05),
+    // paddingLeft: width(0.05),
     justifyContent: "center",
+    marginTop: 15,
   },
   currentPrice: {
     fontSize: RFValue(30),

@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StatusBar, View } from "react-native";
+import { Image, StatusBar, View } from "react-native";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -16,6 +16,7 @@ import {
 import { store } from "./store";
 import { Provider } from "react-redux";
 import Toast, { ErrorToast, SuccessToast } from "react-native-toast-message";
+import { height, width } from "./consts/dimenentions";
 
 const toastConfig = {
   success: (props) => (
@@ -38,21 +39,28 @@ export default function App() {
     Inter_600SemiBold: require("./assets/fonts/DegularSemibold.otf"),
   });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
+  if (!fontsLoaded || !isLoadingComplete) {
     return (
-      <Provider store={store}>
-        <View style={{ flex: 1 }}>
-          <Navigation colorScheme={colorScheme} />
-          <Toast config={toastConfig} />
-          <StatusBar backgroundColor="white" barStyle="dark-content" />
-        </View>
-      </Provider>
+      <Image
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          height: height(1),
+          width: width(1),
+        }}
+        source={require("./assets/images/splash.png")}
+      />
     );
   }
+
+  return (
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>
+        <Navigation />
+        <Toast config={toastConfig} />
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
+      </View>
+    </Provider>
+  );
 }

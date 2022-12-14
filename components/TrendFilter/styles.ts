@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderRadius: RFValue(48),
     borderWidth: 1,
     borderColor: "#F0F0F0",
+    zIndex: 30,
   },
   trendFilterItemText: {
     fontSize: RFValue(14),

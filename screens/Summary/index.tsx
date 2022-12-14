@@ -91,7 +91,8 @@ const SummaryScreen: React.FC<RootStackScreenProps<"Summary">> = ({
         );
         setLoading(false);
         if (result.success) {
-          navigation.navigate("PayInstruction", params);
+          const { jwt, ...data } = result;
+          navigation.navigate("PayInstructionCM", data);
         } else {
           Toast.show({
             autoHide: true,

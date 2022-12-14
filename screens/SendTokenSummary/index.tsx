@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as LocalAuthentication from "expo-local-authentication";
 import { Image, View } from "react-native";
 import CustomText from "../../components/CustomText";
@@ -84,6 +84,14 @@ const SendTokenSummaryScreen: React.FC<
       }
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (navigation.isFocused()) {
+        navigation.goBack();
+      }
+    }, 300000);
+  }, []);
 
   return (
     <ScreenLayout

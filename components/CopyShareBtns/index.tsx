@@ -16,7 +16,7 @@ const CopyShareBtns: React.FC<{ text: string; token: string }> = ({
   const shareAddress = async () => {
     try {
       await Share.share({
-        message: `${user.email}'s ${token} wallet address: ${text}`,
+        message: `This is my ${token} wallet address ${text}`,
       });
     } catch (e) {
       Toast.show({

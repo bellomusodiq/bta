@@ -17,11 +17,12 @@ import { RFValue } from "react-native-responsive-fontsize";
 import MarketStats from "../../components/MarketStats";
 import ReactNativeModal from "react-native-modal";
 import BuySellItem from "../../components/BuySellItem";
-import { LineChart } from "react-native-wagmi-charts";
+import { LineChart } from "react-native-chart-kit";
 import { chartsApi, marketAssetsApi } from "../../api/assets.api";
 import { useAppSelector } from "../../store";
 import { useNavigation } from "@react-navigation/native";
 import { coinImage } from "../../consts/images";
+import { width } from "../../consts/dimenentions";
 
 const coinDescription = {
   BTC: "Bitcoin is the first and most widely recognized cryptocurrency. It enables peer-to-peer exchange of value in the digital realm through the use of a decentralized protocol, cryptography, and a mechanism to achieve global consensus on the state of a periodically updated public transaction ledger called a 'blockchain.'",
@@ -44,6 +45,8 @@ const coinUrl = {
 const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
   route,
 }) => {
+  console.log(route.params);
+
   const {
     currency,
     name,
@@ -51,11 +54,15 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
     usdValue,
     marketIdentifier,
     marketPrice,
+    priceChange,
+    platform,
+    contract,
   } = route.params;
+
   const navigation = useNavigation();
   const { user } = useAppSelector((state) => state.auth);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [chartData, setchartData] = useState<any>([]);
+  const [chartData, setchartData] = useState<any>([1]);
   const [dailyChart, setDailyChart] = useState<any>(null);
   const [weeklyChart, setMWeeklyChart] = useState<any>(null);
   const [monthlyChart, setMontlyChart] = useState<any>(null);
@@ -96,22 +103,16 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       (result) => {
         setLoading(false);
         if (result.success) {
-          let dataPoints = [];
-          if (result.dataPoints) dataPoints = result.dataPoints;
-          const mappedData = dataPoints.map((point: number, i: number) => ({
-            timestamp: i,
-            value: point,
-          }));
-          setchartData(mappedData);
+          setchartData(result.dataPoints);
           switch (trend) {
             case "daily":
-              setDailyChart(mappedData);
+              setDailyChart(result.dataPoints);
               break;
             case "weekly":
-              setMWeeklyChart(mappedData);
+              setMWeeklyChart(result.dataPoints);
               break;
             case "monthly":
-              setMontlyChart(mappedData);
+              setMontlyChart(result.dataPoints);
               break;
             // case "yearly":
             //   setYearlyChart(mappedData);
@@ -146,6 +147,8 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       marketIdentifier,
       marketPrice,
       symbol: currency,
+      platform,
+      contract,
     });
     setShowModal(false);
   };
@@ -158,6 +161,8 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       marketIdentifier,
       marketPrice,
       symbol: currency,
+      platform,
+      contract,
     });
     setShowModal(false);
   };
@@ -190,9 +195,26 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
       <AssetDetailHeader title={`${name} (${currency})`} />
       <View style={styles.currentPriceContainer}>
         <CustomText style={styles.currentPriceTitle}>Current price</CustomText>
-        <CustomText style={styles.currentPrice}>
-          ${Number.parseFloat(marketPrice).toFixed(2)}
-        </CustomText>
+        <View style={{ flexDirection: "row" }}>
+          <CustomText style={styles.currentPrice}>
+            ${Number.parseFloat(marketPrice).toFixed(2)}
+          </CustomText>
+          <CustomText
+            style={[
+              styles.currentPrice,
+              {
+                fontSize: 16,
+                paddingLeft: 5,
+                color: priceChange < 0 ? "#FF5C5C" : "#25D366",
+                alignSelf: "flex-end",
+                marginTop: 5,
+              },
+            ]}
+          >
+            {priceChange >= 0 ? "+" : ""}
+            {priceChange}%
+          </CustomText>
+        </View>
       </View>
       {/* <TrendChart /> */}
       <View style={styles.graphContainer}>
@@ -201,16 +223,43 @@ const AssetDetailScreen: React.FC<OverviewStackScreenProps<"AssetDetail">> = ({
             <ActivityIndicator size="small" />
           </View>
         ) : (
-          <LineChart.Provider data={chartData}>
-            <LineChart height={200}>
-              <LineChart.Path color="#3861FB">
-                <LineChart.Gradient color="#3861FB" />
-              </LineChart.Path>
-              <LineChart.CursorCrosshair>
-                <LineChart.Tooltip />
-              </LineChart.CursorCrosshair>
-            </LineChart>
-          </LineChart.Provider>
+          <LineChart
+            data={{
+              // labels: [],
+              datasets: [
+                {
+                  data: chartData,
+                },
+              ],
+            }}
+            width={width(1)} // from react-native
+            height={250}
+            withVerticalLabels={false}
+            yAxisInterval={1} // optional, defaults to 1
+            withInnerLines={false}
+            chartConfig={{
+              backgroundColor: "#fff",
+              backgroundGradientFrom: "#fff",
+              backgroundGradientTo: "#fff",
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `#3861FB`,
+              labelColor: (opacity = 1) => `black`,
+              style: {
+                // borderRadius: 16,
+              },
+              propsForDots: {
+                r: "0",
+              },
+            }}
+            bezier
+            style={{
+              paddingHorizontal: 5,
+              justifyContent: "flex-end",
+              paddingVertical: 0,
+              zIndex: 3,
+              marginBottom: -30,
+            }}
+          />
         )}
       </View>
       <TrendFilter onSetTrend={(trend) => setTrend(trend)} />

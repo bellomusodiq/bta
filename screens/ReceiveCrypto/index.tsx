@@ -10,7 +10,7 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "../../store";
 import { coinImage } from "../../consts/images";
-
+import Toast from "react-native-toast-message";
 
 const ReceiveCryptoScreen: React.FC<
   RootStackScreenProps<"ReceiveCrypto">
@@ -20,8 +20,19 @@ const ReceiveCryptoScreen: React.FC<
   const [filterData, setFilterData] = useState<any>(dashboardData?.currencies);
   const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
-  const navigateToReceiveToken = (params) =>
+  const navigateToReceiveToken = (params) => {
+    if (!params.enabled) {
+      Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
+        type: "error",
+        text1:
+          "This token has not been enabled, navigate to manage asset to enable token",
+      });
+      return;
+    }
     navigation.navigate("ReceiveCryptoSummary", params);
+  };
 
   const onSearch = (text: string) => {
     setQuery(text);
@@ -56,6 +67,7 @@ const ReceiveCryptoScreen: React.FC<
               navigateToReceiveToken({
                 token: item.symbol,
                 platform: item.platform,
+                enabled: item.enabled,
               })
             }
             hideTrend

@@ -25,6 +25,8 @@ const ManageAssetScreen: React.FC<OverviewStackScreenProps<"ManageAsset">> = ({
     setLoading(true);
     setError(false);
     const result = await manageCryptoAssetApi(navigation, user.token);
+    console.log(JSON.stringify(result, null, 2));
+
     setLoading(false);
     if (result.success) {
       setAssets(result.currencies);

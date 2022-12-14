@@ -217,7 +217,7 @@ const SignInScreen: React.FC<RootStackScreenProps<"SignIn">> = () => {
       >
         SIGNUP
       </CustomButton>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.replace("SignIn")}>
         <CustomText
           style={[styles.termsText, { textAlign: "center", marginBottom: 50 }]}
         >

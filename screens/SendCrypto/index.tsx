@@ -10,6 +10,7 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "../../store";
 import { coinImage } from "../../consts/images";
+import Toast from "react-native-toast-message";
 
 const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
   const { dashboardData } = useAppSelector((state) => state.auth);
@@ -17,7 +18,19 @@ const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
   const [filterData, setFilterData] = useState<any>(dashboardData?.currencies);
   const [query, setQuery] = useState<string>("");
   const navigation = useNavigation();
-  const navigateToSendToken = (item) => navigation.navigate("SendToken", item);
+  const navigateToSendToken = (item) => {
+    if (!item.enabled) {
+      Toast.show({
+        autoHide: true,
+        visibilityTime: 7000,
+        type: "error",
+        text1:
+          "This token has not been enabled, navigate to manage asset to enable token",
+      });
+      return;
+    }
+    navigation.navigate("SendToken", item);
+  };
 
   const onSearch = (text: string) => {
     setQuery(text);
@@ -42,7 +55,6 @@ const SendCryptoScreen: React.FC<RootStackScreenProps<"SendCrypto">> = () => {
       <FlatList
         data={filterData}
         renderItem={({ item }) => {
-
           return (
             <AssetItem
               image={coinImage[item.symbol]}
